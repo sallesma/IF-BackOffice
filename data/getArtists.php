@@ -1,6 +1,7 @@
 <?php
 
-echo '<tr>
+print <<<END
+<tr>
 							<th>Nom</th>
 							<th>Style</th>
 							<th>Programmation</th>
@@ -38,6 +39,6 @@ echo '<tr>
 							</td>
 						</tr>
                         
-        ';
+END;
 
 ?>
