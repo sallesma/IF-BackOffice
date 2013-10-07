@@ -59,7 +59,11 @@
 				<div class="bs-sidebar hidden-print" role="complementary">
 					<ul class="nav bs-sidenav">
 
-						<li><a href="#news">News</a></li>
+						<li><a href="#news">News</a>
+							<ul class="nav">
+								<li><a href="#news-add">Ajouter une news</a></li>
+								<li><a href="#news-edit">Liste des news</a></li>
+							</ul></li>
 						<li><a href="#artists">Artistes</a>
 							<ul class="nav">
 								<li><a href="#artists-add">Ajouter un artiste</a></li>
@@ -92,6 +96,9 @@
 					<div class="page-header">
 						<h1 id="news">News</h1>
 					</div>
+					<p>Ici les news.</p>
+
+					<h3 id="infos-addCategory">Ajouter une catégorie</h3>
 					<p>Ajoutez une news via ce formulaire.</p>
 					<form role="form">
 						<input type="text" class="form-control" placeholder="Titre"><br />
@@ -99,6 +106,29 @@
 						<br />
 						<button type="button" class="btn btn-success">Valider</button>
 					</form>
+
+
+					<h3 id="news-edit">Editer les news</h3>
+					<table id="news-table" class="table table-hover">
+						<tr>
+							<th>Nom</th>
+							<th>Description</th>
+						</tr>
+						<tr>
+							<td>C'est ouvert</td>
+							<td>Les portes du festival sont ouvertes ! Les festivaliers sont déjà nombreux sur place et installent leurs tentes...</td>
+							<td>
+								<button type="button" class="btn btn-primary">Editer</button>
+							</td>
+						</tr>
+						<tr>
+							<td>J-2</td>
+							<td>Attention mesdames et messiers dans un instant, ça va commencer !</td>
+							<td>
+								<button type="button" class="btn btn-primary">Editer</button>
+							</td>
+						</tr>
+					</table>
 				</div>
 
 
@@ -303,6 +333,7 @@
 					<h3 id="infos-addInfo">Ajouter une page info</h3>
 					<form id="infos-addInfo-form" role="form">
 						<input type="text" class="form-control" placeholder="Titre"><br />
+						<input type="text" class="form-control" placeholder="Catégorie"><br />
 						<textarea class="form-control" rows="3" placeholder="Description"></textarea>
 						<br />
 						<button type="button" class="btn btn-success">Valider</button>
@@ -312,32 +343,41 @@
 					<table id="infos-table" class="table table-hover">
 						<tr>
 							<th>Nom</th>
+							<th>Catégorie</th>
 							<th>Description</th>
 						</tr>
 						<tr>
 							<td>Bar tapas</td>
-							<td>Situé au niveau du village asso, le bar tapas vous propose des tapas authentiques. L'assiette apéro...</td>
+							<td>Restauration</td>
+							<td>Situé au niveau du village asso, le bar tapas vous
+								propose des tapas authentiques. L'assiette apéro...</td>
 							<td>
 								<button type="button" class="btn btn-primary">Editer</button>
 							</td>
 						</tr>
 						<tr>
 							<td>Bar tapas</td>
-							<td>Situé au niveau du village asso, le bar tapas vous propose des tapas authentiques. L'assiette apéro...</td>
+							<td>Restauration</td>
+							<td>Situé au niveau du village asso, le bar tapas vous
+								propose des tapas authentiques. L'assiette apéro...</td>
 							<td>
 								<button type="button" class="btn btn-primary">Editer</button>
 							</td>
 						</tr>
 						<tr>
 							<td>Bar tapas</td>
-							<td>Situé au niveau du village asso, le bar tapas vous propose des tapas authentiques. L'assiette apéro...</td>
+							<td>Restauration</td>
+							<td>Situé au niveau du village asso, le bar tapas vous
+								propose des tapas authentiques. L'assiette apéro...</td>
 							<td>
 								<button type="button" class="btn btn-primary">Editer</button>
 							</td>
 						</tr>
 						<tr>
 							<td>Bar tapas</td>
-							<td>Situé au niveau du village asso, le bar tapas vous propose des tapas authentiques. L'assiette apéro...</td>
+							<td>Restauration</td>
+							<td>Situé au niveau du village asso, le bar tapas vous
+								propose des tapas authentiques. L'assiette apéro...</td>
 							<td>
 								<button type="button" class="btn btn-primary">Editer</button>
 							</td>
