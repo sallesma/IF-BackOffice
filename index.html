@@ -65,8 +65,12 @@
 								<li><a href="#artists-add">Ajouter un artiste</a></li>
 								<li><a href="#artistes-edit">Liste des artistes</a></li>
 							</ul></li>
-						<li><a href="#photos">Photos</a></li>
-						
+						<li><a href="#photoFilter">Photos</a>
+							<ul class="nav">
+								<li><a href="#photoFilter-add">Ajouter un filtre</a></li>
+								<li><a href="#photoFilter-edit">Liste des filtres</a></li>
+							</ul></li>
+
 
 
 					</ul>
@@ -97,11 +101,12 @@
 					<div class="page-header">
 						<h1 id="artistes">Artistes</h1>
 					</div>
-					<p>Vous pouvez ajouter ou éditer des artistes par cette interface.
-					Les changements sont pris en compte pour modifier la programmation en conséquence.</p>
+					<p>Vous pouvez ajouter ou éditer des artistes par cette
+						interface. Les changements sont pris en compte pour modifier la
+						programmation en conséquence.</p>
 
 					<h3 id="artistes-add">Ajouter un artiste</h3>
-					<form class="form-horizontal" role="form">
+					<form id="artist-add-form" class="form-horizontal" role="form">
 						<div class="form-group">
 							<label for="inputName" class="col-lg-2 control-label">Nom</label>
 							<div class="col-lg-10">
@@ -124,9 +129,47 @@
 					</form>
 
 					<h3 id="artistes-edit">Editer les artistes</h3>
-					<div class="bs-docs-dl-options">
-						<p>Liste des artistes</p>
-					</div>
+					<table id="artists-table" class="table table-hover">
+						<tr>
+							<th>Nom</th>
+							<th>Style</th>
+							<th>Programmation</th>
+						</tr>
+						<tr>
+							<td>Alain Souchon</td>
+							<td>Chanson française</td>
+							<td>Vendredi aprem</td>
+							<td>
+								<button type="button" class="btn btn-primary">Editer</button>
+							</td>
+						</tr>
+						<tr>
+							<td>Alain Souchon</td>
+							<td>Chanson française</td>
+							<td>Vendredi aprem</td>
+							<td>
+								<button type="button" class="btn btn-primary">Editer</button>
+							</td>
+						</tr>
+						<tr>
+							<td>Alain Souchon</td>
+							<td>Chanson française</td>
+							<td>Vendredi aprem</td>
+							<td>
+								<button type="button" class="btn btn-primary">Editer</button>
+							</td>
+						</tr>
+						<tr>
+							<td>Alain Souchon</td>
+							<td>Chanson française</td>
+							<td>Vendredi aprem</td>
+							<td>
+								<button type="button" class="btn btn-primary">Editer</button>
+							</td>
+						</tr>
+					</table>
+
+
 				</div>
 
 
@@ -135,17 +178,68 @@
   ================================================== -->
 				<div class="bs-docs-section">
 					<div class="page-header">
-						<h1 id="photos">Filtres photos</h1>
+						<h1 id="photoFilter">Filtres photos</h1>
 					</div>
 
-					<p>Ajouter et éditer les filtres</p>
+					<h3 id="photoFilter-add">Ajouter un filtre</h3>
+					<form id="filter-add-form" class="form-horizontal" role="form">
+						<div class="form-group">
+							<label for="inputName" class="col-lg-2 control-label">Nom</label>
+							<div class="col-lg-10">
+								<input type="email" class="form-control" id="inputName"
+									placeholder="Nom">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputStyle" class="col-lg-2 control-label">Filtre</label>
+							<div class="col-lg-10">
+								<input type="file" class="filestyle"
+									data-classInput="input-small">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-lg-offset-2 col-lg-10">
+								<button type="submit" class="btn btn-default">Ajouter</button>
+							</div>
+						</div>
+					</form>
+
+					<h3 id="photoFilter-edit">Editer les filtres</h3>
+
+					<div class="row">
+						<div class="col-sm-6 col-md-3">
+							<a href="#" class="thumbnail"> <img
+								data-src="holder.js/100%x180" alt="...">
+							</a>
+						</div>
+						<div class="col-sm-6 col-md-3">
+							<a href="#" class="thumbnail"> <img
+								data-src="holder.js/100%x180" alt="...">
+							</a>
+						</div>
+						<div class="col-sm-6 col-md-3">
+							<a href="#" class="thumbnail"> <img
+								data-src="holder.js/100%x180" alt="...">
+							</a>
+						</div>
+						<div class="col-sm-6 col-md-3">
+							<a href="#" class="thumbnail"> <img
+								data-src="holder.js/100%x180" alt="...">
+							</a>
+						</div>
+						<div class="col-sm-6 col-md-3">
+							<a href="#" class="thumbnail"> <img
+								data-src="holder.js/100%x180" alt="...">
+							</a>
+						</div>
+					</div>
 				</div>
 
-
-				</div>
 
 			</div>
+
 		</div>
+	</div>
 
 
 	<!-- SCRIPTS -->
