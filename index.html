@@ -61,13 +61,13 @@
 
 						<li><a href="#news">News</a>
 							<ul class="nav">
-								<li><a href="#addNewModal" data-toggle="modal">Ajouter une news</a></li>
 								<li><a href="#news">Liste des news</a></li>
+								<li><a href="#addNewModal" data-toggle="modal">Ajouter une news</a></li>
 							</ul></li>
 						<li><a href="#artists">Artistes</a>
 							<ul class="nav">
-								<li><a href="#addArtistModal" data-toggle="modal">Ajouter un artiste</a></li>
 								<li><a href="#artists">Liste des artistes</a></li>
+								<li><a href="#addArtistModal" data-toggle="modal">Ajouter un artiste</a></li>
 							</ul></li>
 						<li><a href="#photoFilter">Photos</a>
 							<ul class="nav">
@@ -116,14 +116,14 @@
                             <form role="form">
                                 <div class="modal-body">
                               
-						          <input type="text" class="form-control" placeholder="Titre"><br />
-						          <textarea class="form-control" rows="3" placeholder="Nouvelle"></textarea>
+						          <input id="newTitle" type="text" class="form-control" placeholder="Titre"><br />
+						          <textarea id="newBody" class="form-control" rows="3" placeholder="Nouvelle"></textarea>
 						          <br />
                                 </div>
                             
                             <div class="modal-footer">
                               <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
-                              <button type="button" class="btn btn-primary">Ajouter</button>
+                              <button type="button" class="btn btn-primary" id="addNewButton">Ajouter</button>
                             </div>
                             </form>
                           </div><!-- /.modal-content -->
@@ -163,14 +163,14 @@
                                     <div class="form-group">
                                         <label for="inputName" class="col-lg-2 control-label">Nom</label>
                                         <div class="col-lg-10">
-                                            <input type="email" class="form-control" id="inputName"
+                                            <input id="artistName" type="email" class="form-control" id="inputName"
                                                 placeholder="Nom">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="inputStyle" class="col-lg-2 control-label">Style</label>
                                         <div class="col-lg-10">
-                                            <input type="password" class="form-control" id="inputStyle"
+                                            <input id="artistStyle" type="password" class="form-control" id="inputStyle"
                                                 placeholder="Style">
                                         </div>
 						            </div>
@@ -178,7 +178,7 @@
                             
                             <div class="modal-footer">
                               <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
-                              <button type="button" class="btn btn-primary">Ajouter</button>
+                              <button type="button" class="btn btn-primary" id="addArtistButton">Ajouter</button>
                             </div><!--/.modal-footer-->
                                   
                             </form>
