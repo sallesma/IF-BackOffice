@@ -11,14 +11,14 @@ print <<<END
 							</tr>
 END;
 
-include('connection.php');
+include("connection.php");
 
-$getArtistsQuery = sprintf("SELECT nom, genre, jour, scene, debut FROM artists ORDER BY nom");
+$getArtistsQuery = "SELECT nom, genre, jour, scene, debut FROM artistes ORDER BY nom";
 $getArtistsResult = mysql_query($getArtistsQuery);
 
 while($artistRow = mysql_fetch_assoc($getArtistsResult)){
 	echo "<tr>";
-	echo "<td width=\"100\">".$artistRow['nom']."</td>";
+	echo "<td>".$artistRow['nom']."</td>";
 	echo "<td>".$artistRow['genre']."</td>";
 	echo "<td>".$artistRow['scene']."</td>";
 	echo "<td>".$artistRow['jour']."</td>";
@@ -28,5 +28,7 @@ while($artistRow = mysql_fetch_assoc($getArtistsResult)){
 }
 
 echo "</table>";
+
+mysql_close($link);
 
 ?>
