@@ -2,6 +2,19 @@ $(document).ready(function() {
 	getNews();
 	getArtists();
 
+    //Setup time pickers
+    $("#art-start-time").timepicker({
+                minuteStep: 15,
+                showInputs: false,
+                disableFocus: true
+    });
+    
+    $("#art-end-time").timepicker({
+                minuteStep: 15,
+                showInputs: false,
+                disableFocus: true
+    });
+    
 	$.get("data/getInfosCategories.php", function(data) {
 		$("#infoCategory-table").html(data);
 	});
@@ -31,12 +44,21 @@ $(document).ready(function() {
 			type : "POST",
 			url : "data/addArtist.php",
 			data : {
-				name : $("#artistName").val(),
-				style : $("#artistStyle").val()
+				name : $("#art-name").val(),
+				style : $("#art-style").val(),
+                description : $("#art-description").val(),
+                day : $("#art-day").val(),
+                scene : $("#art-scene").val(),
+                startTime :$("#art-start-time").val(),
+                endTime :$("#art-end-time").val(),
+                website : $("#art-website").val(),
+                facebook : $("#art-facebook").val(),
+                twitter : $("#art-twitter").val(),
+                youtube : $("#art-youtube").val()
 			}
 		}).done(function(msg) {
-			//alert("Data Saved: " + msg);
-			getArtist();
+			$("#artistModal").modal('hide');
+			getArtists();
 		}).fail(function(msg) {
 			alert("Failure");
 		});
@@ -48,6 +70,7 @@ $(document).ready(function() {
     $("body").on("click", "#modifyNewButton", function() {
         
         $('#editNewsModal').modal('show');
+        
         var formClass = $(this).parent().parent();
         
         
@@ -87,7 +110,28 @@ $(document).ready(function() {
     });
     
     
+    $("body").on("click", ".showArtistButton", function() {
+        
+        var id = $(event.target).parent.find('input[name="id"]');
+        alert(id);
+        
+        $.ajax({
+			type : "GET",
+			url : "data/getArtist.php",
+			data : {
+                id : id
+			}
+		}).done(function(msg) {
+            alert(msg);
+			getNews();
+		}).fail(function(msg) {
+			alert("Failure");
+		});
+        
+    });
 });
+
+
 
 
 

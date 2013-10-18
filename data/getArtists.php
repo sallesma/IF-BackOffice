@@ -13,7 +13,7 @@ END;
 
 include("connection.php");
 
-$getArtistsQuery = "SELECT nom, genre, jour, scene, debut FROM artistes ORDER BY nom";
+$getArtistsQuery = "SELECT id, nom, genre, jour, scene, debut FROM artistes ORDER BY nom";
 $getArtistsResult = mysql_query($getArtistsQuery);
 
 while($artistRow = mysql_fetch_assoc($getArtistsResult)){
@@ -23,7 +23,7 @@ while($artistRow = mysql_fetch_assoc($getArtistsResult)){
 	echo "<td>".$artistRow['scene']."</td>";
 	echo "<td>".$artistRow['jour']."</td>";
 	echo "<td>".$artistRow['debut']."</td>";
-	echo "<td><button type=\"button\" class=\"btn btn-primary\">Plus</button></td>";
+	echo "<td><input type=\"hidden\" value=\"".$artistRow['id']."\" name=\"id\"/><button type=\"button\" class=\"showArtistButton btn btn-primary\">Plus</button></td>";
 	echo "</tr>";
 }
 
