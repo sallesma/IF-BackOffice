@@ -14,22 +14,6 @@
 <link rel="stylesheet" href="style/jqx.base.css" type="text/css" />
 </head>
 <body>
-	<!-- NAV BAR -->
-	<div class="navbar navbar-default navbar-fixed-top">
-		<div class="container">
-			<div class="navbar-header">
-				<a class="navbar-brand" href="#">Back Office</a>
-			</div>
-			<div class="navbar-collapse collapse">
-				<ul class="nav navbar-nav">
-					<li class="active"><a href="#home_section">Home</a></li>
-					<li><a href="#second_section">Second</a></li>
-					<li><a href="#contact">Contact</a></li>
-				</ul>
-			</div>
-			<!--/.nav-collapse -->
-		</div>
-	</div>
 
 	<!-- Docs page layout -->
 	<div class="bs-header" id="content">
@@ -144,6 +128,8 @@
 
 				</div>
 
+				<!-- fin news
+  ================================================== -->
 
 				<!-- Artistes
   ================================================== -->
@@ -289,7 +275,8 @@
 
 				</div>
 
-
+				<!-- fin artistes
+  ================================================== -->
 
 				<!-- Photos
   ================================================== -->
@@ -351,7 +338,9 @@
 						</div>
 					</div>
 				</div>
-
+				<!-- fin photos
+  ================================================== -->
+				
 				<!-- Infos
   ================================================== -->
 				<div class="bs-docs-section">
@@ -359,37 +348,56 @@
 						<h1 id="infos">Informations pratiques</h1>
 					</div>
 					<p>Vous pouvez ajouter ou éditer des infors par cette
-						interface</p>
-                     <div id='infos-div'>
-                         </div>
-                    <div id='exampleTree'>
-                        <ul>
-                            <li item-selected='true'>Home</li>
-                            <li item-expanded='true'>Solutions
-                                <ul>
-                                    <li>Education</li>
-                                    <li>Financial services</li>
-                                    <li>Government</li>
-                                    <li>Manufacturing</li>
-                                    <li>Solutions
-                                        <ul>
-                                            <li>Consumer photo and video</li>
-                                            <li>Mobile</li>
-                                            <li>Rich Internet applications</li>
-                                            <li>Technical communication</li>
-                                            <li>Training and eLearning</li>
-                                            <li>Web conferencing</li>
-                                        </ul>
-                                    </li>
-                                    <li>All industries and solutions</li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-                    
-                    
-
+					interface</p>
+					<div id='infos-div'class="row">
+						<div id="infos-tree" class="col-md-3">
+						</div>
+						<div id="infos-edit" class="col-md-6">
+						
+							<input type="hidden" value="" name="id"/>
+							<form id="artist-add-form" class="form-horizontal" role="form">
+								<!--Name-->
+								<div class="form-group">
+									<label for="art-name" class="col-lg-2 control-label">Nom</label>
+									<div class="col-lg-10">
+										<input id="art-name" type="text" class="form-control" id="art-name"
+											placeholder="Nom">
+									</div>
+								</div>
+								<!--Style-->
+								<div class="form-group">
+									<label for="art-style" class="col-lg-2 control-label">Style</label>
+									<div class="col-lg-10">
+										<input id="art-style" type="text" class="form-control" id="art-style"
+											placeholder="Style">
+									</div>
+								</div>
+								<!--Description-->
+								<div class="form-group">
+									<label for="art-description" class="col-lg-2 control-label">Description</label>
+									<div class="col-lg-10">
+										<textarea id="art-description" type="text" class="form-control" id="art-description"
+											placeholder="Description"></textarea>
+									</div>
+								</div>
+								<!--PICTURE -->
+								<!--Scene-->
+								<div class="form-group">
+									<label for="art-scene" class="col-lg-2 control-label">Scène</label>
+									<div class="col-lg-10">
+										<select id="art-scene" class="form-control">
+										  <option value="principale">Scène principale</option>
+										  <option value="chapiteau">Scène chapiteau</option>
+										</select>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
 				</div>
+				<!-- fin Infos
+  ================================================== -->
+				
 			</div>
 
 		</div>

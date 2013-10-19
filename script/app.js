@@ -193,19 +193,40 @@ function getArtists() {
     });
 }
 function getInfos() {
-    
-    $.get("data/getInfos.php", function(data) {
-        alert(data);
-        $('#infos-div').jqxTree({ source:data, height: '300px', width: '300px' });
+	$.getJSON("data/getInfos.php", function(data) {
+		$('#infos-tree').jqxTree({ source:computeTree(data), height: '300px', width: '300px' });
+		$('#infos-tree').bind('select', function (event) {
+			var htmlElement = event.args.element;
+			var item = $('#infos-tree').jqxTree('getItem', htmlElement);
+			alert(item.label);
+		});
     });
-    
-    //example tree
-    $('#exampleTree').jqxTree({ height: '300px', width: '300px' });
-    $('#exampleTree').bind('select', function (event) {
-        var htmlElement = event.args.element;
-        var item = $('#exampleTree').jqxTree('getItem', htmlElement);
-        alert(item.label);
-    });
+}
+
+var computeTree = function (data) {
+    var source = [];
+    var items = [];
+    // build hierarchical source.
+    for (i = 0; i < data.length; i++) {
+        var item = data[i];
+        var label = item["text"];
+        var parentid = item["parentid"];
+        var id = item["id"];
+
+        if (items[parentid]) {
+            var item = { parentid: parentid, label: label, item: item };
+            if (!items[parentid].items) {
+                items[parentid].items = [];
+            }
+            items[parentid].items[items[parentid].items.length] = item;
+            items[id] = item;
+        }
+        else {
+            items[id] = { parentid: parentid, label: label, item: item };
+            source[id] = items[id];
+        }
+    }
+    return source;
 }
 
 function loadArtistModalWithObject(artist){

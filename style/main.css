@@ -1,3 +1,14 @@
 #home_section {
     margin-top:90px;
-}    
+}
+
+#infos-div {
+	border-color:#C7C7C7;
+}
+
+#infos-tree {
+	left:0%;
+}
+
+#infos-edit {
+}
