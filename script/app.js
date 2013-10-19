@@ -2,18 +2,21 @@ $(document).ready(function() {
 	getNews();
 	getArtists();
 	getInfos();
+    
 
     //Setup time pickers
     $("#art-start-time").timepicker({
                 minuteStep: 15,
                 showInputs: false,
-                disableFocus: true
+                disableFocus: true,
+                showMeridian:false
     });
     
     $("#art-end-time").timepicker({
                 minuteStep: 15,
                 showInputs: false,
-                disableFocus: true
+                disableFocus: true,
+                showMeridian:false
     });
 
 	$('#addNewButton').click(function() {
@@ -31,8 +34,14 @@ $(document).ready(function() {
 			alert("Failure");
 		});
 	});
+    
+    
+    $('#showArtistModalToAdd').click(function() {
+        loadEmptyArtistModal();
+        $("#artistModal").modal('show');
+    });
 
-	$('#addArtistButton').click(function() {
+	$('#artistModalActionButton').click(function() {
 		$.ajax({
 			type : "POST",
 			url : "data/addArtist.php",
@@ -99,26 +108,24 @@ $(document).ready(function() {
         
     });
     
-    $("body").on("click", ".showArtistButton", function() {
-        
-        var id = $(event.target).parent.find('input[name="id"]');
-        alert(id);
+ $(document).on('click', '.showArtistButton', function (event) {
+        var target = $(event.currentTarget);
+        var id = target.parent().find('input[name="id"]');
         
         $.ajax({
-			type : "GET",
-			url : "data/getArtist.php",
-			data : {
-                id : id
-			}
-		}).done(function(msg) {
-            alert(msg);
-			getNews();
-		}).fail(function(msg) {
-			alert("Failure");
-		});
-        
+            type: "GET",
+            url: "data/getArtist.php?id="+id.val(),
+        }).done(function (msg) {
+            var artist = $.parseJSON(msg);
+            loadArtistModalWithObject(artist);
+            $('#artistModal').modal('show');
+        }).fail(function (msg) {
+            alert("Failure");
+        });
     });
 });
+
+
 
 function getNews() {
 	$.get("data/getNews.php", function(data) {
@@ -145,4 +152,37 @@ function getInfos() {
             var item = $('#exampleTree').jqxTree('getItem', htmlElement);
             alert(item.label);
     });
+}
+
+function loadArtistModalWithObject(artist){
+    
+    var modal = $('#artistModal');
+    modal.find('#title').html('Modifier un artiste');
+    modal.find('#artistModalActionButton').html('Sauvegarder');
+    modal.find('#art-name').val(artist.nom);
+    modal.find('#art-style').val(artist.genre);
+    modal.find('#art-description').val(artist.description);
+    modal.find('#art-day').val(artist.jour);
+    modal.find('#art-scene').val(artist.scene);
+    modal.find('#art-start-time').val(artist.debut);
+    modal.find('#art-end-time').val(artist.fin);
+    modal.find('#art-website').val(artist.website);
+    modal.find('#art-facebook').val(artist.facebook);
+    modal.find('#art-twitter').val(artist.twitter);
+    modal.find('#art-youtube').val(artist.youtube);
+}
+
+
+function loadEmptyArtistModal(){
+    
+    var modal = $('#artistModal');
+    modal.find('#title').html('Ajouter un artiste');
+    modal.find('#artistModalActionButton').html('Ajouter');
+    modal.find('#art-name').val('');
+    modal.find('#art-style').val('');
+    modal.find('#art-description').val('');
+    modal.find('#art-website').val('');
+    modal.find('#art-facebook').val('');
+    modal.find('#art-twitter').val('');
+    modal.find('#art-youtube').val('');
 }
