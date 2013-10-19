@@ -1,6 +1,7 @@
 $(document).ready(function() {
 	getNews();
 	getArtists();
+	getInfos();
 
     //Setup time pickers
     $("#art-start-time").timepicker({
@@ -14,14 +15,6 @@ $(document).ready(function() {
                 showInputs: false,
                 disableFocus: true
     });
-    
-	$.get("data/getInfosCategories.php", function(data) {
-		$("#infoCategory-table").html(data);
-	});
-
-	$.get("data/getInfos.php", function(data) {
-		$("#infos-table").html(data);
-	});
 
 	$('#addNewButton').click(function() {
 		$.ajax({
@@ -73,7 +66,6 @@ $(document).ready(function() {
         
         var formClass = $(this).parent().parent();
         
-        
         var id = formClass.find('input[name="rowID"]').val();
         var title = formClass.find('input[name="title"]').val();
         var content = formClass.find('input[name="content"]').val();
@@ -81,8 +73,6 @@ $(document).ready(function() {
         $('#editNewsModal').find('input[id="rowID"]').val(id);
         $('#editNewsModal').find('input[id="newTitle"]').val(title);
         $('#editNewsModal').find('textarea[id="newBody"]').val(content);
-        
-   
 	});
     
 
@@ -109,7 +99,6 @@ $(document).ready(function() {
         
     });
     
-    
     $("body").on("click", ".showArtistButton", function() {
         
         var id = $(event.target).parent.find('input[name="id"]');
@@ -131,10 +120,6 @@ $(document).ready(function() {
     });
 });
 
-
-
-
-
 function getNews() {
 	$.get("data/getNews.php", function(data) {
 		$("#news-table").html(data);
@@ -145,4 +130,19 @@ function getArtists() {
 	$.get("data/getArtists.php", function(data) {
 		$("#artists-table").html(data);
 	});
+}
+function getInfos() {
+    
+	$.get("data/getInfos.php", function(data) {
+        alert(data);
+        $('#infos-div').jqxTree({ source:data, height: '300px', width: '300px' });
+	});
+    
+    //example tree
+    $('#exampleTree').jqxTree({ height: '300px', width: '300px' });
+    $('#exampleTree').bind('select', function (event) {
+            var htmlElement = event.args.element;
+            var item = $('#exampleTree').jqxTree('getItem', htmlElement);
+            alert(item.label);
+    });
 }

@@ -11,6 +11,7 @@
 <link href="style/bootstrap-docs.css" rel="stylesheet">
 <link href="style/bootstrap-pygments-manni.css" rel="stylesheet">
 <link href="style/bootstrap-timepicker.css" rel="stylesheet">
+<link rel="stylesheet" href="style/jqx.base.css" type="text/css" />
 </head>
 <body>
 	<!-- NAV BAR -->
@@ -63,10 +64,7 @@
 							</ul></li>
 						<li><a href="#infos">Infos</a>
 							<ul class="nav">
-								<li><a href="#infos-addCategory">Ajouter une catégorie</a></li>
-								<li><a href="#infos-editCategory">Liste des catégories</a></li>
-								<li><a href="#infos-addInfo">Ajouter une page info</a></li>
-								<li><a href="#infos-editInfo">Liste des pages infos</a></li>
+								<li><a href="#infos">Visualiser les infos</a></li>
 							</ul></li>
 
 
@@ -358,47 +356,38 @@
 					<div class="page-header">
 						<h1 id="infos">Informations pratiques</h1>
 					</div>
-					<p>Vous pouvez ajouter ou éditer des artistes par cette
-						interface. Les changements sont pris en compte pour modifier la
-						programmation en conséquence.</p>
-
-					<h3 id="infos-addCategory">Ajouter une catégorie</h3>
-					<form id="artist-add-form" class="form-horizontal" role="form">
-						<div class="form-group">
-							<label for="inputName" class="col-lg-2 control-label">Nom</label>
-							<div class="col-lg-10">
-								<input type="email" class="form-control" id="inputName"
-									placeholder="Nom">
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-lg-offset-2 col-lg-10">
-								<button type="submit" class="btn btn-default">Ajouter</button>
-							</div>
-						</div>
-					</form>
-
-					<h3 id="infos-editCategory">Editer les catégories</h3>
-					<table id="infoCategory-table" class="table table-hover">
-					</table>
-
-
-					<h3 id="infos-addInfo">Ajouter une page info</h3>
-					<form id="infos-addInfo-form" role="form">
-						<input type="text" class="form-control" placeholder="Titre"><br />
-						<input type="text" class="form-control" placeholder="Catégorie"><br />
-						<textarea class="form-control" rows="3" placeholder="Description"></textarea>
-						<br />
-						<button type="button" class="btn btn-success">Valider</button>
-					</form>
-
-					<h3 id="infos-editInfo">Editer les infos</h3>
-					<table id="infos-table" class="table table-hover">
-					</table>
+					<p>Vous pouvez ajouter ou éditer des infors par cette
+						interface</p>
+                     <div id='infos-div'>
+                         </div>
+                    <div id='exampleTree'>
+                        <ul>
+                            <li item-selected='true'>Home</li>
+                            <li item-expanded='true'>Solutions
+                                <ul>
+                                    <li>Education</li>
+                                    <li>Financial services</li>
+                                    <li>Government</li>
+                                    <li>Manufacturing</li>
+                                    <li>Solutions
+                                        <ul>
+                                            <li>Consumer photo and video</li>
+                                            <li>Mobile</li>
+                                            <li>Rich Internet applications</li>
+                                            <li>Technical communication</li>
+                                            <li>Training and eLearning</li>
+                                            <li>Web conferencing</li>
+                                        </ul>
+                                    </li>
+                                    <li>All industries and solutions</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    
 
 				</div>
-
-
 			</div>
 
 		</div>
@@ -413,5 +402,10 @@
 	<script src="script/bootstrap-application.js"></script>
     <script src="script/bootstrap-timepicker.js"></script>
     <script src="script/app.js"></script>
+    <script type="text/javascript" src="script/jqxcore.js"></script>
+    <script type="text/javascript" src="script/jqxbuttons.js"></script>
+    <script type="text/javascript" src="script/jqxscrollbar.js"></script>
+    <script type="text/javascript" src="script/jqxpanel.js"></script>
+    <script type="text/javascript" src="script/jqxtree.js"></script>
 </body>
 </html>
