@@ -230,7 +230,8 @@ function loadEmptyArtistModal(){
 /*-----------*/
 function getInfos() {
 	$.getJSON("data/getInfos.php", function(data) {
-		$('#infos-tree').jqxTree({ source:computeTree(data), height: '300px', width: '300px' });
+		$('#infos-tree').jqxTree({ source:computeTree(data)});
+		$('#infos-tree').jqxTree('refresh');
         
         // On click on an item get the item from database
 		$('#infos-tree').bind('select', function (event) {
@@ -269,7 +270,9 @@ function getInfos() {
 				infoSelect.append('<option value="0"> Aucun parent </option>');
 				var items = $('#infos-tree').jqxTree('getItems');
 				$.each(items, function (key, it) {
-					infoSelect.append('<option value="' + it.id + '">' + it.label + '</option>');
+					if (it.id != msg.id && it.value == "1") { //if category and not itself
+						infoSelect.append('<option value="' + it.id + '">' + it.label + '</option>');
+					}
 				});
 				
 				infoSelect.val(msg.parentid);
@@ -278,10 +281,29 @@ function getInfos() {
 				alert("Failure");
 			});
 		});
-	
-        
     });
 }
+
+$('#infosEditButton').click(function() {
+	var infoForm = $('#infos-edit');
+	
+	$.ajax({
+		type : "POST",
+		url : "data/updateInfo.php",
+		data : {
+			id : infoForm.find('#info-id').val(),
+			name : infoForm.find('#info-name').val(),
+			isCategory : $('input[type=radio][name=isCategoryRadio]:checked').attr('value'),
+			content : infoForm.find('#info-content').val(),
+			picture : infoForm.find('#info-picture').attr("data-src"),
+			parentId : infoForm.find('#info-parent').val()
+		}
+	}).done(function(msg) {
+		getInfos();
+	}).fail(function(msg) {
+		alert("Failure");
+	});
+});
 
 var computeTree = function (data) {
     var source = [];
@@ -291,10 +313,11 @@ var computeTree = function (data) {
         var item = data[i];
         var label = item["text"];
         var parentid = item["parentid"];
+		var isCategory = item["isCategory"];
         var id = item["id"];
 
         if (items[parentid]) {
-            var item = { parentid: parentid, label: label, item: item, id:id};
+            var item = { parentid: parentid, label: label, item: item, id:id, value:isCategory};
             if (!items[parentid].items) {
                 items[parentid].items = [];
             }
@@ -302,7 +325,7 @@ var computeTree = function (data) {
             items[id] = item;
         }
         else {
-            items[id] = { parentid: parentid, label: label, item: item, id:id};
+            items[id] = { parentid: parentid, label: label, item: item, id:id, value:isCategory};
             source[id] = items[id];
         }
     }

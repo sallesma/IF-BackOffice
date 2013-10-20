@@ -2,7 +2,7 @@
 
 include("connection.php");
 
-$getInfosQuery = "SELECT id, name, parent FROM infos ORDER BY id";
+$getInfosQuery = "SELECT id, name, parent, isCategory FROM infos ORDER BY id";
 $getInfosResult = mysql_query($getInfosQuery);
 
 $treeArray = Array();
@@ -10,6 +10,7 @@ $treeArray = Array();
 while($infosRow = mysql_fetch_assoc($getInfosResult)){
 	$info = array( "text" => $infosRow['name'],
 				  "id" => $infosRow['id'],
+				  "isCategory" => $infosRow['isCategory'],
 				  "parentid" =>$infosRow['parent']);
 	array_push($treeArray, $info);
 }
