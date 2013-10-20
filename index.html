@@ -347,8 +347,13 @@
 					<div class="page-header">
 						<h1 id="infos">Informations pratiques</h1>
 					</div>
-					<p>Vous pouvez ajouter ou éditer des infors par cette
+					<p>Vous pouvez ajouter ou éditer des infos par cette
 					interface</p>
+					<div id="onDeleteInfoAlert" class="alert alert-danger fade in">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+						<h4>L'info/Catégorie a bien été supprimée !</h4>
+						<p>(Les champs sont laissés plein au cas où tu voudrais copier/coller tout ça pour la recréer ;) )</p>
+					</div>
 					<div id="infos-div" class="row">
 						<div id="infos-tree" class="col-md-3">
 						</div>
@@ -403,6 +408,7 @@
 									</div>
 								</div>
 								<button type="button" class="btn btn-primary" id="infosEditButton">Enregistrer les modifs</button>
+								<button type="button" class="btn btn-danger" id ="infosDeleteButton">Supprimer !</button>
 							</form>
 						</div>
 					</div>

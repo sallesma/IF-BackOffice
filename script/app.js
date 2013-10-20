@@ -277,6 +277,7 @@ function getInfos() {
 				
 				infoSelect.val(msg.parentid);
 				
+				$('#infosDeleteButton').show();
 			}).fail(function(msg) {
 				alert("Failure");
 			});
@@ -305,13 +306,34 @@ $('#infosEditButton').click(function() {
 	});
 });
 
+$('#infosDeleteButton').click(function() {
+	if (confirm('Es-tu sûr de vouloir supprimer ça ? C\'est définitif hein...') ) {
+		var id = $('#infos-edit').find('#info-id').val();
+		
+		$.ajax({
+			type : "POST",
+			url : "data/deleteInfo.php",
+			data : {
+				id : $('#infos-edit').find('#info-id').val()
+			}
+		}).done(function(msg) {
+			getInfos();
+			$("#onDeleteInfoAlert").show();
+			$('#infosDeleteButton').hide();
+		}).fail(function(msg) {
+			alert("Failure");
+		});
+	}
+});
+
+
 var computeTree = function (data) {
     var source = [];
     var items = [];
     // build hierarchical source.
     for (i = 0; i < data.length; i++) {
         var item = data[i];
-        var label = item["text"];
+        var label = item["name"];
         var parentid = item["parentid"];
 		var isCategory = item["isCategory"];
         var id = item["id"];
