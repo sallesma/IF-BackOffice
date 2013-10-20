@@ -3,36 +3,43 @@ $treeArray = array(
 				array(
 								"text" => "Chocolate Beverage",
 								"id" => "1",
+                                "desc" => "",
 								"parentid" => "-1"
 				),
 				array(
 								"id" => "2",
 								"parentid" => "1",
+                                "desc" => "Miam, un chocolat chaud c'est trop bon",
 								"text" => "Hot Chocolate"
 				),
 				array(
 								"id" => "3",
 								"parentid" => "1",
+                                "desc" => "Au PepperMint, c'est encore mieux",
 								"text" => "Peppermint Hot Chocolate"
 				),
 				array(
 								"id" => "4",
 								"parentid" => "1",
+                                "desc" => "CARAMEL trop oufff",
 								"text" => "Salted Caramel Hot Chocolate"
 				),
 				array(
 								"id" => "5",
 								"parentid" => "1",
+                                "desc" => "Blanc parce que c'est bon!",
 								"text" => "White Hot Chocolate"
 				),
 				array(
 								"id" => "6",
 								"text" => "Espresso Beverage",
+                                "desc" => "",
 								"parentid" => "-1"
 				),
 				array(
 								"id" => "7",
 								"parentid" => "6",
+                                 "desc" => "Le café Americano c'est top génial!!",
 								"text" => "Caffe Americano"
 				),
                 array(

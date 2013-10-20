@@ -349,45 +349,36 @@
 					</div>
 					<p>Vous pouvez ajouter ou éditer des infors par cette
 					interface</p>
-					<div id='infos-div'class="row">
-						<div id="infos-tree" class="col-md-3">
+					<div id="infos-div" class="row">
+						<div id="infos-tree" class="col-md-6">
 						</div>
+                        
 						<div id="infos-edit" class="col-md-6">
 						
 							<input type="hidden" value="" name="id"/>
-							<form id="artist-add-form" class="form-horizontal" role="form">
+							<form id="info-form" class="form-horizontal" role="form">
 								<!--Name-->
 								<div class="form-group">
-									<label for="art-name" class="col-lg-2 control-label">Nom</label>
-									<div class="col-lg-10">
-										<input id="art-name" type="text" class="form-control" id="art-name"
+									<label for="info-name" class="col-lg-4 control-label">Nom</label>
+									<div class="col-lg-8">
+										<input id="info-name" type="text" class="form-control" id="art-name"
 											placeholder="Nom">
-									</div>
-								</div>
-								<!--Style-->
-								<div class="form-group">
-									<label for="art-style" class="col-lg-2 control-label">Style</label>
-									<div class="col-lg-10">
-										<input id="art-style" type="text" class="form-control" id="art-style"
-											placeholder="Style">
 									</div>
 								</div>
 								<!--Description-->
 								<div class="form-group">
-									<label for="art-description" class="col-lg-2 control-label">Description</label>
-									<div class="col-lg-10">
-										<textarea id="art-description" type="text" class="form-control" id="art-description"
+									<label for="info-description" class="col-lg-4 control-label">Description</label>
+									<div class="col-lg-8">
+										<textarea id="info-description" type="text" class="form-control" id="art-description"
 											placeholder="Description"></textarea>
 									</div>
 								</div>
 								<!--PICTURE -->
 								<!--Scene-->
 								<div class="form-group">
-									<label for="art-scene" class="col-lg-2 control-label">Scène</label>
-									<div class="col-lg-10">
-										<select id="art-scene" class="form-control">
-										  <option value="principale">Scène principale</option>
-										  <option value="chapiteau">Scène chapiteau</option>
+									<label for="info-parents" class="col-lg-4 control-label">Parent</label>
+									<div class="col-lg-8">
+										<select id="info-parents" class="form-control">
 										</select>
 									</div>
 								</div>

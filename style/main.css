@@ -3,11 +3,13 @@
 }
 
 #infos-div {
+    margin-bottom: 40px;
 	border-color:#C7C7C7;
 }
 
 #infos-tree {
 	left:0%;
+    float: left;
 }
 
 #infos-edit {

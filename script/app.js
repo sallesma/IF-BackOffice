@@ -195,11 +195,28 @@ function getArtists() {
 function getInfos() {
 	$.getJSON("data/getInfos.php", function(data) {
 		$('#infos-tree').jqxTree({ source:computeTree(data), height: '300px', width: '300px' });
+        
+        var infoForm = $('#infos-edit');
+        var infoSelect = infoForm.find('#info-parents');
+        infoSelect.html('');
+        var items = $('#infos-tree').jqxTree('getItems');
+        
+        // Fill the 
+        $.each(items, function (key, it) {
+            console.log(it);
+            infoSelect.append('<option value="' + it.id + '">' + it.label + '</option>');
+        });
+        
+        // On click on a item
 		$('#infos-tree').bind('select', function (event) {
 			var htmlElement = event.args.element;
+            
 			var item = $('#infos-tree').jqxTree('getItem', htmlElement);
-			alert(item.label);
+            infoForm.find('#info-name').val(item.label);
+            infoForm.find('#info-description').val(item.value);
+            infoForm.find('#info-parents').val(item.parentId);
 		});
+        
     });
 }
 
@@ -210,11 +227,12 @@ var computeTree = function (data) {
     for (i = 0; i < data.length; i++) {
         var item = data[i];
         var label = item["text"];
+        var desc = item["desc"];
         var parentid = item["parentid"];
         var id = item["id"];
 
         if (items[parentid]) {
-            var item = { parentid: parentid, label: label, item: item };
+            var item = { parentid: parentid, label: label, item: item, value:desc};
             if (!items[parentid].items) {
                 items[parentid].items = [];
             }
@@ -222,7 +240,7 @@ var computeTree = function (data) {
             items[id] = item;
         }
         else {
-            items[id] = { parentid: parentid, label: label, item: item };
+            items[id] = { parentid: parentid, label: label, item: item, value:desc};
             source[id] = items[id];
         }
     }
