@@ -5,7 +5,6 @@ $(document).ready(function() {
 });
 
 
-
 /*--------*/
 /*- NEWS -*/
 /*--------*/
@@ -191,7 +190,6 @@ function getArtists() {
 
 
 function loadArtistModalWithObject(artist){
-    
     var modal = $('#artistModal');
     modal.find('input[name="id"]').val(artist.id);
     modal.find('#title').html('Modifier un artiste');
@@ -211,7 +209,6 @@ function loadArtistModalWithObject(artist){
 
 
 function loadEmptyArtistModal(){
-    
     var modal = $('#artistModal');
     modal.find('input[name="id"]').val('-1');
     modal.find('#title').html('Ajouter un artiste');
@@ -326,6 +323,46 @@ $('#infosDeleteButton').click(function() {
 	}
 });
 
+// Add a new info
+$('#addInfoButton').click(function() {
+    $.ajax({
+        type : "POST",
+        url : "data/addInfo.php",
+        data : {
+            name : $("#add-info-name").val(),
+            isCategory : $('input[type=radio][name=isAddCategoryRadio]:checked').attr('value'),
+            content : $("#add-info-content").val(),
+            picture : $("#add-info-picture").val(),
+            parent : $("#add-info-parent").val()
+        }
+    }).done(function(msg) {
+        $('#addInfoModal').modal('hide');
+        getInfos();
+    }).fail(function(msg) {
+        alert("Failure");
+    });
+});
+
+// Show the artist modal to add a new one
+$('#showInfoModalToAdd').click(function() {
+	$('input[type=radio][name=isAddCategoryRadio]').change(function() {
+		if ( $('input[type=radio][name=isAddCategoryRadio]:checked').attr('value') == "1") { //if category
+			$('#add-info-content').hide();
+		} else {
+			$('#add-info-content').show();
+		}
+	});
+	var infoSelect = $('#addInfoModal').find('#add-info-parent');
+	infoSelect.html('');
+	infoSelect.append('<option value="0"> Aucun parent </option>');
+	var items = $('#infos-tree').jqxTree('getItems');
+	$.each(items, function (key, it) {
+		if (it.value == "1") { //if category
+			infoSelect.append('<option value="' + it.id + '">' + it.label + '</option>');
+		}
+	});
+	infoSelect.val("0");
+});
 
 var computeTree = function (data) {
     var source = [];

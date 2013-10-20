@@ -412,6 +412,45 @@
 							</form>
 						</div>
 					</div>
+					<!-- Button to trigger modal -->
+                    <a id="showInfoModalToAdd" data-toggle="modal" href="#addInfoModal" class="btn btn-primary btn-lg">Ajouter une Info</a>
+                    
+					<!-- ADD Modal -->
+					<div class="modal fade" id="addInfoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+						  <div class="modal-content">
+							<div class="modal-header">
+							  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							  <h4 class="modal-title">Ajouter une info</h4>
+							</div>
+							  
+							<form role="form">
+								<div class="modal-body">
+									<!--name-->
+									<input id="add-info-name" type="text" class="form-control" placeholder="Titre">
+									<br />
+									<!--isCategory-->
+									<input type="radio" name="isAddCategoryRadio" id="add-category" value="1"> Catégorie
+									<input type="radio" name="isAddCategoryRadio" id="add-info" value="0"> Info
+									<br /><br />
+									<!--Description-->
+						          	<textarea id="add-info-content" class="form-control" rows="3" placeholder="Contenu"></textarea>
+									<br />
+									<!--PICTURE -->
+									<input id="add-info-picture" type="text" class="form-control" placeholder="Image">
+									<br />
+									<!--Parent-->
+									<label for="add-info-parent" class="col-lg-4 control-label">Parent</label>
+									<select id="add-info-parent" class="form-control"></select>
+								</div>
+								<div class="modal-footer">
+								  <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+								  <button type="button" class="btn btn-primary" id="addInfoButton">Ajouter</button>
+								</div>
+							</form>
+						  </div><!-- /.modal-content -->
+						</div><!-- /.modal-dialog -->
+					</div><!-- /.modal -->
 				</div>
 				<!-- fin Infos
   ================================================== -->
