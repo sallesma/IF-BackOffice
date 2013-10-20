@@ -1,5 +1,19 @@
 <?php
-$treeArray = array(
+
+include("connection.php");
+
+$getInfosQuery = "SELECT id, name, parent FROM infos ORDER BY id";
+$getInfosResult = mysql_query($getInfosQuery);
+
+$treeArray = Array();
+
+while($infosRow = mysql_fetch_assoc($getInfosResult)){
+	$info = array( "text" => $infosRow['name'], "id" => $infosRow['id'], "parentid" =>$infosRow['parent']);
+	array_push($treeArray, $info);
+}
+
+mysql_close($link);
+/*$treeArray = array(
 				array(
 								"text" => "Chocolate Beverage",
 								"id" => "1",
@@ -92,31 +106,7 @@ $treeArray = array(
 								"text" => "Caffe Vanilla Frappuccino Light",
 								"parentid" => "12"
 				)
-);
-/*
-$data = [];
-$children = [];
-// build hierarchical source.
-for (i = 0; i < count($treeArray); i++) {
-    $item = $treeArray[i];
-    $label = $item["text"];
-    $parentid = $item["parentid"];
-    $id = $item["id"];
-
-    if ($children[parentid]) {
-        $item = array( parentid => $parentid, label => $label, item => $item );
-        if (!$children[$parentid][children]) {
-            $children[$parentid][children] = Array();
-        }
-        $children[$parentid][children[count($children[$parentid][children])]] = $item;
-        $children[id] = $item;
-    }
-    else {
-        $children[id] = array( parentid => $parentid, label => $label, item => $item );
-        $data[id] = $children[id];
-    }
-}
-*/
+);*/
 
 echo json_encode($treeArray);
 ?>
