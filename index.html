@@ -355,8 +355,8 @@
                         
 						<div id="infos-edit" class="col-md-6">
 						
-							<input type="hidden" value="" name="id"/>
 							<form id="info-form" class="form-horizontal" role="form">
+								<input id="info-id" type="hidden" value="" name="id"/>
 								<!--Name-->
 								<div class="form-group">
 									<label for="info-name" class="col-lg-4 control-label">Nom</label>
@@ -365,23 +365,44 @@
 											placeholder="Nom">
 									</div>
 								</div>
-								<!--Description-->
+								<!--isCategory-->
 								<div class="form-group">
-									<label for="info-description" class="col-lg-4 control-label">Description</label>
+									<label for="info-name" class="col-lg-4 control-label">Catégorie ? info ?</label>
 									<div class="col-lg-8">
-										<textarea id="info-description" type="text" class="form-control" id="art-description"
+										<label class="radio">
+											<input type="radio" name="isCategoryRadio" id="category" value="1">
+											Catégorie
+										</label>
+										<label class="radio">
+											<input type="radio" name="isCategoryRadio" id="info" value="0">
+											Info
+										</label>
+									</div>
+								</div>
+								<!--Description-->
+								<div id="InfoContent" class="form-group">
+									<label for="info-content" class="col-lg-4 control-label">Description</label>
+									<div class="col-lg-8">
+										<textarea id="info-content" type="text" class="form-control" id="info-content"
 											placeholder="Description"></textarea>
 									</div>
 								</div>
 								<!--PICTURE -->
-								<!--Scene-->
 								<div class="form-group">
-									<label for="info-parents" class="col-lg-4 control-label">Parent</label>
+									<label for="info-picture" class="col-lg-4 control-label">Image (icone)</label>
 									<div class="col-lg-8">
-										<select id="info-parents" class="form-control">
+										<img data-src="holder.js/100%x180" alt="...">
+									</div>
+								</div>
+								<!--Parent-->
+								<div class="form-group">
+									<label for="info-parent" class="col-lg-4 control-label">Parent</label>
+									<div class="col-lg-8">
+										<select id="info-parent" class="form-control">
 										</select>
 									</div>
 								</div>
+								<button type="button" class="btn btn-primary" id="infosEditButton">Enregistrer les modifs</button>
 							</form>
 						</div>
 					</div>

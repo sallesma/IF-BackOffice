@@ -2,7 +2,6 @@ $(document).ready(function() {
     getNews();
     getArtists();
     getInfos();
-    
 });
 
 
@@ -68,6 +67,12 @@ $('#editNewButton').click(function() {
     });
     
 });
+
+function getNews() {
+    $.get("data/getNews.php", function(data) {
+        $("#news-table").html(data);
+    });
+}
 
 /*-----------*/
 /*- ARTISTS -*/
@@ -178,74 +183,12 @@ $('#artistModalActionButton').click(function() {
 });
 
 
-
-
-
-function getNews() {
-    $.get("data/getNews.php", function(data) {
-        $("#news-table").html(data);
-    });
-}
-
 function getArtists() {
     $.get("data/getArtists.php", function(data) {
         $("#artists-table").html(data);
     });
 }
-function getInfos() {
-	$.getJSON("data/getInfos.php", function(data) {
-		$('#infos-tree').jqxTree({ source:computeTree(data), height: '300px', width: '300px' });
-        
-        var infoForm = $('#infos-edit');
-        var infoSelect = infoForm.find('#info-parents');
-        infoSelect.html('');
-        var items = $('#infos-tree').jqxTree('getItems');
-        
-        // Fill the 
-        $.each(items, function (key, it) {
-            console.log(it);
-            infoSelect.append('<option value="' + it.id + '">' + it.label + '</option>');
-        });
-        
-        // On click on a item
-		$('#infos-tree').bind('select', function (event) {
-			var htmlElement = event.args.element;
-            
-			var item = $('#infos-tree').jqxTree('getItem', htmlElement);
-            infoForm.find('#info-name').val(item.label);
-            infoForm.find('#info-description').val(item.value);
-            infoForm.find('#info-parents').val(item.parentId);
-		});
-        
-    });
-}
 
-var computeTree = function (data) {
-    var source = [];
-    var items = [];
-    // build hierarchical source.
-    for (i = 0; i < data.length; i++) {
-        var item = data[i];
-        var label = item["text"];
-        var desc = item["desc"];
-        var parentid = item["parentid"];
-        var id = item["id"];
-
-        if (items[parentid]) {
-            var item = { parentid: parentid, label: label, item: item, value:desc};
-            if (!items[parentid].items) {
-                items[parentid].items = [];
-            }
-            items[parentid].items[items[parentid].items.length] = item;
-            items[id] = item;
-        }
-        else {
-            items[id] = { parentid: parentid, label: label, item: item, value:desc};
-            source[id] = items[id];
-        }
-    }
-    return source;
-}
 
 function loadArtistModalWithObject(artist){
     
@@ -280,4 +223,88 @@ function loadEmptyArtistModal(){
     modal.find('#art-facebook').val('');
     modal.find('#art-twitter').val('');
     modal.find('#art-youtube').val('');
+}
+
+/*-----------*/
+/*- INFOS -*/
+/*-----------*/
+function getInfos() {
+	$.getJSON("data/getInfos.php", function(data) {
+		$('#infos-tree').jqxTree({ source:computeTree(data), height: '300px', width: '300px' });
+        
+        // On click on an item get the item from database
+		$('#infos-tree').bind('select', function (event) {
+			var htmlElement = event.args.element;
+			var item = $('#infos-tree').jqxTree('getItem', htmlElement);
+			$.getJSON("data/getInfo.php?id="+item.id).done(function (msg) {
+				var infoForm = $('#infos-edit');
+				infoForm.find('#info-id').val(msg.id);
+				
+				//name
+				infoForm.find('#info-name').val(msg.name);
+				
+				//picture
+				infoForm.find('#info-picture').attr("data-src", msg.picture);
+				
+				//isCategory
+				$('input[type=radio][name=isCategoryRadio]').change(function() {
+					if ( $('input[type=radio][name=isCategoryRadio]:checked').attr('value') == "1") { //if category
+						$('#InfoContent').hide();
+					} else {
+						$('#InfoContent').show();
+					}
+				});
+				if (msg.isCategory == "1") {
+					infoForm.find("#category").click();
+				} else {
+					infoForm.find("#info").click();
+				}
+				
+				//content
+				infoForm.find('#info-content').val(msg.content);
+				
+				//parent
+				var infoSelect = infoForm.find('#info-parent');
+				infoSelect.html('');
+				infoSelect.append('<option value="0"> Aucun parent </option>');
+				var items = $('#infos-tree').jqxTree('getItems');
+				$.each(items, function (key, it) {
+					infoSelect.append('<option value="' + it.id + '">' + it.label + '</option>');
+				});
+				
+				infoSelect.val(msg.parentid);
+				
+			}).fail(function(msg) {
+				alert("Failure");
+			});
+		});
+	
+        
+    });
+}
+
+var computeTree = function (data) {
+    var source = [];
+    var items = [];
+    // build hierarchical source.
+    for (i = 0; i < data.length; i++) {
+        var item = data[i];
+        var label = item["text"];
+        var parentid = item["parentid"];
+        var id = item["id"];
+
+        if (items[parentid]) {
+            var item = { parentid: parentid, label: label, item: item, id:id};
+            if (!items[parentid].items) {
+                items[parentid].items = [];
+            }
+            items[parentid].items[items[parentid].items.length] = item;
+            items[id] = item;
+        }
+        else {
+            items[id] = { parentid: parentid, label: label, item: item, id:id};
+            source[id] = items[id];
+        }
+    }
+    return source;
 }
