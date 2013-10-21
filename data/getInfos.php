@@ -2,7 +2,7 @@
 
 include("connection.php");
 
-$getInfosQuery = "SELECT id, name, parent, isCategory FROM infos ORDER BY id";
+$getInfosQuery = "SELECT id, name, parent, isCategory FROM infos ORDER BY parent";
 $getInfosResult = mysql_query($getInfosQuery);
 
 $treeArray = Array();

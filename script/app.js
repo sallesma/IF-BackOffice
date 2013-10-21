@@ -203,7 +203,6 @@ $('#artistModalActionButton').click(function() {
             youtube: modal.find('#art-youtube').val()   
         }
     }).done(function(msg) {
-        alert(msg);
         $('#artistModal').modal('hide');
         getArtists();
     }).fail(function(msg) {
