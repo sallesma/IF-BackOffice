@@ -15,31 +15,25 @@
 </head>
 <body>
 
-	<!-- Docs page layout -->
-	<div class="bs-header" id="content">
 		<div class="container">
-			<h1>Getting started</h1>
-			<p>An overview of Bootstrap, how to download and use, basic
-				templates and examples, and more.</p>
+			<h1>Imaginarium Festival - Backoffice</h1>
+			<p>Pour changer le contenu de l'application Imaginarium Festival.</p>
 		</div>
-	</div>
-
 
 	<div class="container bs-docs-container">
 		<div class="row">
 			<div class="col-md-3">
 				<div class="bs-sidebar hidden-print" role="complementary">
 					<ul class="nav bs-sidenav">
-
 						<li><a href="#news">News</a>
 							<ul class="nav">
 								<li><a href="#news">Liste des news</a></li>
-								<!--<li><a href="#addNewModal" data-toggle="modal">Ajouter une news</a></li>-->
+								<li><a href="#addNewsTriggerModal">Ajouter une news</a></li>
 							</ul></li>
 						<li><a href="#artists">Artistes</a>
 							<ul class="nav">
 								<li><a href="#artists">Liste des artistes</a></li>
-								<!--<li><a href="#addArtistModal" data-toggle="modal">Ajouter un artiste</a></li>-->
+								<li><a href="#showArtistModalToAdd">Ajouter une news</a></li>
 							</ul></li>
 						<li><a href="#photoFilter">Photos</a>
 							<ul class="nav">
@@ -49,6 +43,8 @@
 						<li><a href="#infos">Infos</a>
 							<ul class="nav">
 								<li><a href="#infos">Visualiser les infos</a></li>
+								<li><a href="#showInfoModalToAdd">Ajouter une info</a></li>
+								
 							</ul></li>
 
 
@@ -65,7 +61,8 @@
 					<div class="page-header">
 						<h1 id="news">News</h1>
 					</div>
-					<p>Ici les news.</p>
+					<p>Pour ajouter, éditer et supprimer les news.</p>
+					<p>Elles seront affichées dans l'ordre décroissant (la plus récente en premier) dans l'application.</p>
                     
 					<div id="onDeleteNewsAlert" class="alert alert-danger fade in">
 						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -77,7 +74,7 @@
 					</table>
                     
                     <!-- Button to trigger modal -->
-                      <a data-toggle="modal" href="#addNewModal" class="btn btn-primary btn-lg">Ajouter une nouvelle</a>
+                      <a id="addNewsTriggerModal" data-toggle="modal" href="#addNewModal" class="btn btn-primary btn-lg">Ajouter une nouvelle</a>
                     
                       <!-- ADD Modal -->
                       <div class="modal fade" id="addNewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -145,7 +142,7 @@
 					</div>
 					<p>Vous pouvez ajouter ou éditer des artistes par cette
 						interface. Les changements sont pris en compte pour modifier la
-						programmation en conséquence.</p>
+						programmation en conséquence (en plus des fiches artiste).</p>
 
 					<div id="onDeleteArtistAlert" class="alert alert-danger fade in">
 						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -359,8 +356,10 @@
 					<div class="page-header">
 						<h1 id="infos">Informations pratiques</h1>
 					</div>
-					<p>Vous pouvez ajouter ou éditer des infos par cette
-					interface</p>
+					<p>Vous pouvez ajouter ou éditer des infos par cette interface.</p>
+					<p>Sélectionnez une info ou une catégorie d'info dans l'arbre à gauche pour pouvoir l'éditer à droite.
+					L'arborescence présentée sera exactement celle de la page "Infos pratiques" dans l'application.</p>
+					
 					<div id="onDeleteInfoAlert" class="alert alert-danger fade in">
 						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 						<h4>L'info/Catégorie a bien été supprimée !</h4>
