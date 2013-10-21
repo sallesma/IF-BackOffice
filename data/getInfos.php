@@ -25,7 +25,7 @@ mysql_close($link);
 $listCursor = 0;
 while ( count($pool) > 0 && $listCursor < count($treeArray) ) { //On parcourt la liste définitive
 	$poolCursor = 0;
-	while ($poolCursor < count($pool)) { // pour chaque élément de la liste, on regarde dans le pool
+	while ($poolCursor <= count($pool)) { // pour chaque élément de la liste, on regarde dans le pool
 		if ($pool[$poolCursor]["parentId"] == $treeArray[$listCursor]["id"]) { //on chope les éléments du pool dont c'est le parent
 			array_push($treeArray, $pool[$poolCursor]);			// on les rajoute à la liste
 			unset($pool[$poolCursor]);							// on les enlève du pool
@@ -35,6 +35,5 @@ while ( count($pool) > 0 && $listCursor < count($treeArray) ) { //On parcourt la
 	$pool = array_values($pool);								//on remet les indexs des éléments du pool normaux (sans trous)
 	$listCursor = $listCursor+1;
 }
-
 echo json_encode($treeArray);			//on envoie la purée
 ?>
