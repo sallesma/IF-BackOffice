@@ -22,7 +22,10 @@ while($newsRow = mysql_fetch_array($getNewsResult)){
 	echo "<td id=\"title\">".utf8_encode($newsRow[1])."</td>";
 	echo "<td id=\"content\">".utf8_encode($newsRow[2])."</td>";
 	echo "<td>".$newsRow[3]."</td>";
-	echo "<td><button type=\"button\" class=\"btn btn-primary\" id=\"modifyNewButton\">Modifier</button></td>";
+	echo "<td>
+			<button type=\"button\" class=\"btn btn-primary modifyNewButton\">Modifier</button>
+			<button type=\"button\" class=\"newsDeleteButton btn btn-danger\">Supprimer !</button>
+		</td>";
     echo "<input type=\"hidden\" name=\"rowID\" value=\"".$newsRow[0]."\">";
     echo "</form>";
 	echo "</tr>";

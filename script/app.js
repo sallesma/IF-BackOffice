@@ -28,7 +28,7 @@ $('#addNewButton').click(function() {
 
 
 // Open News modal with an existing news
-$(document).on("click", "#modifyNewButton", function() {
+$(document).on("click", ".modifyNewButton", function() {
     
     $('#editNewsModal').modal('show');
     
@@ -65,6 +65,22 @@ $('#editNewButton').click(function() {
         alert("Failure");
     });
     
+});
+
+$(document).on('click', '.newsDeleteButton', function (event) {
+    if (confirm('Es-tu sûr de vouloir supprimer ça ? C\'est définitif hein...') ) {
+		var id = $(this).parent().parent().find('input[name="rowID"]').val();
+		
+		$.ajax({
+			type: "GET",
+			url: "data/deleteNews.php?id="+id,
+		}).done(function (msg) {
+			getNews();
+			$("#onDeleteNewsAlert").show();
+		}).fail(function (msg) {
+			alert("Failure");
+		});
+	}
 });
 
 function getNews() {
