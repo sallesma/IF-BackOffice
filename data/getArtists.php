@@ -23,7 +23,10 @@ while($artistRow = mysql_fetch_assoc($getArtistsResult)){
 	echo "<td>".$artistRow['scene']."</td>";
 	echo "<td>".$artistRow['jour']."</td>";
 	echo "<td>".$artistRow['debut']."</td>";
-	echo "<td><input type=\"hidden\" value=\"".$artistRow['id']."\" name=\"id\"/><button type=\"button\" class=\"showArtistButton btn btn-primary\">Plus</button></td>";
+	echo "<td><input type=\"hidden\" value=\"".$artistRow['id']."\" name=\"id\"/>
+				<button type=\"button\" class=\"showArtistButton btn btn-primary\">Plus</button>
+				<button type=\"button\" class=\"artistDeleteButton btn btn-danger\">Supprimer !</button>
+				</td>";
 	echo "</tr>";
 }
 

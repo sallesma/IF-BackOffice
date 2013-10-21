@@ -115,6 +115,22 @@ $(document).on('click', '.showArtistButton', function (event) {
     });
 });
 
+$(document).on('click', '.artistDeleteButton', function (event) {
+    if (confirm('Es-tu sûr de vouloir supprimer ça ? C\'est définitif hein...') ) {
+		var target = $(event.currentTarget);
+		var id = target.parent().find('input[name="id"]');
+		
+		$.ajax({
+			type: "GET",
+			url: "data/deleteArtist.php?id="+id.val(),
+		}).done(function (msg) {
+			getArtists();
+			$("#onDeleteArtistAlert").show();
+		}).fail(function (msg) {
+			alert("Failure");
+		});
+	}
+});
 
 // Save new or update existing artist
 $('#artistModalActionButton').click(function() {

@@ -17,8 +17,8 @@ $editChildrenQuery ="UPDATE infos SET parent='".$parentId."' WHERE parent=".$id;
 mysql_query($editChildrenQuery);
 
 //Supprimer l'info
-$editInfoQuery ="DELETE FROM infos WHERE id=".$id;
-mysql_query($editInfoQuery);
+$deleteInfoQuery ="DELETE FROM infos WHERE id=".$id;
+mysql_query($deleteInfoQuery);
 
 mysql_close($link);
 ?>
