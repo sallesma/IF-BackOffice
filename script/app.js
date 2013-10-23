@@ -29,15 +29,15 @@ $('#addNewButton').click(function() {
 
 // Open News modal with an existing news
 $(document).on("click", ".modifyNewButton", function() {
-    
+
     $('#editNewsModal').modal('show');
-    
+
     var formClass = $(this).parent().parent();
-    
+
     var id = formClass.find('input[name="rowID"]').val();
     var title = formClass.find('input[name="title"]').val();
     var content = formClass.find('input[name="content"]').val();
-    
+
     $('#editNewsModal').find('input[id="rowID"]').val(id);
     $('#editNewsModal').find('input[id="newTitle"]').val(title);
     $('#editNewsModal').find('textarea[id="newBody"]').val(content);
@@ -45,11 +45,11 @@ $(document).on("click", ".modifyNewButton", function() {
 
 // Modify an existing news
 $('#editNewButton').click(function() {
-    
+
     var id = $('#editNewsModal').find('input[id="rowID"]').val();
     var title =  $('#editNewsModal').find('input[id="newTitle"]').val();
     var content = $('#editNewsModal').find('textarea[id="newBody"]').val();
-    
+
     $.ajax({
         type : "POST",
         url : "data/updateNew.php",
@@ -64,13 +64,13 @@ $('#editNewButton').click(function() {
     }).fail(function(msg) {
         alert("Failure");
     });
-    
+
 });
 
 $(document).on('click', '.newsDeleteButton', function (event) {
     if (confirm('Es-tu sûr de vouloir supprimer ça ? C\'est définitif hein...') ) {
 		var id = $(this).parent().parent().find('input[name="rowID"]').val();
-		
+
 		$.ajax({
 			type: "GET",
 			url: "data/deleteNews.php?id="+id,
@@ -118,7 +118,7 @@ $('#showArtistModalToAdd').click(function() {
 $(document).on('click', '.showArtistButton', function (event) {
     var target = $(event.currentTarget);
     var id = target.parent().find('input[name="id"]');
-    
+
     $.ajax({
         type: "GET",
         url: "data/getArtist.php?id="+id.val(),
@@ -135,7 +135,7 @@ $(document).on('click', '.artistDeleteButton', function (event) {
     if (confirm('Es-tu sûr de vouloir supprimer ça ? C\'est définitif hein...') ) {
 		var target = $(event.currentTarget);
 		var id = target.parent().find('input[name="id"]');
-		
+
 		$.ajax({
 			type: "GET",
 			url: "data/deleteArtist.php?id="+id.val(),
@@ -151,14 +151,14 @@ $(document).on('click', '.artistDeleteButton', function (event) {
 // Save new or update existing artist
 $('#artistModalActionButton').click(function() {
     //Get ID of the article
-    
+
     var id = $(this).parent().parent().parent().find('input[name="id"]').val();
-    
+
     if (id =='-1') {
-        
+
         // New artist : add it to the DB
-        // TO DO : form secure and 
-        
+        // TO DO : form secure and
+
         $.ajax({
             type : "POST",
             url : "data/addArtist.php",
@@ -167,7 +167,7 @@ $('#artistModalActionButton').click(function() {
                 style : $("#art-style").val(),
                 description : $("#art-description").val(),
                 day : $("#art-day").val(),
-                scene : $("#art-scene").val(),
+                stage : $("#art-scene").val(),
                 startTime :$("#art-start-time").val(),
                 endTime :$("#art-end-time").val(),
                 website : $("#art-website").val(),
@@ -181,7 +181,7 @@ $('#artistModalActionButton').click(function() {
         }).fail(function(msg) {
             alert("Failure");
         });
-        
+
     } else {
         // Existing artist : update in the db
         var modal = $('#artistModal');
@@ -191,16 +191,16 @@ $('#artistModalActionButton').click(function() {
         data : {
             id : id,
             name: modal.find('#art-name').val(),
-            genre: modal.find('#art-style').val(),
+            style: modal.find('#art-style').val(),
             description: modal.find('#art-description').val(),
             day: modal.find('#art-day').val(),
-            scene: modal.find('#art-scene').val(),
+            stage: modal.find('#art-scene').val(),
             start_time: modal.find('#art-start-time').val(),
             end_time: modal.find('#art-end-time').val(),
             website: modal.find('#art-website').val(),
             facebook: modal.find('#art-facebook').val(),
             twitter: modal.find('#art-twitter').val(),
-            youtube: modal.find('#art-youtube').val()   
+            youtube: modal.find('#art-youtube').val()
         }
     }).done(function(msg) {
         $('#artistModal').modal('hide');
@@ -209,7 +209,7 @@ $('#artistModalActionButton').click(function() {
         alert("Failure");
     });
     }
-    
+
 });
 
 
@@ -225,13 +225,13 @@ function loadArtistModalWithObject(artist){
     modal.find('input[name="id"]').val(artist.id);
     modal.find('#title').html('Modifier un artiste');
     modal.find('#artistModalActionButton').html('Sauvegarder');
-    modal.find('#art-name').val(artist.nom);
-    modal.find('#art-style').val(artist.genre);
+    modal.find('#art-name').val(artist.name);
+    modal.find('#art-style').val(artist.style);
     modal.find('#art-description').val(artist.description);
-    modal.find('#art-day').val(artist.jour);
-    modal.find('#art-scene').val(artist.scene);
-    modal.find('#art-start-time').val(artist.debut);
-    modal.find('#art-end-time').val(artist.fin);
+    modal.find('#art-day').val(artist.day);
+    modal.find('#art-scene').val(artist.stage);
+    modal.find('#art-start-time').val(artist.beginHour);
+    modal.find('#art-end-time').val(artist.endHour);
     modal.find('#art-website').val(artist.website);
     modal.find('#art-facebook').val(artist.facebook);
     modal.find('#art-twitter').val(artist.twitter);
@@ -260,7 +260,7 @@ function getInfos() {
 	$.getJSON("data/getInfos.php", function(data) {
 		$('#infos-tree').jqxTree({ source:computeTree(data)});
 		$('#infos-tree').jqxTree('refresh');
-        
+
         // On click on an item get the item from database
 		$('#infos-tree').bind('select', function (event) {
 			var htmlElement = event.args.element;
@@ -268,13 +268,13 @@ function getInfos() {
 			$.getJSON("data/getInfo.php?id="+item.id).done(function (msg) {
 				var infoForm = $('#infos-edit');
 				infoForm.find('#info-id').val(msg.id);
-				
+
 				//name
 				infoForm.find('#info-name').val(msg.name);
-				
+
 				//picture
 				infoForm.find('#info-picture').attr("data-src", msg.picture);
-				
+
 				//isCategory
 				$('input[type=radio][name=isCategoryRadio]').change(function() {
 					if ( $('input[type=radio][name=isCategoryRadio]:checked').attr('value') == "1") { //if category
@@ -288,10 +288,10 @@ function getInfos() {
 				} else {
 					infoForm.find("#info").click();
 				}
-				
+
 				//content
 				infoForm.find('#info-content').val(msg.content);
-				
+
 				//parent
 				var infoSelect = infoForm.find('#info-parent');
 				infoSelect.html('');
@@ -302,9 +302,9 @@ function getInfos() {
 						infoSelect.append('<option value="' + it.id + '">' + it.label + '</option>');
 					}
 				});
-				
+
 				infoSelect.val(msg.parentid);
-				
+
 				$('#infosDeleteButton').show();
 			}).fail(function(msg) {
 				alert("Failure");
@@ -315,7 +315,7 @@ function getInfos() {
 
 $('#infosEditButton').click(function() {
 	var infoForm = $('#infos-edit');
-	
+
 	$.ajax({
 		type : "POST",
 		url : "data/updateInfo.php",
@@ -337,7 +337,7 @@ $('#infosEditButton').click(function() {
 $('#infosDeleteButton').click(function() {
 	if (confirm('Es-tu sûr de vouloir supprimer ça ? C\'est définitif hein...') ) {
 		var id = $('#infos-edit').find('#info-id').val();
-		
+
 		$.ajax({
 			type : "POST",
 			url : "data/deleteInfo.php",
