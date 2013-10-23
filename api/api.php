@@ -47,7 +47,7 @@ class API extends REST {
         $lastRetrieve = $_REQUEST['lastRetrieve'];
 
         if (empty($lastRetrieve)) {
-             $sql = mysql_query("SELECT * FROM artistes", $this->db);
+             $sql = mysql_query("SELECT * FROM artists", $this->db);
 
                 if(mysql_num_rows($sql) > 0){
 
