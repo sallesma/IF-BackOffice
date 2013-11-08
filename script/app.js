@@ -374,7 +374,7 @@ $('#addInfoButton').click(function() {
     });
 });
 
-// Show the artist modal to add a new one
+// Show the info modal to add a new one
 $('#showInfoModalToAdd').click(function() {
 	$('input[type=radio][name=isAddCategoryRadio]').change(function() {
 		if ( $('input[type=radio][name=isAddCategoryRadio]:checked').attr('value') == "1") { //if category
@@ -421,3 +421,31 @@ var computeTree = function (data) {
     }
     return source;
 }
+
+
+
+
+// ADD FILTER
+
+$(function () {
+    'use strict';
+    // Change this to the location of your server-side upload handler:
+    var url = './data/fileUpload/';
+    $('#fileupload').fileupload({
+        url: url,
+        dataType: 'json',
+        done: function (e, data) {
+            $.each(data.result.files, function (index, file) {
+                $('<p/>').text(file.name).appendTo('#files');
+            });
+        },
+        progressall: function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            $('#progress .progress-bar').css(
+                'width',
+                progress + '%'
+            );
+        }
+    }).prop('disabled', !$.support.fileInput)
+        .parent().addClass($.support.fileInput ? undefined : 'disabled');
+});
