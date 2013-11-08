@@ -19,8 +19,8 @@ while($newsRow = mysql_fetch_array($getNewsResult)){
     echo "<form role=\"form\">";
     echo "<input type=\"hidden\" name=\"title\" value=\"".$newsRow[1]."\">";
     echo "<input type=\"hidden\" name=\"content\" value=\"".$newsRow[2]."\">";
-	echo "<td id=\"title\">".utf8_encode($newsRow[1])."</td>";
-	echo "<td id=\"content\">".utf8_encode($newsRow[2])."</td>";
+	echo "<td id=\"title\">".$newsRow[1]."</td>";
+	echo "<td id=\"content\">".$newsRow[2]."</td>";
 	echo "<td>".$newsRow[3]."</td>";
 	echo "<td>
 			<button type=\"button\" class=\"btn btn-primary modifyNewButton\">Modifier</button>

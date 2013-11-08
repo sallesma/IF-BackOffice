@@ -5,7 +5,7 @@ include("connection.php");
 $id = $_POST['id'];
 $name = $_POST['name'];
 $style = $_POST['style'];
-$descritpion = $_POST['description'];
+$description = $_POST['description'];
 $day = $_POST['day'];
 $stage = $_POST['stage'];
 $start_time = $_POST['start_time'];
@@ -20,8 +20,6 @@ $youtube = $_POST['youtube'];
 
 
 $editArtistQuery ="UPDATE artists SET name='".$name."', style='".$style."', description='".$description."', day='".$day."', stage='".$stage."', beginHour='".$start_time."', endHour='".$end_time."', website='".$website."', facebook='".$facebook."', twitter='".$twitter."', youtube='".$youtube."' WHERE id=".$id."";
-
-echo $editArtistQuery;
 
 mysql_query($editArtistQuery);
 mysql_close($link);
