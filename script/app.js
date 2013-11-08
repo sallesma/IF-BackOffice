@@ -29,15 +29,15 @@ $('#addNewButton').click(function() {
 
 // Open News modal with an existing news
 $(document).on("click", ".modifyNewButton", function() {
-
+    
     $('#editNewsModal').modal('show');
-
+    
     var formClass = $(this).parent().parent();
-
+    
     var id = formClass.find('input[name="rowID"]').val();
     var title = formClass.find('input[name="title"]').val();
     var content = formClass.find('input[name="content"]').val();
-
+    
     $('#editNewsModal').find('input[id="rowID"]').val(id);
     $('#editNewsModal').find('input[id="newTitle"]').val(title);
     $('#editNewsModal').find('textarea[id="newBody"]').val(content);
@@ -45,11 +45,11 @@ $(document).on("click", ".modifyNewButton", function() {
 
 // Modify an existing news
 $('#editNewButton').click(function() {
-
+    
     var id = $('#editNewsModal').find('input[id="rowID"]').val();
     var title =  $('#editNewsModal').find('input[id="newTitle"]').val();
     var content = $('#editNewsModal').find('textarea[id="newBody"]').val();
-
+    
     $.ajax({
         type : "POST",
         url : "data/updateNew.php",
@@ -64,23 +64,23 @@ $('#editNewButton').click(function() {
     }).fail(function(msg) {
         alert("Failure");
     });
-
+    
 });
 
 $(document).on('click', '.newsDeleteButton', function (event) {
     if (confirm('Es-tu sûr de vouloir supprimer ça ? C\'est définitif hein...') ) {
-		var id = $(this).parent().parent().find('input[name="rowID"]').val();
-
-		$.ajax({
-			type: "GET",
-			url: "data/deleteNews.php?id="+id,
-		}).done(function (msg) {
-			getNews();
-			$("#onDeleteNewsAlert").show();
-		}).fail(function (msg) {
-			alert("Failure");
-		});
-	}
+        var id = $(this).parent().parent().find('input[name="rowID"]').val();
+        
+        $.ajax({
+            type: "GET",
+            url: "data/deleteNews.php?id="+id,
+        }).done(function (msg) {
+            getNews();
+            $("#onDeleteNewsAlert").show();
+        }).fail(function (msg) {
+            alert("Failure");
+        });
+    }
 });
 
 function getNews() {
@@ -118,7 +118,7 @@ $('#showArtistModalToAdd').click(function() {
 $(document).on('click', '.showArtistButton', function (event) {
     var target = $(event.currentTarget);
     var id = target.parent().find('input[name="id"]');
-
+    
     $.ajax({
         type: "GET",
         url: "data/getArtist.php?id="+id.val(),
@@ -133,32 +133,32 @@ $(document).on('click', '.showArtistButton', function (event) {
 
 $(document).on('click', '.artistDeleteButton', function (event) {
     if (confirm('Es-tu sûr de vouloir supprimer ça ? C\'est définitif hein...') ) {
-		var target = $(event.currentTarget);
-		var id = target.parent().find('input[name="id"]');
-
-		$.ajax({
-			type: "GET",
-			url: "data/deleteArtist.php?id="+id.val(),
-		}).done(function (msg) {
-			getArtists();
-			$("#onDeleteArtistAlert").show();
-		}).fail(function (msg) {
-			alert("Failure");
-		});
-	}
+        var target = $(event.currentTarget);
+        var id = target.parent().find('input[name="id"]');
+        
+        $.ajax({
+            type: "GET",
+            url: "data/deleteArtist.php?id="+id.val(),
+        }).done(function (msg) {
+            getArtists();
+            $("#onDeleteArtistAlert").show();
+        }).fail(function (msg) {
+            alert("Failure");
+        });
+    }
 });
 
 // Save new or update existing artist
 $('#artistModalActionButton').click(function() {
     //Get ID of the article
-
+    
     var id = $(this).parent().parent().parent().find('input[name="id"]').val();
-
+    
     if (id =='-1') {
-
+        
         // New artist : add it to the DB
         // TO DO : form secure and
-
+        
         $.ajax({
             type : "POST",
             url : "data/addArtist.php",
@@ -181,35 +181,35 @@ $('#artistModalActionButton').click(function() {
         }).fail(function(msg) {
             alert("Failure");
         });
-
+        
     } else {
         // Existing artist : update in the db
         var modal = $('#artistModal');
         $.ajax({
-        type : "POST",
-        url : "data/updateArtist.php",
-        data : {
-            id : id,
-            name: modal.find('#art-name').val(),
-            style: modal.find('#art-style').val(),
-            description: modal.find('#art-description').val(),
-            day: modal.find('#art-day').val(),
-            stage: modal.find('#art-scene').val(),
-            start_time: modal.find('#art-start-time').val(),
-            end_time: modal.find('#art-end-time').val(),
-            website: modal.find('#art-website').val(),
-            facebook: modal.find('#art-facebook').val(),
-            twitter: modal.find('#art-twitter').val(),
-            youtube: modal.find('#art-youtube').val()
-        }
-    }).done(function(msg) {
-        $('#artistModal').modal('hide');
-        getArtists();
-    }).fail(function(msg) {
-        alert("Failure");
-    });
+            type : "POST",
+            url : "data/updateArtist.php",
+            data : {
+                id : id,
+                name: modal.find('#art-name').val(),
+                style: modal.find('#art-style').val(),
+                description: modal.find('#art-description').val(),
+                day: modal.find('#art-day').val(),
+                stage: modal.find('#art-scene').val(),
+                start_time: modal.find('#art-start-time').val(),
+                end_time: modal.find('#art-end-time').val(),
+                website: modal.find('#art-website').val(),
+                facebook: modal.find('#art-facebook').val(),
+                twitter: modal.find('#art-twitter').val(),
+                youtube: modal.find('#art-youtube').val()
+            }
+        }).done(function(msg) {
+            $('#artistModal').modal('hide');
+            getArtists();
+        }).fail(function(msg) {
+            alert("Failure");
+        });
     }
-
+    
 });
 
 
@@ -257,101 +257,101 @@ function loadEmptyArtistModal(){
 /*- INFOS -*/
 /*-----------*/
 function getInfos() {
-	$.getJSON("data/getInfos.php", function(data) {
-		$('#infos-tree').jqxTree({ source:computeTree(data)});
-		$('#infos-tree').jqxTree('refresh');
-
+    $.getJSON("data/getInfos.php", function(data) {
+        $('#infos-tree').jqxTree({ source:computeTree(data)});
+        $('#infos-tree').jqxTree('refresh');
+        
         // On click on an item get the item from database
-		$('#infos-tree').bind('select', function (event) {
-			var htmlElement = event.args.element;
-			var item = $('#infos-tree').jqxTree('getItem', htmlElement);
-			$.getJSON("data/getInfo.php?id="+item.id).done(function (msg) {
-				var infoForm = $('#infos-edit');
-				infoForm.find('#info-id').val(msg.id);
-
-				//name
-				infoForm.find('#info-name').val(msg.name);
-
-				//picture
-				infoForm.find('#info-picture').attr("data-src", msg.picture);
-
-				//isCategory
-				$('input[type=radio][name=isCategoryRadio]').change(function() {
-					if ( $('input[type=radio][name=isCategoryRadio]:checked').attr('value') == "1") { //if category
-						$('#InfoContent').hide();
-					} else {
-						$('#InfoContent').show();
-					}
-				});
-				if (msg.isCategory == "1") {
-					infoForm.find("#category").click();
-				} else {
-					infoForm.find("#info").click();
-				}
-
-				//content
-				infoForm.find('#info-content').val(msg.content);
-
-				//parent
-				var infoSelect = infoForm.find('#info-parent');
-				infoSelect.html('');
-				infoSelect.append('<option value="0"> Aucun parent </option>');
-				var items = $('#infos-tree').jqxTree('getItems');
-				$.each(items, function (key, it) {
-					if (it.id != msg.id && it.value == "1") { //if category and not itself
-						infoSelect.append('<option value="' + it.id + '">' + it.label + '</option>');
-					}
-				});
-
-				infoSelect.val(msg.parentid);
-
-				$('#infosDeleteButton').show();
-			}).fail(function(msg) {
-				alert("Failure");
-			});
-		});
+        $('#infos-tree').bind('select', function (event) {
+            var htmlElement = event.args.element;
+            var item = $('#infos-tree').jqxTree('getItem', htmlElement);
+            $.getJSON("data/getInfo.php?id="+item.id).done(function (msg) {
+                var infoForm = $('#infos-edit');
+                infoForm.find('#info-id').val(msg.id);
+                
+                //name
+                infoForm.find('#info-name').val(msg.name);
+                
+                //picture
+                infoForm.find('#info-picture').attr("data-src", msg.picture);
+                
+                //isCategory
+                $('input[type=radio][name=isCategoryRadio]').change(function() {
+                    if ( $('input[type=radio][name=isCategoryRadio]:checked').attr('value') == "1") { //if category
+                        $('#InfoContent').hide();
+                    } else {
+                        $('#InfoContent').show();
+                    }
+                });
+                if (msg.isCategory == "1") {
+                    infoForm.find("#category").click();
+                } else {
+                    infoForm.find("#info").click();
+                }
+                
+                //content
+                infoForm.find('#info-content').val(msg.content);
+                
+                //parent
+                var infoSelect = infoForm.find('#info-parent');
+                infoSelect.html('');
+                infoSelect.append('<option value="0"> Aucun parent </option>');
+                var items = $('#infos-tree').jqxTree('getItems');
+                $.each(items, function (key, it) {
+                    if (it.id != msg.id && it.value == "1") { //if category and not itself
+                        infoSelect.append('<option value="' + it.id + '">' + it.label + '</option>');
+                    }
+                });
+                
+                infoSelect.val(msg.parentid);
+                
+                $('#infosDeleteButton').show();
+            }).fail(function(msg) {
+                alert("Failure");
+            });
+        });
     });
 }
 
 $('#infosEditButton').click(function() {
-	var infoForm = $('#infos-edit');
-
-	$.ajax({
-		type : "POST",
-		url : "data/updateInfo.php",
-		data : {
-			id : infoForm.find('#info-id').val(),
-			name : infoForm.find('#info-name').val(),
-			isCategory : $('input[type=radio][name=isCategoryRadio]:checked').attr('value'),
-			content : infoForm.find('#info-content').val(),
-			picture : infoForm.find('#info-picture').attr("data-src"),
-			parentId : infoForm.find('#info-parent').val()
-		}
-	}).done(function(msg) {
-		getInfos();
-	}).fail(function(msg) {
-		alert("Failure");
-	});
+    var infoForm = $('#infos-edit');
+    
+    $.ajax({
+        type : "POST",
+        url : "data/updateInfo.php",
+        data : {
+            id : infoForm.find('#info-id').val(),
+            name : infoForm.find('#info-name').val(),
+            isCategory : $('input[type=radio][name=isCategoryRadio]:checked').attr('value'),
+            content : infoForm.find('#info-content').val(),
+            picture : infoForm.find('#info-picture').attr("data-src"),
+            parentId : infoForm.find('#info-parent').val()
+        }
+    }).done(function(msg) {
+        getInfos();
+    }).fail(function(msg) {
+        alert("Failure");
+    });
 });
 
 $('#infosDeleteButton').click(function() {
-	if (confirm('Es-tu sûr de vouloir supprimer ça ? C\'est définitif hein...') ) {
-		var id = $('#infos-edit').find('#info-id').val();
-
-		$.ajax({
-			type : "POST",
-			url : "data/deleteInfo.php",
-			data : {
-				id : $('#infos-edit').find('#info-id').val()
-			}
-		}).done(function(msg) {
-			getInfos();
-			$("#onDeleteInfoAlert").show();
-			$('#infosDeleteButton').hide();
-		}).fail(function(msg) {
-			alert("Failure");
-		});
-	}
+    if (confirm('Es-tu sûr de vouloir supprimer ça ? C\'est définitif hein...') ) {
+        var id = $('#infos-edit').find('#info-id').val();
+        
+        $.ajax({
+            type : "POST",
+            url : "data/deleteInfo.php",
+            data : {
+                id : $('#infos-edit').find('#info-id').val()
+            }
+        }).done(function(msg) {
+            getInfos();
+            $("#onDeleteInfoAlert").show();
+            $('#infosDeleteButton').hide();
+        }).fail(function(msg) {
+            alert("Failure");
+        });
+    }
 });
 
 // Add a new info
@@ -376,23 +376,23 @@ $('#addInfoButton').click(function() {
 
 // Show the info modal to add a new one
 $('#showInfoModalToAdd').click(function() {
-	$('input[type=radio][name=isAddCategoryRadio]').change(function() {
-		if ( $('input[type=radio][name=isAddCategoryRadio]:checked').attr('value') == "1") { //if category
-			$('#add-info-content').hide();
-		} else {
-			$('#add-info-content').show();
-		}
-	});
-	var infoSelect = $('#addInfoModal').find('#add-info-parent');
-	infoSelect.html('');
-	infoSelect.append('<option value="0"> Aucun parent </option>');
-	var items = $('#infos-tree').jqxTree('getItems');
-	$.each(items, function (key, it) {
-		if (it.value == "1") { //if category
-			infoSelect.append('<option value="' + it.id + '">' + it.label + '</option>');
-		}
-	});
-	infoSelect.val("0");
+    $('input[type=radio][name=isAddCategoryRadio]').change(function() {
+        if ( $('input[type=radio][name=isAddCategoryRadio]:checked').attr('value') == "1") { //if category
+            $('#add-info-content').hide();
+        } else {
+            $('#add-info-content').show();
+        }
+    });
+    var infoSelect = $('#addInfoModal').find('#add-info-parent');
+    infoSelect.html('');
+    infoSelect.append('<option value="0"> Aucun parent </option>');
+    var items = $('#infos-tree').jqxTree('getItems');
+    $.each(items, function (key, it) {
+        if (it.value == "1") { //if category
+            infoSelect.append('<option value="' + it.id + '">' + it.label + '</option>');
+        }
+    });
+    infoSelect.val("0");
 });
 
 var computeTree = function (data) {
@@ -403,9 +403,9 @@ var computeTree = function (data) {
         var item = data[i];
         var label = item["name"];
         var parentid = item["parentId"];
-		var isCategory = item["isCategory"];
+        var isCategory = item["isCategory"];
         var id = item["id"];
-
+        
         if (items[parentid]) {
             var item = { parentid: parentid, label: label, item: item, id:id, value:isCategory};
             if (!items[parentid].items) {
@@ -422,11 +422,7 @@ var computeTree = function (data) {
     return source;
 }
 
-
-
-
 // ADD FILTER
-
 $(function () {
     'use strict';
     // Change this to the location of your server-side upload handler:
@@ -436,7 +432,21 @@ $(function () {
         dataType: 'json',
         done: function (e, data) {
             $.each(data.result.files, function (index, file) {
-                $('<p/>').text(file.name).appendTo('#files');
+                
+               $.ajax({
+                    type : "POST",
+                    url : "data/addFilter.php",
+                    data : {
+                        name : file.name
+                    }
+                }).done(function(msg) {
+                    $('<p/>').text(file.name).appendTo('#files');
+                }).fail(function(msg) {
+                    alert("msg : " + msg);
+                    alert("Failure :/:");
+                });
+                
+            
             });
         },
         progressall: function (e, data) {
@@ -447,5 +457,5 @@ $(function () {
             );
         }
     }).prop('disabled', !$.support.fileInput)
-        .parent().addClass($.support.fileInput ? undefined : 'disabled');
+    .parent().addClass($.support.fileInput ? undefined : 'disabled');
 });
