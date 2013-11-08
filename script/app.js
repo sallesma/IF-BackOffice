@@ -437,10 +437,12 @@ $(function () {
                     type : "POST",
                     url : "data/addFilter.php",
                     data : {
-                        name : file.name
+                        url : file.url
                     }
                 }).done(function(msg) {
-                    $('<p/>').text(file.name).appendTo('#files');
+                   //$('<p/>').text(file.url).appendTo('#files');
+                   
+                   $("#photoFilter-edit").append('<div class="col-sm-6 col-md-3"><a href="#" class="thumbnail"> <img src="'+file.url + '" alt="..."></a></div>');
                 }).fail(function(msg) {
                     alert("msg : " + msg);
                     alert("Failure :/:");
