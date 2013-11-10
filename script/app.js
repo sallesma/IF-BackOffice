@@ -1,6 +1,7 @@
 $(document).ready(function() {
     getNews();
     getArtists();
+	getFilters();
     getInfos();
 });
 
@@ -29,15 +30,15 @@ $('#addNewButton').click(function() {
 
 // Open News modal with an existing news
 $(document).on("click", ".modifyNewButton", function() {
-    
+
     $('#editNewsModal').modal('show');
-    
+
     var formClass = $(this).parent().parent();
-    
+
     var id = formClass.find('input[name="rowID"]').val();
     var title = formClass.find('input[name="title"]').val();
     var content = formClass.find('input[name="content"]').val();
-    
+
     $('#editNewsModal').find('input[id="rowID"]').val(id);
     $('#editNewsModal').find('input[id="newTitle"]').val(title);
     $('#editNewsModal').find('textarea[id="newBody"]').val(content);
@@ -45,11 +46,11 @@ $(document).on("click", ".modifyNewButton", function() {
 
 // Modify an existing news
 $('#editNewButton').click(function() {
-    
+
     var id = $('#editNewsModal').find('input[id="rowID"]').val();
     var title =  $('#editNewsModal').find('input[id="newTitle"]').val();
     var content = $('#editNewsModal').find('textarea[id="newBody"]').val();
-    
+
     $.ajax({
         type : "POST",
         url : "data/updateNew.php",
@@ -64,13 +65,13 @@ $('#editNewButton').click(function() {
     }).fail(function(msg) {
         alert("Failure");
     });
-    
+
 });
 
 $(document).on('click', '.newsDeleteButton', function (event) {
     if (confirm('Es-tu sûr de vouloir supprimer ça ? C\'est définitif hein...') ) {
         var id = $(this).parent().parent().find('input[name="rowID"]').val();
-        
+
         $.ajax({
             type: "GET",
             url: "data/deleteNews.php?id="+id,
@@ -118,7 +119,7 @@ $('#showArtistModalToAdd').click(function() {
 $(document).on('click', '.showArtistButton', function (event) {
     var target = $(event.currentTarget);
     var id = target.parent().find('input[name="id"]');
-    
+
     $.ajax({
         type: "GET",
         url: "data/getArtist.php?id="+id.val(),
@@ -135,7 +136,7 @@ $(document).on('click', '.artistDeleteButton', function (event) {
     if (confirm('Es-tu sûr de vouloir supprimer ça ? C\'est définitif hein...') ) {
         var target = $(event.currentTarget);
         var id = target.parent().find('input[name="id"]');
-        
+
         $.ajax({
             type: "GET",
             url: "data/deleteArtist.php?id="+id.val(),
@@ -151,14 +152,14 @@ $(document).on('click', '.artistDeleteButton', function (event) {
 // Save new or update existing artist
 $('#artistModalActionButton').click(function() {
     //Get ID of the article
-    
+
     var id = $(this).parent().parent().parent().find('input[name="id"]').val();
-    
+
     if (id =='-1') {
-        
+
         // New artist : add it to the DB
         // TO DO : form secure and
-        
+
         $.ajax({
             type : "POST",
             url : "data/addArtist.php",
@@ -181,7 +182,7 @@ $('#artistModalActionButton').click(function() {
         }).fail(function(msg) {
             alert("Failure");
         });
-        
+
     } else {
         // Existing artist : update in the db
         var modal = $('#artistModal');
@@ -209,7 +210,7 @@ $('#artistModalActionButton').click(function() {
             alert("Failure");
         });
     }
-    
+
 });
 
 
@@ -254,13 +255,13 @@ function loadEmptyArtistModal(){
 }
 
 /*-----------*/
-/*- INFOS -*/
+/*-  INFOS  -*/
 /*-----------*/
 function getInfos() {
     $.getJSON("data/getInfos.php", function(data) {
         $('#infos-tree').jqxTree({ source:computeTree(data)});
         $('#infos-tree').jqxTree('refresh');
-        
+
         // On click on an item get the item from database
         $('#infos-tree').bind('select', function (event) {
             var htmlElement = event.args.element;
@@ -268,13 +269,13 @@ function getInfos() {
             $.getJSON("data/getInfo.php?id="+item.id).done(function (msg) {
                 var infoForm = $('#infos-edit');
                 infoForm.find('#info-id').val(msg.id);
-                
+
                 //name
                 infoForm.find('#info-name').val(msg.name);
-                
+
                 //picture
                 infoForm.find('#info-picture').attr("data-src", msg.picture);
-                
+
                 //isCategory
                 $('input[type=radio][name=isCategoryRadio]').change(function() {
                     if ( $('input[type=radio][name=isCategoryRadio]:checked').attr('value') == "1") { //if category
@@ -288,10 +289,10 @@ function getInfos() {
                 } else {
                     infoForm.find("#info").click();
                 }
-                
+
                 //content
                 infoForm.find('#info-content').val(msg.content);
-                
+
                 //parent
                 var infoSelect = infoForm.find('#info-parent');
                 infoSelect.html('');
@@ -302,9 +303,9 @@ function getInfos() {
                         infoSelect.append('<option value="' + it.id + '">' + it.label + '</option>');
                     }
                 });
-                
+
                 infoSelect.val(msg.parentid);
-                
+
                 $('#infosDeleteButton').show();
             }).fail(function(msg) {
                 alert("Failure");
@@ -315,7 +316,7 @@ function getInfos() {
 
 $('#infosEditButton').click(function() {
     var infoForm = $('#infos-edit');
-    
+
     $.ajax({
         type : "POST",
         url : "data/updateInfo.php",
@@ -337,7 +338,7 @@ $('#infosEditButton').click(function() {
 $('#infosDeleteButton').click(function() {
     if (confirm('Es-tu sûr de vouloir supprimer ça ? C\'est définitif hein...') ) {
         var id = $('#infos-edit').find('#info-id').val();
-        
+
         $.ajax({
             type : "POST",
             url : "data/deleteInfo.php",
@@ -405,7 +406,7 @@ var computeTree = function (data) {
         var parentid = item["parentId"];
         var isCategory = item["isCategory"];
         var id = item["id"];
-        
+
         if (items[parentid]) {
             var item = { parentid: parentid, label: label, item: item, id:id, value:isCategory};
             if (!items[parentid].items) {
@@ -422,6 +423,13 @@ var computeTree = function (data) {
     return source;
 }
 
+
+
+
+/*-----------*/
+/*- FILTERS -*/
+/*-----------*/
+
 // ADD FILTER
 $(function () {
     'use strict';
@@ -432,7 +440,7 @@ $(function () {
         dataType: 'json',
         done: function (e, data) {
             $.each(data.result.files, function (index, file) {
-                
+
                $.ajax({
                     type : "POST",
                     url : "data/addFilter.php",
@@ -441,14 +449,13 @@ $(function () {
                     }
                 }).done(function(msg) {
                    //$('<p/>').text(file.url).appendTo('#files');
-                   
+
                    $("#photoFilter-edit").append('<div class="col-sm-6 col-md-3"><a href="#" class="thumbnail"> <img src="'+file.url + '" alt="..."></a></div>');
                 }).fail(function(msg) {
-                    alert("msg : " + msg);
-                    alert("Failure :/:");
+                    alert("Failure");
                 });
-                
-            
+
+
             });
         },
         progressall: function (e, data) {
@@ -461,3 +468,11 @@ $(function () {
     }).prop('disabled', !$.support.fileInput)
     .parent().addClass($.support.fileInput ? undefined : 'disabled');
 });
+
+function getFilters() {
+    $.get("data/getFilters.php", function(data) {
+        $("#photoFilter-edit").html(data);
+    }).fail(function(msg) {
+		alert("Failure");
+	});
+}
