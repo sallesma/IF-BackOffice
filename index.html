@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-
+    
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -14,69 +14,84 @@
         <link rel="stylesheet" href="style/jqx.base.css" type="text/css" />
         <link rel="stylesheet" href="style/jquery.fileupload.css" />
     </head>
+    
     <body>
-
         <div class="container">
             <h1>Imaginarium Festival - Backoffice</h1>
             <p>Pour changer le contenu de l'application Imaginarium Festival.</p>
         </div>
-
         <div class="container bs-docs-container">
             <div class="row">
                 <div class="col-md-3">
                     <div class="bs-sidebar hidden-print" role="complementary">
                         <ul class="nav bs-sidenav">
-                            <li><a href="#news">News</a>
+                            <li>
+                                <a href="#news">News</a>
                                 <ul class="nav">
-                                    <li><a href="#news">Liste des news</a></li>
-                                    <li><a href="#addNewsTriggerModal">Ajouter une news</a></li>
-                                </ul></li>
-                            <li><a href="#artists">Artistes</a>
+                                    <li>
+                                        <a href="#news">Liste des news</a>
+                                    </li>
+                                    <li>
+                                        <a href="#addNewsTriggerModal">Ajouter une news</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#artists">Artistes</a>
                                 <ul class="nav">
-                                    <li><a href="#artists">Liste des artistes</a></li>
-                                    <li><a href="#showArtistModalToAdd">Ajouter une news</a></li>
-                                </ul></li>
-                            <li><a href="#photoFilter">Photos</a>
+                                    <li>
+                                        <a href="#artists">Liste des artistes</a>
+                                    </li>
+                                    <li>
+                                        <a href="#showArtistModalToAdd">Ajouter une news</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#photoFilter">Photos</a>
                                 <ul class="nav">
-                                    <li><a href="#photoFilter-add">Ajouter un filtre</a></li>
-                                    <li><a href="#photoFilter-edit">Liste des filtres</a></li>
-                                </ul></li>
-                            <li><a href="#infos">Infos</a>
+                                    <li>
+                                        <a href="#photoFilter-add">Ajouter un filtre</a>
+                                    </li>
+                                    <li>
+                                        <a href="#photoFilter-edit">Liste des filtres</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#infos">Infos</a>
                                 <ul class="nav">
-                                    <li><a href="#infos">Visualiser les infos</a></li>
-                                    <li><a href="#showInfoModalToAdd">Ajouter une info</a></li>
-
-                                </ul></li>
-
-
-
+                                    <li>
+                                        <a href="#infos">Visualiser les infos</a>
+                                    </li>
+                                    <li>
+                                        <a href="#showInfoModalToAdd">Ajouter une info</a>
+                                    </li>
+                                </ul>
+                            </li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-md-9" role="main">
-
-
-                    <!-- News
-================================================== -->
+                    <!-- News -->
                     <div class="bs-docs-section">
                         <div class="page-header">
                             <h1 id="news">News</h1>
                         </div>
                         <p>Pour ajouter, éditer et supprimer les news.</p>
                         <p>Elles seront affichées dans l'ordre décroissant (la plus récente en premier) dans l'application.</p>
-
+                        
                         <div id="onDeleteNewsAlert" class="alert alert-danger fade in">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                             <h4>La news a bien été supprimée !</h4>
                             <p>(C'est trop tard, il n'est plus possible de la récupérer. )</p>
                         </div>
-
+                        
                         <table id="news-table" class="table table-hover">
                         </table>
-
+                        
                         <!-- Button to trigger modal -->
                         <a id="addNewsTriggerModal" data-toggle="modal" href="#addNewModal" class="btn btn-primary btn-lg">Ajouter une nouvelle</a>
-
                         <!-- ADD Modal -->
                         <div class="modal fade" id="addNewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
@@ -85,25 +100,25 @@
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                         <h4 class="modal-title">Ajouter une nouvelle</h4>
                                     </div>
-
                                     <form role="form">
                                         <div class="modal-body">
-
-                                            <input id="newTitle" type="text" class="form-control" placeholder="Titre"><br />
+                                            <input id="newTitle" type="text" class="form-control" placeholder="Titre">
+                                            <br />
                                             <textarea id="newBody" class="form-control" rows="3" placeholder="Nouvelle"></textarea>
                                             <br />
                                         </div>
-
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
                                             <button type="button" class="btn btn-primary" id="addNewButton">Ajouter</button>
                                         </div>
                                     </form>
-                                </div><!-- /.modal-content -->
-                            </div><!-- /.modal-dialog -->
-                        </div><!-- /.modal -->
-
-
+                                </div>
+                                <!-- /.modal-content -->
+                            </div>
+                            <!-- /.modal-dialog -->
+                        </div>
+                        <!-- /.modal -->
+                        
                         <!-- EDIT Modal -->
                         <div class="modal fade" id="editNewsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
@@ -112,50 +127,43 @@
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                         <h4 class="modal-title">Modifier une nouvelle</h4>
                                     </div>
-
                                     <form role="form">
                                         <div class="modal-body">
-                                            <input id="rowID" type ="hidden" value ="">
-                                            <input id="newTitle" type="text" class="form-control" placeholder="Titre"><br />
+                                            <input id="rowID" type="hidden" value="">
+                                            <input id="newTitle" type="text" class="form-control" placeholder="Titre">
+                                            <br />
                                             <textarea id="newBody" class="form-control" rows="3" placeholder="Nouvelle"></textarea>
                                             <br />
                                         </div>
-
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
                                             <button type="button" class="btn btn-primary" id="editNewButton">Enregistrer</button>
                                         </div>
                                     </form>
-                                </div><!-- /.modal-content -->
-                            </div><!-- /.modal-dialog -->
-                        </div><!-- /.modal -->
-
+                                </div>
+                                <!-- /.modal-content -->
+                            </div>
+                            <!-- /.modal-dialog -->
+                        </div>
+                        <!-- /.modal -->
                     </div>
+                    <!-- fin news==================================================- ->
 
-                    <!-- fin news
-================================================== -->
-
-                    <!-- Artistes
+<!-- Artistes
 ================================================== -->
                     <div class="bs-docs-section">
                         <div class="page-header">
                             <h1 id="artists">Artistes</h1>
                         </div>
-                        <p>Vous pouvez ajouter ou éditer des artistes par cette
-                            interface. Les changements sont pris en compte pour modifier la
-                            programmation en conséquence (en plus des fiches artiste).</p>
-
+                        <p>Vous pouvez ajouter ou éditer des artistes par cette interface. Les changements sont pris en compte pour modifier la programmation en conséquence (en plus des fiches artiste).</p>
                         <div id="onDeleteArtistAlert" class="alert alert-danger fade in">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                             <h4>L'artiste a bien été supprimé !</h4>
                             <p>(C'est trop tard, il n'est plus possible de le récupérer. )</p>
                         </div>
-
-                        <table id="artists-table" class="table table-hover">
-                        </table>
+                        <table id="artists-table" class="table table-hover"></table>
                         <!-- Button to trigger modal -->
                         <button id="showArtistModalToAdd" class="btn btn-primary btn-lg">Ajouter un artiste</button>
-
                         <!-- Modal -->
                         <div class="modal fade" id="artistModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
@@ -164,37 +172,55 @@
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                         <h4 class="modal-title" id="title">Ajouter un nouvel artiste</h4>
                                     </div>
-
-                                    <input type="hidden" value="" name="id"/>
-
+                                    <input type="hidden" value="" name="id" />
                                     <form id="artist-add-form" class="form-horizontal" role="form">
-
                                         <div class="modal-body">
                                             <!--Name-->
                                             <div class="form-group">
                                                 <label for="art-name" class="col-lg-2 control-label">Nom</label>
                                                 <div class="col-lg-10">
-                                                    <input id="art-name" type="text" class="form-control" id="art-name"
-                                                           placeholder="Nom">
+                                                    <input id="art-name" type="text" class="form-control" id="art-name" placeholder="Nom">
                                                 </div>
                                             </div>
                                             <!--Style-->
                                             <div class="form-group">
                                                 <label for="art-style" class="col-lg-2 control-label">Style</label>
                                                 <div class="col-lg-10">
-                                                    <input id="art-style" type="text" class="form-control" id="art-style"
-                                                           placeholder="Style">
+                                                    <input id="art-style" type="text" class="form-control" id="art-style" placeholder="Style">
                                                 </div>
                                             </div>
+                                            <!-- Image -->
+                                            <div class="form-group">
+                                                <label for="art-image" class="col-lg-2 control-label">Image</label>
+                                                <input id="art-image" type="hidden" value=""/>
+                                                <span class="btn btn-success fileinput-button">
+                                                    <i class="glyphicon glyphicon-plus"></i>
+                                                    <span>Séléctionner un fichier</span>
+                                                    <!-- The file input field used as target for the file upload widget -->
+                                                    <input id="artistFileUpload" type="file" name="files[]">
+                                                </span>
+                                                <br>
+                                                <br>
+                                                <!-- The global progress bar -->
+                                                <div id="progressArtist" class="progress">
+                                                    <div class="progress-bar progress-bar-success"></div>
+                                                </div>
+                                                
+                                                
+                                                <div class="col-md-3" id="photoArtist">
+                                                </div>
+                                                
+                                            </div>
+                                            
+                                            
                                             <!--Description-->
                                             <div class="form-group">
                                                 <label for="art-description" class="col-lg-2 control-label">Description</label>
                                                 <div class="col-lg-10">
-                                                    <textarea id="art-description" type="text" class="form-control"
-                                                              placeholder="Description"></textarea>
+                                                    <textarea id="art-description" type="text" class="form-control" placeholder="Description"></textarea>
                                                 </div>
                                             </div>
-                                            <!--PICTURE -->
+                                            
                                             <!--Scene-->
                                             <div class="form-group">
                                                 <label for="art-scene" class="col-lg-2 control-label">Scène</label>
@@ -235,9 +261,12 @@
                                                 <div class="input-group col-lg-10">
                                                     <input id="art-website" type="text" class="form-control">
                                                     <span class="input-group-btn">
-                                                        <button class="btn btn-default" type="button"><a href="">Visiter</a></button>
+                                                        <button class="btn btn-default" type="button">
+                                                            <a href="">Visiter</a>
+                                                        </button>
                                                     </span>
-                                                </div><!-- /input-group -->
+                                                </div>
+                                                <!-- /input-group -->
                                             </div>
                                             <!--Facebook-->
                                             <div class="form-group">
@@ -245,9 +274,12 @@
                                                 <div class="input-group col-lg-10">
                                                     <input id="art-facebook" type="text" class="form-control">
                                                     <span class="input-group-btn">
-                                                        <button class="btn btn-default" type="button"><a href="">Visiter</a></button>
+                                                        <button class="btn btn-default" type="button">
+                                                            <a href="">Visiter</a>
+                                                        </button>
                                                     </span>
-                                                </div><!-- /input-group -->
+                                                </div>
+                                                <!-- /input-group -->
                                             </div>
                                             <!--Twitter-->
                                             <div class="form-group">
@@ -255,9 +287,12 @@
                                                 <div class="input-group col-lg-10">
                                                     <input id="art-twitter" type="text" class="form-control">
                                                     <span class="input-group-btn">
-                                                        <button class="btn btn-default" type="button"><a href="">Visiter</a></button>
+                                                        <button class="btn btn-default" type="button">
+                                                            <a href="">Visiter</a>
+                                                        </button>
                                                     </span>
-                                                </div><!-- /input-group -->
+                                                </div>
+                                                <!-- /input-group -->
                                             </div>
                                             <!--Twitter-->
                                             <div class="form-group">
@@ -265,50 +300,49 @@
                                                 <div class="input-group col-lg-10">
                                                     <input id="art-youtube" type="text" class="form-control">
                                                     <span class="input-group-btn">
-                                                        <button class="btn btn-default" type="button"><a href="">Visiter</a></button>
+                                                        <button class="btn btn-default" type="button">
+                                                            <a href="">Visiter</a>
+                                                        </button>
                                                     </span>
-                                                </div><!-- /input-group -->
+                                                </div>
+                                                <!-- /input-group -->
                                             </div>
-                                        </div><!--/.modal-body-->
-
+                                        </div>
+                                        <!--/.modal-body-->
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
                                             <button type="button" class="btn btn-primary" id="artistModalActionButton">Ajouter</button>
-                                        </div><!--/.modal-footer-->
-
+                                        </div>
+                                        <!--/.modal-footer-->
                                     </form>
-                                </div><!-- /.modal-content -->
-                            </div><!-- /.modal-dialog -->
-                        </div><!-- /.modal -->
-
-
-
+                                </div>
+                                <!-- /.modal-content -->
+                            </div>
+                            <!-- /.modal-dialog -->
+                        </div>
+                        <!-- /.modal -->
                     </div>
+                    <!-- fin artistes==================================================- ->
 
-                    <!-- fin artistes
-================================================== -->
-
-                    <!-- Photos
+<!-- Photos
 ================================================== -->
                     <div class="bs-docs-section">
                         <div class="page-header">
                             <h1 id="photoFilter">Filtres photos</h1>
                         </div>
-
                         <h3 id="photoFilter-add">Ajouter un filtre</h3>
                         <form id="filter-add-form" class="form-horizontal" role="form">
                             <div class="form-group">
                                 <label for="inputName" class="col-lg-2 control-label">Nom</label>
                                 <div class="col-lg-10">
-                                    <input type="email" class="form-control" id="inputName"
-                                           placeholder="Nom">
+                                    <input type="email" class="form-control" id="inputName" placeholder="Nom">
                                 </div>
                             </div>
                             <span class="btn btn-success fileinput-button">
                                 <i class="glyphicon glyphicon-plus"></i>
                                 <span>Séléctionner un fichier</span>
                                 <!-- The file input field used as target for the file upload widget -->
-                                <input id="fileupload" type="file" name="files[]" multiple>
+                                <input id="filtersFileUpload" type="file" name="files[]" multiple>
                             </span>
                             <br>
                             <br>
@@ -320,44 +354,34 @@
                             <div id="files" class="files"></div>
                             <br>
                         </form>
-
                         <h3>Editer les filtres</h3>
-
-                        <div class="row" id="photoFilter-edit">
-						</div>
+                        <div class="row" id="photoFilter-edit"></div>
                     </div>
-                    <!-- fin photos
-================================================== -->
+                    <!-- fin photos==================================================- ->
 
-                    <!-- Infos
+<!-- Infos
 ================================================== -->
                     <div class="bs-docs-section">
                         <div class="page-header">
                             <h1 id="infos">Informations pratiques</h1>
                         </div>
                         <p>Vous pouvez ajouter ou éditer des infos par cette interface.</p>
-                        <p>Sélectionnez une info ou une catégorie d'info dans l'arbre à gauche pour pouvoir l'éditer à droite.
-                            L'arborescence présentée sera exactement celle de la page "Infos pratiques" dans l'application.</p>
-
+                        <p>Sélectionnez une info ou une catégorie d'info dans l'arbre à gauche pour pouvoir l'éditer à droite. L'arborescence présentée sera exactement celle de la page "Infos pratiques" dans l'application.</p>
                         <div id="onDeleteInfoAlert" class="alert alert-danger fade in">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                             <h4>L'info/Catégorie a bien été supprimée !</h4>
                             <p>(Les champs sont laissés plein au cas où tu voudrais copier/coller tout ça pour la recréer ;) )</p>
                         </div>
                         <div id="infos-div" class="row">
-                            <div id="infos-tree" class="col-md-3">
-                            </div>
-
+                            <div id="infos-tree" class="col-md-3"></div>
                             <div id="infos-edit" class="col-md-8">
-
                                 <form id="info-form" class="form-horizontal" role="form">
-                                    <input id="info-id" type="hidden" value="" name="id"/>
+                                    <input id="info-id" type="hidden" value="" name="id" />
                                     <!--Name-->
                                     <div class="form-group">
                                         <label for="info-name" class="col-lg-4 control-label">Nom</label>
                                         <div class="col-lg-8">
-                                            <input id="info-name" type="text" class="form-control" id="art-name"
-                                                   placeholder="Nom">
+                                            <input id="info-name" type="text" class="form-control" id="art-name" placeholder="Nom">
                                         </div>
                                     </div>
                                     <!--isCategory-->
@@ -365,21 +389,16 @@
                                         <label for="info-name" class="col-lg-4 control-label">Catégorie ou info ?</label>
                                         <div class="col-lg-8">
                                             <label class="radio">
-                                                <input type="radio" name="isCategoryRadio" id="category" value="1">
-                                                Catégorie
-                                            </label>
+                                                <input type="radio" name="isCategoryRadio" id="category" value="1">Catégorie</label>
                                             <label class="radio">
-                                                <input type="radio" name="isCategoryRadio" id="info" value="0">
-                                                Info
-                                            </label>
+                                                <input type="radio" name="isCategoryRadio" id="info" value="0">Info</label>
                                         </div>
                                     </div>
                                     <!--Description-->
                                     <div id="InfoContent" class="form-group">
                                         <label for="info-content" class="col-lg-4 control-label">Description</label>
                                         <div class="col-lg-8">
-                                            <textarea id="info-content" type="text" class="form-control" id="info-content"
-                                                      placeholder="Description"></textarea>
+                                            <textarea id="info-content" type="text" class="form-control" id="info-content" placeholder="Description"></textarea>
                                         </div>
                                     </div>
                                     <!--PICTURE -->
@@ -393,19 +412,16 @@
                                     <div class="form-group">
                                         <label for="info-parent" class="col-lg-4 control-label">Parent</label>
                                         <div class="col-lg-8">
-                                            <select id="info-parent" class="form-control">
-                                            </select>
+                                            <select id="info-parent" class="form-control"></select>
                                         </div>
                                     </div>
                                     <button type="button" class="btn btn-primary" id="infosEditButton">Enregistrer les modifs</button>
-                                    <button type="button" class="btn btn-danger" id ="infosDeleteButton">Supprimer !</button>
+                                    <button type="button" class="btn btn-danger" id="infosDeleteButton">Supprimer !</button>
                                 </form>
                             </div>
                             <!-- Button to trigger modal -->
                             <a id="showInfoModalToAdd" data-toggle="modal" href="#addInfoModal" class="btn btn-primary btn-lg">Ajouter une Info</a>
                         </div>
-
-
                         <!-- ADD Modal -->
                         <div class="modal fade" id="addInfoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
@@ -414,16 +430,16 @@
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                         <h4 class="modal-title">Ajouter une info</h4>
                                     </div>
-
                                     <form role="form">
                                         <div class="modal-body">
                                             <!--name-->
                                             <input id="add-info-name" type="text" class="form-control" placeholder="Titre">
                                             <br />
                                             <!--isCategory-->
-                                            <input type="radio" name="isAddCategoryRadio" id="add-category" value="1"> Catégorie
-                                            <input type="radio" name="isAddCategoryRadio" id="add-info" value="0"> Info
-                                            <br /><br />
+                                            <input type="radio" name="isAddCategoryRadio" id="add-category" value="1">Catégorie
+                                            <input type="radio" name="isAddCategoryRadio" id="add-info" value="0">Info
+                                            <br />
+                                            <br />
                                             <!--Description-->
                                             <textarea id="add-info-content" class="form-control" rows="3" placeholder="Contenu"></textarea>
                                             <br />
@@ -439,34 +455,37 @@
                                             <button type="button" class="btn btn-primary" id="addInfoButton">Ajouter</button>
                                         </div>
                                     </form>
-                                </div><!-- /.modal-content -->
-                            </div><!-- /.modal-dialog -->
-                        </div><!-- /.modal -->
+                                </div>
+                                <!-- /.modal-content -->
+                            </div>
+                            <!-- /.modal-dialog -->
+                        </div>
+                        <!-- /.modal -->
                     </div>
-                    <!-- fin Infos
-================================================== -->
+                    <!-- fin Infos==================================================- ->
 
-                </div>
+</div>
 
-            </div>
-        </div>
+</div>
+</div>
 
 
-        <!-- SCRIPTS -->
-        <script src="script/jquery-2.0.3.js"></script>
-        <script src="script/bootstrap.js"></script>
-        <script src="script/bootstrap-widgets.js"></script>
-        <script src="script/bootstrap-holder.js"></script>
-        <script src="script/bootstrap-application.js"></script>
-        <script src="script/bootstrap-timepicker.js"></script>
-        <script src="script/app.js?v=8"></script>
-        <script type="text/javascript" src="script/jqxcore.js"></script>
-        <script type="text/javascript" src="script/jqxbuttons.js"></script>
-        <script type="text/javascript" src="script/jqxscrollbar.js"></script>
-        <script type="text/javascript" src="script/jqxpanel.js"></script>
-        <script type="text/javascript" src="script/jqxtree.js"></script>
-        <script src="script/jquery.ui.widget.js"></script>
-        <script src="script/jquery.iframe-transport.js"></script>
-        <script src="script/jquery.fileupload.js"></script>
-    </body>
-</html>
+<!-- SCRIPTS -->
+                    <script src="script/jquery-2.0.3.js"></script>
+                    <script src="script/bootstrap.js"></script>
+                    <script src="script/bootstrap-widgets.js"></script>
+                    <script src="script/bootstrap-holder.js"></script>
+                    <script src="script/bootstrap-application.js"></script>
+                    <script src="script/bootstrap-timepicker.js"></script>
+                    <script src="script/app.js?v=8"></script>
+                    <script type="text/javascript" src="script/jqxcore.js"></script>
+                    <script type="text/javascript" src="script/jqxbuttons.js"></script>
+                    <script type="text/javascript" src="script/jqxscrollbar.js"></script>
+                    <script type="text/javascript" src="script/jqxpanel.js"></script>
+                    <script type="text/javascript" src="script/jqxtree.js"></script>
+                    <script src="script/jquery.ui.widget.js"></script>
+                    <script src="script/jquery.iframe-transport.js"></script>
+                    <script src="script/jquery.fileupload.js"></script>
+                </body>
+                
+            </html>
