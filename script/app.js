@@ -115,6 +115,33 @@ $('#showArtistModalToAdd').click(function() {
     $("#artistModal").modal('show');
 });
 
+$(function () {
+    'use strict';
+    // Change this to the location of your server-side upload handler:
+    var url = './data/fileUpload/index.php?directory=artists';
+    $('#artistFileUpload').fileupload({
+        url: url,
+        dataType: 'json',
+        done: function (e, data) {
+            $.each(data.result.files, function (index, file) {
+            $("#art-image").val(file.url);
+            $("#photoArtist").html('<a href="#" class="thumbnail"><img src="'+file.url + '" alt="..."></a></div>');
+               
+
+
+            });
+        },
+        progressall: function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            $('#progressArtist .progress-bar').css(
+                'width',
+                progress + '%'
+            );
+        }
+    }).prop('disabled', !$.support.fileInput)
+    .parent().addClass($.support.fileInput ? undefined : 'disabled');
+});
+
 // Open artist modal with a specific artist
 $(document).on('click', '.showArtistButton', function (event) {
     var target = $(event.currentTarget);
@@ -162,6 +189,7 @@ $('#artistModalActionButton').click(function() {
             data : {
                 name : $("#art-name").val(),
                 style : $("#art-style").val(),
+                image : $("#art-image").val(),
                 description : $("#art-description").val(),
                 day : $("#art-day").val(),
                 stage : $("#art-scene").val(),
@@ -188,6 +216,7 @@ $('#artistModalActionButton').click(function() {
             data : {
                 id : id,
                 name: modal.find('#art-name').val(),
+                image: modal.find('#art-image').val(),
                 style: modal.find('#art-style').val(),
                 description: modal.find('#art-description').val(),
                 day: modal.find('#art-day').val(),
@@ -223,6 +252,8 @@ function loadArtistModalWithObject(artist){
     modal.find('#title').html('Modifier un artiste');
     modal.find('#artistModalActionButton').html('Sauvegarder');
     modal.find('#art-name').val(artist.name);
+    modal.find('#art-image').val(artist.picture);
+    modal.find("#photoArtist").html('<a href="#" class="thumbnail"><img src="'+artist.picture + '" alt="..."></a></div>');
     modal.find('#art-style').val(artist.style);
     modal.find('#art-description').val(artist.description);
     modal.find('#art-day').val(artist.day);
@@ -242,6 +273,8 @@ function loadEmptyArtistModal(){
     modal.find('#title').html('Ajouter un artiste');
     modal.find('#artistModalActionButton').html('Ajouter');
     modal.find('#art-name').val('');
+    modal.find('#art-image').val('');
+    modal.find("#photoArtist").html('');
     modal.find('#art-style').val('');
     modal.find('#art-description').val('');
     modal.find('#art-website').val('');
@@ -430,8 +463,8 @@ var computeTree = function (data) {
 $(function () {
     'use strict';
     // Change this to the location of your server-side upload handler:
-    var url = './data/fileUpload/';
-    $('#fileupload').fileupload({
+    var url = './data/fileUpload/index.php?directory=filters';
+    $('#filtersFileUpload').fileupload({
         url: url,
         dataType: 'json',
         done: function (e, data) {
@@ -441,7 +474,8 @@ $(function () {
                     type : "POST",
                     url : "data/addFilter.php",
                     data : {
-                        url : file.url
+                        url : file.url,
+                        
                     }
                 }).done(function(msg) {
                    getFilters()
