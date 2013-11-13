@@ -151,15 +151,11 @@ $(document).on('click', '.artistDeleteButton', function (event) {
 
 // Save new or update existing artist
 $('#artistModalActionButton').click(function() {
-    //Get ID of the article
 
     var id = $(this).parent().parent().parent().find('input[name="id"]').val();
 
     if (id =='-1') {
-
         // New artist : add it to the DB
-        // TO DO : form secure and
-
         $.ajax({
             type : "POST",
             url : "data/addArtist.php",
@@ -448,9 +444,7 @@ $(function () {
                         url : file.url
                     }
                 }).done(function(msg) {
-                   //$('<p/>').text(file.url).appendTo('#files');
-
-                   $("#photoFilter-edit").append('<div class="col-sm-6 col-md-3"><a href="#" class="thumbnail"> <img src="'+file.url + '" alt="..."></a></div>');
+                   getFilters()
                 }).fail(function(msg) {
                     alert("Failure");
                 });
@@ -467,6 +461,22 @@ $(function () {
         }
     }).prop('disabled', !$.support.fileInput)
     .parent().addClass($.support.fileInput ? undefined : 'disabled');
+});
+
+$(document).on('click', '.filterDeleteButton', function (event) {
+    if (confirm('Es-tu sûr de vouloir supprimer ça ? C\'est définitif hein...') ) {
+        var id = $(this).parent().parent().find('input[name="filterId"]').val();
+
+        $.ajax({
+            type: "GET",
+            url: "data/deleteFilter.php?id="+id,
+        }).done(function (msg) {
+            getFilters();
+            $("#onDeleteFiltersAlert").show();
+        }).fail(function (msg) {
+            alert("Failure");
+        });
+    }
 });
 
 function getFilters() {
