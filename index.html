@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-    
+
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -14,11 +14,11 @@
         <link rel="stylesheet" href="style/jqx.base.css" type="text/css" />
         <link rel="stylesheet" href="style/jquery.fileupload.css" />
     </head>
-    
+
     <body>
         <div class="container">
             <h1>Imaginarium Festival - Backoffice</h1>
-            <p>Pour changer le contenu de l'application Imaginarium Festival.</p>
+            <p>Pour changer le contenu de l'application mobile Imaginarium Festival.</p>
         </div>
         <div class="container bs-docs-container">
             <div class="row">
@@ -26,6 +26,9 @@
                     <div class="bs-sidebar hidden-print" role="complementary">
                         <ul class="nav bs-sidenav">
                             <li>
+                                <a href="#informations">Informations sur le backoffice</a>
+                            </li>
+							<li>
                                 <a href="#news">News</a>
                                 <ul class="nav">
                                     <li>
@@ -43,10 +46,10 @@
                                         <a href="#artists">Liste des artistes</a>
                                     </li>
                                     <li>
-                                        <a href="#showArtistModalToAdd">Ajouter une news</a>
+                                        <a href="#showArtistModalToAdd">Ajouter un artiste</a>
                                     </li>
                                 </ul>
-                            </li>
+							</li>
                             <li>
                                 <a href="#photoFilter">Photos</a>
                                 <ul class="nav">
@@ -73,6 +76,23 @@
                     </div>
                 </div>
                 <div class="col-md-9" role="main">
+
+
+					<div class="bs-docs-section">
+                        <div class="page-header">
+                            <h1 id="informations">Informations sur le backoffice</h1>
+                        </div>
+                        <p>Ce backoffice vous permet de modifier facilement une grande partie du contenu des applications mobiles. C'est pratique, mais le revers de la médaille est la responsabilité qui vous est donnée.</p>
+
+						<p>Pensez à toujours vérifier les informations que vous ajoutez car elles sont disponibles immédiatement dans l'application (Même s'il est possible de les modifier juste après)</p>
+
+						<p>Faites particulièrement attention à la taille et au format des photos et images que vous ajoutez (artistes, infos pratiques, filtres photos). Respectez les tailles requises quand il y en a et au besoin inspirez vous des fichiers déjà ajoutés pour être sûrs.</p>
+
+						<p>Une bonne pratique serait d'avoir toujours sur soi un smartphone et de tester l'application tout de suite après avoir effectué une modification pour s'assurer que l'on n'a pas fait d'erreur.</p>
+
+						<p>Si vous avez la moindre question, n'hésitez pas à nous contacter au plus vite : titouan.rossier@gmail.com salles.martin@gmail.com</p>
+                    </div>
+
                     <!-- News -->
                     <div class="bs-docs-section">
                         <div class="page-header">
@@ -80,16 +100,16 @@
                         </div>
                         <p>Pour ajouter, éditer et supprimer les news.</p>
                         <p>Elles seront affichées dans l'ordre décroissant (la plus récente en premier) dans l'application.</p>
-                        
+
                         <div id="onDeleteNewsAlert" class="alert alert-danger fade in">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                             <h4>La news a bien été supprimée !</h4>
                             <p>(C'est trop tard, il n'est plus possible de la récupérer. )</p>
                         </div>
-                        
+
                         <table id="news-table" class="table table-hover">
                         </table>
-                        
+
                         <!-- Button to trigger modal -->
                         <a id="addNewsTriggerModal" data-toggle="modal" href="#addNewModal" class="btn btn-primary btn-lg">Ajouter une nouvelle</a>
                         <!-- ADD Modal -->
@@ -118,7 +138,7 @@
                             <!-- /.modal-dialog -->
                         </div>
                         <!-- /.modal -->
-                        
+
                         <!-- EDIT Modal -->
                         <div class="modal fade" id="editNewsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
@@ -205,14 +225,14 @@
                                                 <div id="progressArtist" class="progress">
                                                     <div class="progress-bar progress-bar-success"></div>
                                                 </div>
-                                                
-                                                
+
+
                                                 <div class="col-md-3" id="photoArtist">
                                                 </div>
-                                                
+
                                             </div>
-                                            
-                                            
+
+
                                             <!--Description-->
                                             <div class="form-group">
                                                 <label for="art-description" class="col-lg-2 control-label">Description</label>
@@ -220,7 +240,7 @@
                                                     <textarea id="art-description" type="text" class="form-control" placeholder="Description"></textarea>
                                                 </div>
                                             </div>
-                                            
+
                                             <!--Scene-->
                                             <div class="form-group">
                                                 <label for="art-scene" class="col-lg-2 control-label">Scène</label>
@@ -330,6 +350,10 @@
                         <div class="page-header">
                             <h1 id="photoFilter">Filtres photos</h1>
                         </div>
+
+						<p>Vous pouvez ajouter des filtres photos qui seront utilisés pour la fonctionnalité d'appareil photo de l'application. L'utilisateur choisira un filtre et prendra une photo, la photo sera alors modifiée en ajoutant le filtre par dessus.</p>
+						<p>Vous devez impérativement respecter la taille standard qui est de XXX*XXX pixels et utiliser le format png (pour utiliser la transparence).</p>
+
                         <h3 id="photoFilter-add">Ajouter un filtre</h3>
                         <form id="filter-add-form" class="form-horizontal" role="form">
                             <div class="form-group">
@@ -373,8 +397,10 @@
                         <div class="page-header">
                             <h1 id="infos">Informations pratiques</h1>
                         </div>
-                        <p>Vous pouvez ajouter ou éditer des infos par cette interface.</p>
+                        <p>Vous pouvez ajouter ou éditer des infos pratiques par cette interface.</p>
                         <p>Sélectionnez une info ou une catégorie d'info dans l'arbre à gauche pour pouvoir l'éditer à droite. L'arborescence présentée sera exactement celle de la page "Infos pratiques" dans l'application.</p>
+						<p>Il est vivement conseillé de construire une arborescence propre (en mettant les infos dans des catégories et non l'inverse, par exemple). Sinon l'application mobile risque de mal fonctionner.</p>
+						<p>Il est possible de laisser des infos à la racine de l'arborescence ("Aucun parent").</p>
                         <div id="onDeleteInfoAlert" class="alert alert-danger fade in">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                             <h4>L'info/Catégorie a bien été supprimée !</h4>
@@ -487,7 +513,7 @@
         <script src="script/bootstrap-holder.js"></script>
         <script src="script/bootstrap-application.js"></script>
         <script src="script/bootstrap-timepicker.js"></script>
-        <script src="script/app.js?v=13"></script>
+        <script src="script/app.js?v=14"></script>
         <script type="text/javascript" src="script/jqxcore.js"></script>
         <script type="text/javascript" src="script/jqxbuttons.js"></script>
         <script type="text/javascript" src="script/jqxscrollbar.js"></script>
