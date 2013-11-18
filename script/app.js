@@ -115,6 +115,14 @@ $('#showArtistModalToAdd').click(function() {
     $("#artistModal").modal('show');
 });
 
+//Set up visit links in modal
+$('.visit-link').each(function() {
+	$(this).click(function() {
+		var url = $(this).parent().parent().find('.input-link').val();
+		window.open(url);
+	})
+});
+
 $(function () {
     'use strict';
     // Change this to the location of your server-side upload handler:
@@ -126,7 +134,7 @@ $(function () {
             $.each(data.result.files, function (index, file) {
             $("#art-image").val(file.url);
             $("#photoArtist").html('<a href="#" class="thumbnail"><img src="'+file.url + '" alt="..."></a></div>');
-               
+
 
 
             });
@@ -475,7 +483,7 @@ $(function () {
                     url : "data/addFilter.php",
                     data : {
                         url : file.url,
-                        
+
                     }
                 }).done(function(msg) {
                    getFilters()
