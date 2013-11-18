@@ -257,7 +257,11 @@ function loadArtistModalWithObject(artist){
     modal.find('#artistModalActionButton').html('Sauvegarder');
     modal.find('#art-name').val(artist.name);
     modal.find('#art-image').val(artist.picture);
-    modal.find("#photoArtist").html('<a href="#" class="thumbnail"><img src="'+artist.picture + '" alt="..."></a></div>');
+    
+    if (artist.picture != '')
+        modal.find("#photoArtist").html('<a href="#" class="thumbnail"><img src="'+artist.picture + '" alt="..."></a></div>');
+    else 
+        modal.find("#photoArtist").html('');
     modal.find('#art-style').val(artist.style);
     modal.find('#art-description').val(artist.description);
     modal.find('#art-day').val(artist.day);
