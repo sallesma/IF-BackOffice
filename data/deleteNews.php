@@ -2,7 +2,7 @@
 
 include("connection.php");
 
-//Supprimer l'artiste
+//Supprimer la news
 $deleteNewsQuery ="DELETE FROM news WHERE id=".$_GET['id'];
 mysql_query($deleteNewsQuery);
 

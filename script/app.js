@@ -115,6 +115,14 @@ $('#showArtistModalToAdd').click(function() {
     $("#artistModal").modal('show');
 });
 
+//Set up visit links in modal
+$('.visit-link').each(function() {
+	$(this).click(function() {
+		var url = $(this).parent().parent().find('.input-link').val();
+		window.open(url);
+	})
+});
+
 $(function () {
     'use strict';
     // Change this to the location of your server-side upload handler:
@@ -126,7 +134,7 @@ $(function () {
             $.each(data.result.files, function (index, file) {
             $("#art-image").val(file.url);
             $("#photoArtist").html('<a href="#" class="thumbnail"><img src="'+file.url + '" alt="..."></a></div>');
-               
+
 
 
             });
@@ -178,15 +186,11 @@ $(document).on('click', '.artistDeleteButton', function (event) {
 
 // Save new or update existing artist
 $('#artistModalActionButton').click(function() {
-    //Get ID of the article
 
     var id = $(this).parent().parent().parent().find('input[name="id"]').val();
 
     if (id =='-1') {
-
         // New artist : add it to the DB
-        // TO DO : form secure and
-
         $.ajax({
             type : "POST",
             url : "data/addArtist.php",
@@ -304,7 +308,10 @@ function getInfos() {
             var htmlElement = event.args.element;
             var item = $('#infos-tree').jqxTree('getItem', htmlElement);
             $.getJSON("data/getInfo.php?id="+item.id).done(function (msg) {
-                var infoForm = $('#infos-edit');
+                var infoForm = $('#infos-edit-form');
+				$('#infos-form').show();
+				$('#infos-edit-text').hide();
+
                 infoForm.find('#info-id').val(msg.id);
 
                 //name
@@ -352,7 +359,7 @@ function getInfos() {
 }
 
 $('#infosEditButton').click(function() {
-    var infoForm = $('#infos-edit');
+    var infoForm = $('#infos-edit-form');
 
     $.ajax({
         type : "POST",
@@ -374,18 +381,19 @@ $('#infosEditButton').click(function() {
 
 $('#infosDeleteButton').click(function() {
     if (confirm('Es-tu sûr de vouloir supprimer ça ? C\'est définitif hein...') ) {
-        var id = $('#infos-edit').find('#info-id').val();
+        var id = $('#infos-edit-form').find('#info-id').val();
 
         $.ajax({
             type : "POST",
             url : "data/deleteInfo.php",
             data : {
-                id : $('#infos-edit').find('#info-id').val()
+                id : $('#infos-edit-form').find('#info-id').val()
             }
         }).done(function(msg) {
             getInfos();
             $("#onDeleteInfoAlert").show();
-            $('#infosDeleteButton').hide();
+            $('#infos-form').hide();
+			$('#infos-edit-text').show();
         }).fail(function(msg) {
             alert("Failure");
         });
@@ -483,10 +491,10 @@ $(function () {
                     url : "data/addFilter.php",
                     data : {
                         url : file.url,
-                        
+
                     }
                 }).done(function(msg) {
-                   $("#photoFilter-edit").append('<div class="col-sm-6 col-md-3"><a href="#" class="thumbnail"> <img src="'+file.url + '" alt="..."></a></div>');
+                   getFilters()
                 }).fail(function(msg) {
                     alert("Failure");
                 });
@@ -503,6 +511,22 @@ $(function () {
         }
     }).prop('disabled', !$.support.fileInput)
     .parent().addClass($.support.fileInput ? undefined : 'disabled');
+});
+
+$(document).on('click', '.filterDeleteButton', function (event) {
+    if (confirm('Es-tu sûr de vouloir supprimer ça ? C\'est définitif hein...') ) {
+        var id = $(this).parent().parent().find('input[name="filterId"]').val();
+
+        $.ajax({
+            type: "GET",
+            url: "data/deleteFilter.php?id="+id,
+        }).done(function (msg) {
+            getFilters();
+            $("#onDeleteFiltersAlert").show();
+        }).fail(function (msg) {
+            alert("Failure");
+        });
+    }
 });
 
 function getFilters() {
