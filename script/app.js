@@ -304,7 +304,7 @@ function getInfos() {
             var htmlElement = event.args.element;
             var item = $('#infos-tree').jqxTree('getItem', htmlElement);
             $.getJSON("data/getInfo.php?id="+item.id).done(function (msg) {
-                var infoForm = $('#infos-edit');
+                var infoForm = $('#infos-edit-form');
                 infoForm.find('#info-id').val(msg.id);
 
                 //name
@@ -352,7 +352,7 @@ function getInfos() {
 }
 
 $('#infosEditButton').click(function() {
-    var infoForm = $('#infos-edit');
+    var infoForm = $('#infos-edit-form');
 
     $.ajax({
         type : "POST",
@@ -374,13 +374,13 @@ $('#infosEditButton').click(function() {
 
 $('#infosDeleteButton').click(function() {
     if (confirm('Es-tu sûr de vouloir supprimer ça ? C\'est définitif hein...') ) {
-        var id = $('#infos-edit').find('#info-id').val();
+        var id = $('#infos-edit-form').find('#info-id').val();
 
         $.ajax({
             type : "POST",
             url : "data/deleteInfo.php",
             data : {
-                id : $('#infos-edit').find('#info-id').val()
+                id : $('#infos-edit-form').find('#info-id').val()
             }
         }).done(function(msg) {
             getInfos();

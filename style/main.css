@@ -8,15 +8,19 @@
 
 #infos-div {
     margin-bottom: 20px;
-	border-color:#C7C7C7;
+	border:1px solid #C7C7C7;
 }
 
 #infos-tree {
 	left:0%;
     float: left;
+	border:none;
+	border-right:1px solid #C7C7C7;
 }
 
-#infos-edit {
+#infos-edit-form {
+	border-left:1px solid #C7C7C7;
+	padding:20px;
 }
 
 .alert {
