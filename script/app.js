@@ -262,10 +262,14 @@ function loadArtistModalWithObject(artist){
     modal.find('#art-name').val(artist.name);
     modal.find('#art-image').val(artist.picture);
     
-    if (artist.picture != '')
+    if (artist.picture != '') {
         modal.find("#photoArtist").html('<a href="#" class="thumbnail"><img src="'+artist.picture + '" alt="..."></a></div>');
-    else 
+        modal.find("#artistFileButtonName").html('Modifier l\'image');
+    }    
+    else {
+        modal.find("#artistFileButtonName").html('Sélectionner une image');
         modal.find("#photoArtist").html('');
+    }    
     modal.find('#art-style').val(artist.style);
     modal.find('#art-description').val(artist.description);
     modal.find('#art-day').val(artist.day);
@@ -283,6 +287,7 @@ function loadEmptyArtistModal(){
     var modal = $('#artistModal');
     modal.find('input[name="id"]').val('-1');
     modal.find('#title').html('Ajouter un artiste');
+    modal.find("#artistFileButtonName").html('Sélectionner une image');
     modal.find('#artistModalActionButton').html('Ajouter');
     modal.find('#art-name').val('');
     modal.find('#art-image').val('');
