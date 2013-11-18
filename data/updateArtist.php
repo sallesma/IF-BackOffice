@@ -17,7 +17,23 @@ $facebook = $_POST['facebook'];
 $youtube = $_POST['youtube'];
 
 
+$getArtistImageUrlQuery = "SELECT picture FROM artists where id=".$id."";
+$getArtistImageUrlResult = mysql_query($getArtistImageUrlQuery);
 
+while($pictureRow = mysql_fetch_array($getArtistImageUrlResult)){
+	$url = $pictureRow[0];
+}
+
+if ($url != $picture) {
+    $beginPos = strpos($url, "data/");
+    $urlToDelete = substr($url, $beginPos + strlen("data/") );
+
+    if (!unlink($urlToDelete)) {
+	   echo ("Error deleting $file");
+    } else {
+	echo ("Deleted $file");
+    }
+}
 
 
 $editArtistQuery ="UPDATE artists SET name='".$name."', picture='".$picture."' ,style='".$style."', description='".$description."', day='".$day."', stage='".$stage."', beginHour='".$start_time."', endHour='".$end_time."', website='".$website."', facebook='".$facebook."', twitter='".$twitter."', youtube='".$youtube."' WHERE id=".$id."";
