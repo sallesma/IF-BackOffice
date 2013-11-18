@@ -8,7 +8,7 @@ $getFiltersResult = mysql_query($getFiltersQuery);
 while($filtersRow = mysql_fetch_array($getFiltersResult)){
 	echo "<div class=\"col-sm-6 col-md-3\">";
 	echo "	<form role=\"form\">";
-	echo "		<a href=\"#\" class=\"thumbnail\">";
+	echo "		<a href=\"#photoFilter-edit\" class=\"thumbnail\">";
 	echo "			<img src=\"".$filtersRow[1]."\" alt=\"...\">";
 	echo "		</a>";
 	echo "		<button type=\"button\" class=\"filterDeleteButton btn btn-danger\">Supprimer</button>";

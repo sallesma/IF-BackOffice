@@ -6,7 +6,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>Imaginarium Backoffice</title>
         <meta name="description" content="">
-        <link rel="stylesheet" href="style/main.css">
+        <link rel="stylesheet" href="style/main.css?v=8">
         <link rel="stylesheet" href="style/bootstrap.min.css">
         <link href="style/bootstrap-docs.css" rel="stylesheet">
         <link href="style/bootstrap-pygments-manni.css" rel="stylesheet">
@@ -17,7 +17,7 @@
 
     <body>
         <div class="container">
-            <h1>Imaginarium Festival - Backoffice</h1>
+            <h1><img src="style/images/logo_low.png" id="logo" alt="Logo">   Imaginarium Festival - Backoffice</h1>
             <p>Pour changer le contenu de l'application mobile Imaginarium Festival.</p>
         </div>
         <div class="container bs-docs-container">
@@ -62,13 +62,13 @@
                                 </ul>
                             </li>
                             <li>
-                                <a href="#infos">Infos</a>
+                                <a href="#infos">Infos pratiques</a>
                                 <ul class="nav">
                                     <li>
-                                        <a href="#infos">Visualiser les infos</a>
+                                        <a href="#infos">Visualiser les infos pratiques</a>
                                     </li>
                                     <li>
-                                        <a href="#showInfoModalToAdd">Ajouter une info</a>
+                                        <a href="#showInfoModalToAdd">Ajouter une info pratique</a>
                                     </li>
                                 </ul>
                             </li>
@@ -111,7 +111,7 @@
                         </table>
 
                         <!-- Button to trigger modal -->
-                        <a id="addNewsTriggerModal" data-toggle="modal" href="#addNewModal" class="btn btn-primary btn-lg">Ajouter une nouvelle</a>
+                        <a id="addNewsTriggerModal" data-toggle="modal" href="#addNewModal" class="btn btn-primary btn-lg">Ajouter une news</a>
                         <!-- ADD Modal -->
                         <div class="modal fade" id="addNewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
@@ -444,7 +444,7 @@
                                     </div>
                                     <!--Parent-->
                                     <div class="form-group">
-                                        <label for="info-parent" class="col-lg-4 control-label">Parent</label>
+                                        <label for="info-parent" class="col-lg-4 control-label">Catégorie parente</label>
                                         <div class="col-lg-8">
                                             <select id="info-parent" class="form-control"></select>
                                         </div>
@@ -481,7 +481,7 @@
                                             <input id="add-info-picture" type="text" class="form-control" placeholder="Image">
                                             <br />
                                             <!--Parent-->
-                                            <label for="add-info-parent" class="col-lg-4 control-label">Parent</label>
+                                            <label for="add-info-parent" class="col-lg-4 control-label">Catégorie parente</label>
                                             <select id="add-info-parent" class="form-control"></select>
                                         </div>
                                         <div class="modal-footer">
