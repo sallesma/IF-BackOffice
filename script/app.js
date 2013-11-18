@@ -305,6 +305,9 @@ function getInfos() {
             var item = $('#infos-tree').jqxTree('getItem', htmlElement);
             $.getJSON("data/getInfo.php?id="+item.id).done(function (msg) {
                 var infoForm = $('#infos-edit-form');
+				$('#infos-form').show();
+				$('#infos-edit-text').hide();
+
                 infoForm.find('#info-id').val(msg.id);
 
                 //name
@@ -385,7 +388,8 @@ $('#infosDeleteButton').click(function() {
         }).done(function(msg) {
             getInfos();
             $("#onDeleteInfoAlert").show();
-            $('#infosDeleteButton').hide();
+            $('#infos-form').hide();
+			$('#infos-edit-text').show();
         }).fail(function(msg) {
             alert("Failure");
         });

@@ -21,6 +21,17 @@
 #infos-edit-form {
 	border-left:1px solid #C7C7C7;
 	padding:20px;
+	min-height:120px;
+}
+
+#infos-form {
+	display:none;
+}
+
+#infos-edit-text {
+	margin:auto;
+	height:100px;
+  	line-height:100px;
 }
 
 .alert {
