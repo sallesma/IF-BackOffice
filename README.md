@@ -49,7 +49,7 @@ A dump of the database that we use when we move to another server to install the
 
 To have the project running properly, put all the files in your web server file system
 
-Use base.sql to create your MySQL database with all the tables and some fake data (that you can delete afterwards if you want).
+Use base.sql to create your MySQL database with all the tables.
 
 Then you need to update the file data/connection.php to set up your database connection :
 
@@ -57,5 +57,6 @@ Then you need to update the file data/connection.php to set up your database con
 	$login = "";
 	$password = "";
 	$databaseName = "";
+	$table_schema= "";
 
 Your backoffice is now available!

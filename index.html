@@ -546,7 +546,6 @@
     <script src="script/bootstrap-holder.js"></script>
     <script src="script/bootstrap-application.js"></script>
     <script src="script/bootstrap-timepicker.js"></script>
-    <script src="script/app.js?v=23"></script>
     <script type="text/javascript" src="script/jqxcore.js"></script>
     <script type="text/javascript" src="script/jqxbuttons.js"></script>
     <script type="text/javascript" src="script/jqxscrollbar.js"></script>
@@ -555,6 +554,19 @@
     <script src="script/jquery.ui.widget.js"></script>
     <script src="script/jquery.iframe-transport.js"></script>
     <script src="script/jquery.fileupload.js"></script>
+
+    <script src="script/artists.js"></script>
+    <script src="script/infos.js"></script>
+    <script src="script/news.js"></script>
+    <script src="script/filters.js"></script>
+	<script type="text/javascript" >
+		$(document).ready(function() {
+			getNews();
+			getArtists();
+			getFilters();
+			getInfos();
+		});
+	</script>
 </body>
 
 </html>
