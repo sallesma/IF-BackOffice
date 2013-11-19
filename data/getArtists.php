@@ -24,7 +24,7 @@ while($artistRow = mysql_fetch_assoc($getArtistsResult)){
 	echo "<td>".$artistRow['day']."</td>";
 	echo "<td>".$artistRow['beginHour']."</td>";
 	echo "<td><input type=\"hidden\" value=\"".$artistRow['id']."\" name=\"id\"/>
-				<button type=\"button\" class=\"showArtistButton btn btn-primary\">Plus</button>
+				<button type=\"button\" class=\"showArtistButton btn btn-primary\">Voir plus</button>
 				<button type=\"button\" class=\"artistDeleteButton btn btn-danger\">Supprimer !</button>
 				</td>";
 	echo "</tr>";

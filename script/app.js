@@ -134,9 +134,6 @@ $(function () {
             $.each(data.result.files, function (index, file) {
             $("#art-image").val(file.url);
             $("#photoArtist").html('<a href="#" class="thumbnail"><img src="'+file.url + '" alt="..."></a></div>');
-
-
-
             });
         },
         progressall: function (e, data) {
@@ -323,8 +320,16 @@ function getInfos() {
                 infoForm.find('#info-name').val(msg.name);
 
                 //picture
-                infoForm.find('#info-picture').attr("data-src", msg.picture);
-
+                if (msg.picture != "") {
+                    $('#edit-infoFileButtonName').html('Modifier l\'icône');
+                    infoForm.find('#edit-photoInfo').html('<a href="#" class="thumbnail"><img src="'+msg.picture + '" alt="..."></a></div>');
+                }
+                    
+                else {
+                    $('#edit-infoFileButtonName').html('Séléctionner un fichier');
+                    infoForm.find('#edit-photoInfo').html('<i>Pas d\'icône actuellement</i>');
+                }
+                     
                 //isCategory
                 $('input[type=radio][name=isCategoryRadio]').change(function() {
                     if ( $('input[type=radio][name=isCategoryRadio]:checked').attr('value') == "1") { //if category
@@ -365,7 +370,6 @@ function getInfos() {
 
 $('#infosEditButton').click(function() {
     var infoForm = $('#infos-edit-form');
-
     $.ajax({
         type : "POST",
         url : "data/updateInfo.php",
@@ -374,7 +378,7 @@ $('#infosEditButton').click(function() {
             name : infoForm.find('#info-name').val(),
             isCategory : $('input[type=radio][name=isCategoryRadio]:checked').attr('value'),
             content : infoForm.find('#info-content').val(),
-            picture : infoForm.find('#info-picture').attr("data-src"),
+            picture : infoForm.find('#edit-info-image').val(),
             parentId : infoForm.find('#info-parent').val()
         }
     }).done(function(msg) {
@@ -414,7 +418,7 @@ $('#addInfoButton').click(function() {
             name : $("#add-info-name").val(),
             isCategory : $('input[type=radio][name=isAddCategoryRadio]:checked').attr('value'),
             content : $("#add-info-content").val(),
-            picture : $("#add-info-picture").val(),
+            picture : $("#add-info-image").val(),
             parent : $("#add-info-parent").val()
         }
     }).done(function(msg) {
@@ -444,6 +448,12 @@ $('#showInfoModalToAdd').click(function() {
         }
     });
     infoSelect.val("0");
+    $("#add-photoInfo").html("");
+    $("#add-info-image").val("");
+    $('#add-progressInfo .progress-bar').css(
+                'width',
+                '0%'
+            );
 });
 
 var computeTree = function (data) {
@@ -474,6 +484,57 @@ var computeTree = function (data) {
 }
 
 
+// Infos file Upload 
+//ADD
+$(function () {
+    'use strict';
+    // Change this to the location of your server-side upload handler:
+    var url = './data/fileUpload/index.php?directory=infos';
+    $('#add-infoFileUpload').fileupload({
+        url: url,
+        dataType: 'json',
+        done: function (e, data) {
+            $.each(data.result.files, function (index, file) {
+            $("#add-info-image").val(file.url);
+            $("#add-photoInfo").html('<a href="#" class="thumbnail"><img src="'+file.url + '" alt="..."></a></div>');
+            });
+        },
+        progressall: function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            $('#add-progressInfo .progress-bar').css(
+                'width',
+                progress + '%'
+            );
+        }
+    }).prop('disabled', !$.support.fileInput)
+    .parent().addClass($.support.fileInput ? undefined : 'disabled');
+});
+
+//EDIT
+$(function () {
+    'use strict';
+    // Change this to the location of your server-side upload handler:
+    var url = './data/fileUpload/index.php?directory=infos';
+    $('#edit-infoFileUpload').fileupload({
+        url: url,
+        dataType: 'json',
+        done: function (e, data) {
+            $.each(data.result.files, function (index, file) {
+                $("#edit-info-image").val(file.url);
+                $("#edit-photoInfo").html('<a href="#" class="thumbnail"><img src="'+file.url + '" alt="..."></a></div>');
+            });
+            $('#edit-infoFileButtonName').html('Modifier l\'icône');
+        },
+        progressall: function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            $('#edit-progressInfo .progress-bar').css(
+                'width',
+                progress + '%'
+            );
+        }
+    }).prop('disabled', !$.support.fileInput)
+    .parent().addClass($.support.fileInput ? undefined : 'disabled');
+});
 
 
 /*-----------*/

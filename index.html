@@ -1,520 +1,560 @@
 <!DOCTYPE html>
 <html>
 
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>Imaginarium Backoffice</title>
-        <meta name="description" content="">
-        <link rel="stylesheet" href="style/main.css?v=23">
-        <link rel="stylesheet" href="style/bootstrap.min.css">
-        <link href="style/bootstrap-docs.css" rel="stylesheet">
-        <link href="style/bootstrap-pygments-manni.css" rel="stylesheet">
-        <link href="style/bootstrap-timepicker.css" rel="stylesheet">
-        <link rel="stylesheet" href="style/jqx.base.css" type="text/css" />
-        <link rel="stylesheet" href="style/jquery.fileupload.css" />
-    </head>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Imaginarium Backoffice</title>
+    <meta name="description" content="">
+    <link rel="stylesheet" href="style/main.css?v=23">
+    <link rel="stylesheet" href="style/bootstrap.min.css">
+    <link href="style/bootstrap-docs.css" rel="stylesheet">
+    <link href="style/bootstrap-pygments-manni.css" rel="stylesheet">
+    <link href="style/bootstrap-timepicker.css" rel="stylesheet">
+    <link rel="stylesheet" href="style/jqx.base.css" type="text/css" />
+    <link rel="stylesheet" href="style/jquery.fileupload.css" />
+</head>
 
-    <body>
-        <div class="container">
-            <h1><img src="style/images/logo_low.png" id="logo" alt="Logo">   Imaginarium Festival - Backoffice</h1>
-            <p>Pour changer le contenu de l'application mobile Imaginarium Festival.</p>
-        </div>
-        <div class="container bs-docs-container">
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="bs-sidebar hidden-print" role="complementary">
-                        <ul class="nav bs-sidenav">
-                            <li>
-                                <a href="#informations">Informations sur le backoffice</a>
-                            </li>
-							<li>
-                                <a href="#news">News</a>
-                                <ul class="nav">
-                                    <li>
-                                        <a href="#news">Liste des news</a>
-                                    </li>
-                                    <li>
-                                        <a href="#addNewsTriggerModal">Ajouter une news</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="#artists">Artistes</a>
-                                <ul class="nav">
-                                    <li>
-                                        <a href="#artists">Liste des artistes</a>
-                                    </li>
-                                    <li>
-                                        <a href="#showArtistModalToAdd">Ajouter un artiste</a>
-                                    </li>
-                                </ul>
-							</li>
-                            <li>
-                                <a href="#photoFilter">Photos</a>
-                                <ul class="nav">
-                                    <li>
-                                        <a href="#photoFilter-add">Ajouter un filtre</a>
-                                    </li>
-                                    <li>
-                                        <a href="#photoFilter-edit">Liste des filtres</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="#infos">Infos pratiques</a>
-                                <ul class="nav">
-                                    <li>
-                                        <a href="#infos">Visualiser les infos pratiques</a>
-                                    </li>
-                                    <li>
-                                        <a href="#showInfoModalToAdd">Ajouter une info pratique</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
+<body>
+    <div class="container">
+        <h1>
+            <img src="style/images/logo_low.png" id="logo" alt="Logo">Imaginarium Festival - Backoffice</h1>
+        <p>Pour changer le contenu de l'application mobile Imaginarium Festival.</p>
+    </div>
+    <div class="container bs-docs-container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="bs-sidebar hidden-print" role="complementary">
+                    <ul class="nav bs-sidenav">
+                        <li>
+                            <a href="#informations">Informations sur le backoffice</a>
+                        </li>
+                        <li>
+                            <a href="#news">News</a>
+                            <ul class="nav">
+                                <li>
+                                    <a href="#news">Liste des news</a>
+                                </li>
+                                <li>
+                                    <a href="#addNewsTriggerModal">Ajouter une news</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#artists">Artistes</a>
+                            <ul class="nav">
+                                <li>
+                                    <a href="#artists">Liste des artistes</a>
+                                </li>
+                                <li>
+                                    <a href="#showArtistModalToAdd">Ajouter un artiste</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#photoFilter">Photos</a>
+                            <ul class="nav">
+                                <li>
+                                    <a href="#photoFilter-add">Ajouter un filtre</a>
+                                </li>
+                                <li>
+                                    <a href="#photoFilter-edit">Liste des filtres</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#infos">Infos pratiques</a>
+                            <ul class="nav">
+                                <li>
+                                    <a href="#infos">Visualiser les infos pratiques</a>
+                                </li>
+                                <li>
+                                    <a href="#showInfoModalToAdd">Ajouter une info pratique</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
                 </div>
-                <div class="col-md-9" role="main">
+            </div>
+            <div class="col-md-9" role="main">
 
 
-					<div class="bs-docs-section">
-                        <div class="page-header">
-                            <h1 id="informations">Informations sur le backoffice</h1>
-                        </div>
-                        <p>Ce backoffice vous permet de modifier facilement une grande partie du contenu des applications mobiles. C'est pratique, mais le revers de la médaille est la responsabilité qui vous est donnée.</p>
+                <div class="bs-docs-section">
+                    <div class="page-header">
+                        <h1 id="informations">Informations sur le backoffice</h1>
+                    </div>
+                    <p>Ce backoffice vous permet de modifier facilement une grande partie du contenu des applications mobiles. C'est pratique, mais le revers de la médaille est la responsabilité qui vous est donnée.</p>
 
-						<p>Pensez à toujours vérifier les informations que vous ajoutez car elles sont disponibles immédiatement dans l'application (Même s'il est possible de les modifier juste après)</p>
+                    <p>Pensez à toujours vérifier les informations que vous ajoutez car elles sont disponibles immédiatement dans l'application (Même s'il est possible de les modifier juste après)</p>
 
-						<p>Faites particulièrement attention à la taille et au format des photos et images que vous ajoutez (artistes, infos pratiques, filtres photos). Respectez les tailles requises quand il y en a et au besoin inspirez vous des fichiers déjà ajoutés pour être sûrs.</p>
+                    <p>Faites particulièrement attention à la taille et au format des photos et images que vous ajoutez (artistes, infos pratiques, filtres photos). Respectez les tailles requises quand il y en a et au besoin inspirez vous des fichiers déjà ajoutés pour être sûrs.</p>
 
-						<p>Une bonne pratique serait d'avoir toujours sur soi un smartphone et de tester l'application tout de suite après avoir effectué une modification pour s'assurer que l'on n'a pas fait d'erreur.</p>
+                    <p>Une bonne pratique serait d'avoir toujours sur soi un smartphone et de tester l'application tout de suite après avoir effectué une modification pour s'assurer que l'on n'a pas fait d'erreur.</p>
 
-						<p>Si vous avez la moindre question, n'hésitez pas à nous contacter au plus vite : titouan.rossier@gmail.com salles.martin@gmail.com</p>
+                    <p>Si vous avez la moindre question, n'hésitez pas à nous contacter au plus vite : titouan.rossier@gmail.com salles.martin@gmail.com</p>
+                </div>
+
+                <!-- News -->
+                <div class="bs-docs-section">
+                    <div class="page-header">
+                        <h1 id="news">News</h1>
+                    </div>
+                    <p>Pour ajouter, éditer et supprimer les news.</p>
+                    <p>Elles seront affichées dans l'ordre décroissant (la plus récente en premier) dans l'application.</p>
+
+                    <div id="onDeleteNewsAlert" class="alert alert-danger fade in">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <h4>La news a bien été supprimée !</h4>
+                        <p>(C'est trop tard, il n'est plus possible de la récupérer. )</p>
                     </div>
 
-                    <!-- News -->
-                    <div class="bs-docs-section">
-                        <div class="page-header">
-                            <h1 id="news">News</h1>
-                        </div>
-                        <p>Pour ajouter, éditer et supprimer les news.</p>
-                        <p>Elles seront affichées dans l'ordre décroissant (la plus récente en premier) dans l'application.</p>
+                    <table id="news-table" class="table table-hover">
+                    </table>
 
-                        <div id="onDeleteNewsAlert" class="alert alert-danger fade in">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            <h4>La news a bien été supprimée !</h4>
-                            <p>(C'est trop tard, il n'est plus possible de la récupérer. )</p>
-                        </div>
-
-                        <table id="news-table" class="table table-hover">
-                        </table>
-
-                        <!-- Button to trigger modal -->
-                        <a id="addNewsTriggerModal" data-toggle="modal" href="#addNewModal" class="btn btn-primary btn-lg">Ajouter une news</a>
-                        <!-- ADD Modal -->
-                        <div class="modal fade" id="addNewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                        <h4 class="modal-title">Ajouter une nouvelle</h4>
-                                    </div>
-                                    <form role="form">
-                                        <div class="modal-body">
-                                            <input id="newTitle" type="text" class="form-control" placeholder="Titre">
-                                            <br />
-                                            <textarea id="newBody" class="form-control" rows="3" placeholder="Nouvelle"></textarea>
-                                            <br />
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
-                                            <button type="button" class="btn btn-primary" id="addNewButton">Ajouter</button>
-                                        </div>
-                                    </form>
+                    <!-- Button to trigger modal -->
+                    <a id="addNewsTriggerModal" data-toggle="modal" href="#addNewModal" class="btn btn-primary btn-lg">Ajouter une news</a>
+                    <!-- ADD Modal -->
+                    <div class="modal fade" id="addNewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title">Ajouter une nouvelle</h4>
                                 </div>
-                                <!-- /.modal-content -->
-                            </div>
-                            <!-- /.modal-dialog -->
-                        </div>
-                        <!-- /.modal -->
-
-                        <!-- EDIT Modal -->
-                        <div class="modal fade" id="editNewsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                        <h4 class="modal-title">Modifier une nouvelle</h4>
+                                <form role="form">
+                                    <div class="modal-body">
+                                        <input id="newTitle" type="text" class="form-control" placeholder="Titre">
+                                        <br />
+                                        <textarea id="newBody" class="form-control" rows="3" placeholder="Nouvelle"></textarea>
+                                        <br />
                                     </div>
-                                    <form role="form">
-                                        <div class="modal-body">
-                                            <input id="rowID" type="hidden" value="">
-                                            <input id="newTitle" type="text" class="form-control" placeholder="Titre">
-                                            <br />
-                                            <textarea id="newBody" class="form-control" rows="3" placeholder="Nouvelle"></textarea>
-                                            <br />
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
-                                            <button type="button" class="btn btn-primary" id="editNewButton">Enregistrer</button>
-                                        </div>
-                                    </form>
-                                </div>
-                                <!-- /.modal-content -->
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                                        <button type="button" class="btn btn-primary" id="addNewButton">Ajouter</button>
+                                    </div>
+                                </form>
                             </div>
-                            <!-- /.modal-dialog -->
+                            <!-- /.modal-content -->
                         </div>
-                        <!-- /.modal -->
+                        <!-- /.modal-dialog -->
                     </div>
-                    <!-- fin news==================================================- ->
+                    <!-- /.modal -->
+
+                    <!-- EDIT Modal -->
+                    <div class="modal fade" id="editNewsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title">Modifier une nouvelle</h4>
+                                </div>
+                                <form role="form">
+                                    <div class="modal-body">
+                                        <input id="rowID" type="hidden" value="">
+                                        <input id="newTitle" type="text" class="form-control" placeholder="Titre">
+                                        <br />
+                                        <textarea id="newBody" class="form-control" rows="3" placeholder="Nouvelle"></textarea>
+                                        <br />
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                                        <button type="button" class="btn btn-primary" id="editNewButton">Enregistrer</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- /.modal-content -->
+                        </div>
+                        <!-- /.modal-dialog -->
+                    </div>
+                    <!-- /.modal -->
+                </div>
+                <!-- fin news==================================================- ->
 
 <!-- Artistes
 ================================================== -->
-                    <div class="bs-docs-section">
-                        <div class="page-header">
-                            <h1 id="artists">Artistes</h1>
-                        </div>
-                        <p>Vous pouvez ajouter ou éditer des artistes par cette interface. Les changements sont pris en compte pour modifier la programmation en conséquence (en plus des fiches artiste).</p>
-                        <div id="onDeleteArtistAlert" class="alert alert-danger fade in">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            <h4>L'artiste a bien été supprimé !</h4>
-                            <p>(C'est trop tard, il n'est plus possible de le récupérer. )</p>
-                        </div>
-                        <table id="artists-table" class="table table-hover"></table>
-                        <!-- Button to trigger modal -->
-                        <button id="showArtistModalToAdd" class="btn btn-primary btn-lg">Ajouter un artiste</button>
-                        <!-- Modal -->
-                        <div class="modal fade" id="artistModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                        <h4 class="modal-title" id="title">Ajouter un nouvel artiste</h4>
-                                    </div>
-                                    <input type="hidden" value="" name="id" />
-                                    <form id="artist-add-form" class="form-horizontal" role="form">
-                                        <div class="modal-body">
-                                            <!--Name-->
-                                            <div class="form-group">
-                                                <label for="art-name" class="col-lg-2 control-label">Nom</label>
-                                                <div class="col-lg-10">
-                                                    <input id="art-name" type="text" class="form-control" id="art-name" placeholder="Nom">
-                                                </div>
-                                            </div>
-                                            <!--Style-->
-                                            <div class="form-group">
-                                                <label for="art-style" class="col-lg-2 control-label">Style</label>
-                                                <div class="col-lg-10">
-                                                    <input id="art-style" type="text" class="form-control" id="art-style" placeholder="Style">
-                                                </div>
-                                            </div>
-                                            <!-- Image -->
-                                            <div class="form-group">
-                                                <label for="art-image" class="col-lg-2 control-label">Image</label>
-                                                <input id="art-image" type="hidden" value=""/>
-                                                <span class="btn btn-success fileinput-button">
-                                                    <i class="glyphicon glyphicon-plus"></i>
-                                                    <span id="artistFileButtonName">Séléctionner un fichier</span>
-                                                    <!-- The file input field used as target for the file upload widget -->
-                                                    <input id="artistFileUpload" type="file" name="files[]">
-                                                </span>
-                                                <br>
-                                                <br>
-                                                <!-- The global progress bar -->
-                                                <div id="progressArtist" class="progress">
-                                                    <div class="progress-bar progress-bar-success"></div>
-                                                </div>
-
-
-                                                <div class="col-md-3" id="photoArtist">
-                                                </div>
-
-                                            </div>
-
-
-                                            <!--Description-->
-                                            <div class="form-group">
-                                                <label for="art-description" class="col-lg-2 control-label">Description</label>
-                                                <div class="col-lg-10">
-                                                    <textarea id="art-description" type="text" class="form-control" placeholder="Description"></textarea>
-                                                </div>
-                                            </div>
-
-                                            <!--Scene-->
-                                            <div class="form-group">
-                                                <label for="art-scene" class="col-lg-2 control-label">Scène</label>
-                                                <div class="col-lg-10">
-                                                    <select id="art-scene" class="form-control">
-                                                        <option value="principale">Scène principale</option>
-                                                        <option value="chapiteau">Scène chapiteau</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <!--Day-->
-                                            <div class="form-group">
-                                                <label for="art-day" class="col-lg-2 control-label">Jour</label>
-                                                <div class="col-lg-10">
-                                                    <select id="art-day" class="form-control">
-                                                        <option value="vendredi">Vendredi</option>
-                                                        <option value="samedi">Samedi</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <!--Start time-->
-                                            <div class="form-group">
-                                                <label for="art-start-time" class="col-lg-2 control-label">Heure début</label>
-                                                <div class="bootstrap-timepicker col-lg-10">
-                                                    <input id="art-start-time" type="text">
-                                                </div>
-                                            </div>
-                                            <!--End hour-->
-                                            <div class="form-group">
-                                                <label for="art-end-time" class="col-lg-2 control-label">Heure Fin</label>
-                                                <div class="bootstrap-timepicker col-lg-10">
-                                                    <input id="art-end-time" type="text">
-                                                </div>
-                                            </div>
-                                            <!--Website-->
-                                            <div class="form-group">
-                                                <label for="art-website" class="col-lg-2 control-label">Site web</label>
-                                                <div class="input-group col-lg-10">
-                                                    <input id="art-website" type="text" class="form-control input-link">
-                                                    <span class="input-group-btn">
-                                                        <button class="btn btn-default visit-link" type="button">Visiter</button>
-                                                    </span>
-                                                </div>
-                                                <!-- /input-group -->
-                                            </div>
-                                            <!--Facebook-->
-                                            <div class="form-group">
-                                                <label for="art-facebook" class="col-lg-2 control-label">Facebook</label>
-                                                <div class="input-group col-lg-10">
-                                                    <input id="art-facebook" type="text" class="form-control input-link">
-                                                    <span class="input-group-btn">
-                                                        <button class="btn btn-default visit-link" type="button">Visiter</button>
-                                                    </span>
-                                                </div>
-                                                <!-- /input-group -->
-                                            </div>
-                                            <!--Twitter-->
-                                            <div class="form-group">
-                                                <label for="art-twitter" class="col-lg-2 control-label">Twitter</label>
-                                                <div class="input-group col-lg-10">
-                                                    <input id="art-twitter" type="text" class="form-control input-link">
-                                                    <span class="input-group-btn">
-                                                        <button class="btn btn-default visit-link" type="button">Visiter</button>
-                                                    </span>
-                                                </div>
-                                                <!-- /input-group -->
-                                            </div>
-                                            <!--Twitter-->
-                                            <div class="form-group">
-                                                <label for="art-youtube" class="col-lg-2 control-label">Youtube</label>
-                                                <div class="input-group col-lg-10">
-                                                    <input id="art-youtube" type="text" class="form-control input-link">
-                                                    <span class="input-group-btn">
-                                                        <button class="btn btn-default visit-link" type="button">Visiter</button>
-                                                    </span>
-                                                </div>
-                                                <!-- /input-group -->
-                                            </div>
-                                        </div>
-                                        <!--/.modal-body-->
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
-                                            <button type="button" class="btn btn-primary" id="artistModalActionButton">Ajouter</button>
-                                        </div>
-                                        <!--/.modal-footer-->
-                                    </form>
-                                </div>
-                                <!-- /.modal-content -->
-                            </div>
-                            <!-- /.modal-dialog -->
-                        </div>
-                        <!-- /.modal -->
+                <div class="bs-docs-section">
+                    <div class="page-header">
+                        <h1 id="artists">Artistes</h1>
                     </div>
-                    <!-- fin artistes==================================================- ->
+                    <p>Vous pouvez ajouter ou éditer des artistes par cette interface. Les changements sont pris en compte pour modifier la programmation en conséquence (en plus des fiches artiste).</p>
+                    <div id="onDeleteArtistAlert" class="alert alert-danger fade in">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <h4>L'artiste a bien été supprimé !</h4>
+                        <p>(C'est trop tard, il n'est plus possible de le récupérer. )</p>
+                    </div>
+                    <table id="artists-table" class="table table-hover"></table>
+                    <!-- Button to trigger modal -->
+                    <button id="showArtistModalToAdd" class="btn btn-primary btn-lg">Ajouter un artiste</button>
+                    <!-- Modal -->
+                    <div class="modal fade" id="artistModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title" id="title">Ajouter un nouvel artiste</h4>
+                                </div>
+                                <input type="hidden" value="" name="id" />
+                                <form id="artist-add-form" class="form-horizontal" role="form">
+                                    <div class="modal-body">
+                                        <!--Name-->
+                                        <div class="form-group">
+                                            <label for="art-name" class="col-lg-2 control-label">Nom</label>
+                                            <div class="col-lg-10">
+                                                <input id="art-name" type="text" class="form-control" id="art-name" placeholder="Nom">
+                                            </div>
+                                        </div>
+                                        <!--Style-->
+                                        <div class="form-group">
+                                            <label for="art-style" class="col-lg-2 control-label">Style</label>
+                                            <div class="col-lg-10">
+                                                <input id="art-style" type="text" class="form-control" id="art-style" placeholder="Style">
+                                            </div>
+                                        </div>
+                                        <!-- Image -->
+                                        <div class="form-group">
+                                            <label for="art-image" class="col-lg-2 control-label">Image</label>
+                                            <input id="art-image" type="hidden" value="" />
+                                            <span class="btn btn-success fileinput-button">
+                                                <i class="glyphicon glyphicon-plus"></i>
+                                                <span id="artistFileButtonName">Séléctionner un fichier</span>
+                                                <!-- The file input field used as target for the file upload widget -->
+                                                <input id="artistFileUpload" type="file" name="files[]">
+                                            </span>
+                                            <br>
+                                            <br>
+                                            <!-- The global progress bar -->
+                                            <div id="progressArtist" class="progress">
+                                                <div class="progress-bar progress-bar-success"></div>
+                                            </div>
+
+
+                                            <div class="col-md-3" id="photoArtist">
+                                            </div>
+
+                                        </div>
+
+
+                                        <!--Description-->
+                                        <div class="form-group">
+                                            <label for="art-description" class="col-lg-2 control-label">Description</label>
+                                            <div class="col-lg-10">
+                                                <textarea id="art-description" type="text" class="form-control" placeholder="Description"></textarea>
+                                            </div>
+                                        </div>
+
+                                        <!--Scene-->
+                                        <div class="form-group">
+                                            <label for="art-scene" class="col-lg-2 control-label">Scène</label>
+                                            <div class="col-lg-10">
+                                                <select id="art-scene" class="form-control">
+                                                    <option value="principale">Scène principale</option>
+                                                    <option value="chapiteau">Scène chapiteau</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <!--Day-->
+                                        <div class="form-group">
+                                            <label for="art-day" class="col-lg-2 control-label">Jour</label>
+                                            <div class="col-lg-10">
+                                                <select id="art-day" class="form-control">
+                                                    <option value="vendredi">Vendredi</option>
+                                                    <option value="samedi">Samedi</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <!--Start time-->
+                                        <div class="form-group">
+                                            <label for="art-start-time" class="col-lg-2 control-label">Heure début</label>
+                                            <div class="bootstrap-timepicker col-lg-10">
+                                                <input id="art-start-time" type="text">
+                                            </div>
+                                        </div>
+                                        <!--End hour-->
+                                        <div class="form-group">
+                                            <label for="art-end-time" class="col-lg-2 control-label">Heure Fin</label>
+                                            <div class="bootstrap-timepicker col-lg-10">
+                                                <input id="art-end-time" type="text">
+                                            </div>
+                                        </div>
+                                        <!--Website-->
+                                        <div class="form-group">
+                                            <label for="art-website" class="col-lg-2 control-label">Site web</label>
+                                            <div class="input-group col-lg-10">
+                                                <input id="art-website" type="text" class="form-control input-link">
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-default visit-link" type="button">Visiter</button>
+                                                </span>
+                                            </div>
+                                            <!-- /input-group -->
+                                        </div>
+                                        <!--Facebook-->
+                                        <div class="form-group">
+                                            <label for="art-facebook" class="col-lg-2 control-label">Facebook</label>
+                                            <div class="input-group col-lg-10">
+                                                <input id="art-facebook" type="text" class="form-control input-link">
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-default visit-link" type="button">Visiter</button>
+                                                </span>
+                                            </div>
+                                            <!-- /input-group -->
+                                        </div>
+                                        <!--Twitter-->
+                                        <div class="form-group">
+                                            <label for="art-twitter" class="col-lg-2 control-label">Twitter</label>
+                                            <div class="input-group col-lg-10">
+                                                <input id="art-twitter" type="text" class="form-control input-link">
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-default visit-link" type="button">Visiter</button>
+                                                </span>
+                                            </div>
+                                            <!-- /input-group -->
+                                        </div>
+                                        <!--Twitter-->
+                                        <div class="form-group">
+                                            <label for="art-youtube" class="col-lg-2 control-label">Youtube</label>
+                                            <div class="input-group col-lg-10">
+                                                <input id="art-youtube" type="text" class="form-control input-link">
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-default visit-link" type="button">Visiter</button>
+                                                </span>
+                                            </div>
+                                            <!-- /input-group -->
+                                        </div>
+                                    </div>
+                                    <!--/.modal-body-->
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                                        <button type="button" class="btn btn-primary" id="artistModalActionButton">Ajouter</button>
+                                    </div>
+                                    <!--/.modal-footer-->
+                                </form>
+                            </div>
+                            <!-- /.modal-content -->
+                        </div>
+                        <!-- /.modal-dialog -->
+                    </div>
+                    <!-- /.modal -->
+                </div>
+                <!-- fin artistes==================================================- ->
 
 <!-- Photos
 ================================================== -->
-                    <div class="bs-docs-section">
-                        <div class="page-header">
-                            <h1 id="photoFilter">Filtres photos</h1>
-                        </div>
-
-						<p>Vous pouvez ajouter des filtres photos qui seront utilisés pour la fonctionnalité d'appareil photo de l'application. L'utilisateur choisira un filtre et prendra une photo, la photo sera alors modifiée en ajoutant le filtre par dessus.</p>
-						<p>Vous devez impérativement respecter la taille standard qui est de XXX*XXX pixels et utiliser le format png (pour utiliser la transparence).</p>
-
-                        <h3 id="photoFilter-add">Ajouter un filtre</h3>
-                        <form id="filter-add-form" class="form-horizontal" role="form">
-                            <span class="btn btn-success fileinput-button">
-                                <i class="glyphicon glyphicon-plus"></i>
-                                <span>Séléctionner un fichier</span>
-                                <!-- The file input field used as target for the file upload widget -->
-                                <input id="filtersFileUpload" type="file" name="files[]" multiple>
-                            </span>
-                            <br>
-                            <br>
-                            <!-- The global progress bar -->
-                            <div id="progress" class="progress">
-                                <div class="progress-bar progress-bar-success"></div>
-                            </div>
-                            <!-- The container for the uploaded files -->
-                            <div id="files" class="files"></div>
-                            <br>
-                        </form>
-                        <h3>Editer les filtres</h3>
-
-						<div id="onDeleteFiltersAlert" class="alert alert-danger fade in">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            <h4>Le filtre photo a bien été supprimé !</h4>
-                            <p>(C'est trop tard, il n'est plus possible de le récupérer. )</p>
-                        </div>
-
-                        <div class="row" id="photoFilter-edit">
-						</div>
+                <div class="bs-docs-section">
+                    <div class="page-header">
+                        <h1 id="photoFilter">Filtres photos</h1>
                     </div>
-                    <!-- fin photos==================================================- ->
+
+                    <p>Vous pouvez ajouter des filtres photos qui seront utilisés pour la fonctionnalité d'appareil photo de l'application. L'utilisateur choisira un filtre et prendra une photo, la photo sera alors modifiée en ajoutant le filtre par dessus.</p>
+                    <p>Vous devez impérativement respecter la taille standard qui est de XXX*XXX pixels et utiliser le format png (pour utiliser la transparence).</p>
+
+                    <h3 id="photoFilter-add">Ajouter un filtre</h3>
+                    <form id="filter-add-form" class="form-horizontal" role="form">
+                        <span class="btn btn-success fileinput-button">
+                            <i class="glyphicon glyphicon-plus"></i>
+                            <span>Séléctionner un fichier</span>
+                            <!-- The file input field used as target for the file upload widget -->
+                            <input id="filtersFileUpload" type="file" name="files[]" multiple>
+                        </span>
+                        <br>
+                        <br>
+                        <!-- The global progress bar -->
+                        <div id="progress" class="progress">
+                            <div class="progress-bar progress-bar-success"></div>
+                        </div>
+                        <!-- The container for the uploaded files -->
+                        <div id="files" class="files"></div>
+                        <br>
+                    </form>
+                    <h3>Editer les filtres</h3>
+
+                    <div id="onDeleteFiltersAlert" class="alert alert-danger fade in">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <h4>Le filtre photo a bien été supprimé !</h4>
+                        <p>(C'est trop tard, il n'est plus possible de le récupérer. )</p>
+                    </div>
+
+                    <div class="row" id="photoFilter-edit">
+                    </div>
+                </div>
+                <!-- fin photos==================================================- ->
 
 <!-- Infos
 ================================================== -->
-                    <div class="bs-docs-section">
-                        <div class="page-header">
-                            <h1 id="infos">Informations pratiques</h1>
+                <div class="bs-docs-section">
+                    <div class="page-header">
+                        <h1 id="infos">Informations pratiques</h1>
+                    </div>
+                    <p>Vous pouvez ajouter ou éditer des infos pratiques par cette interface.</p>
+                    <p>Sélectionnez une info ou une catégorie d'info dans l'arbre à gauche pour pouvoir l'éditer à droite. L'arborescence présentée sera exactement celle de la page "Infos pratiques" dans l'application.</p>
+                    <p>Il est vivement conseillé de construire une arborescence propre (en mettant les infos dans des catégories et non l'inverse, par exemple). Sinon l'application mobile risque de mal fonctionner.</p>
+                    <p>Il est possible de laisser des infos à la racine de l'arborescence ("Aucun parent").</p>
+                    <div id="onDeleteInfoAlert" class="alert alert-danger fade in">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <h4>L'info/Catégorie a bien été supprimée !</h4>
+                        <p>(Les champs sont laissés plein au cas où tu voudrais copier/coller tout ça pour la recréer ;) )</p>
+                    </div>
+                    <div id="infos-div" class="row">
+                        <div id="infos-tree" class="col-md-3"></div>
+                        <div id="infos-edit-form" class="col-md-8">
+                            <p id="infos-edit-text">Sélectionnez une info ou une catégorie dans l'arbre pour l'afficher en détail ici</p>
+                            <form id="infos-form" class="form-horizontal" role="form">
+                                <input id="info-id" type="hidden" value="" name="id" />
+                                <!--Name-->
+                                <div class="form-group">
+                                    <label for="info-name" class="col-lg-4 control-label">Nom</label>
+                                    <div class="col-lg-8">
+                                        <input id="info-name" type="text" class="form-control" id="art-name" placeholder="Nom">
+                                    </div>
+                                </div>
+                                <!--isCategory-->
+                                <div class="form-group">
+                                    <label for="info-name" class="col-lg-4 control-label">Catégorie ou info ?</label>
+                                    <div class="col-lg-8">
+                                        <label class="radio">
+                                            <input type="radio" name="isCategoryRadio" id="category" value="1">Catégorie</label>
+                                        <label class="radio">
+                                            <input type="radio" name="isCategoryRadio" id="info" value="0">Info</label>
+                                    </div>
+                                </div>
+                                <!--Description-->
+                                <div id="InfoContent" class="form-group">
+                                    <label for="info-content" class="col-lg-4 control-label">Description</label>
+                                    <div class="col-lg-8">
+                                        <textarea id="info-content" type="text" class="form-control" id="info-content" placeholder="Description"></textarea>
+                                    </div>
+                                </div>
+
+                                <!-- UPLOAD -->
+                                <div class="form-group">
+                                    <label for="edit-info-image" class="col-lg-2 control-label">Icône</label>
+                                    <input id="edit-info-image" type="hidden" value="" />
+                                    <span class="btn btn-success fileinput-button">
+                                        <i class="glyphicon glyphicon-plus"></i>
+                                        <span id="edit-infoFileButtonName">Séléctionner un fichier</span>
+                                        <!-- The file input field used as target for the file upload widget -->
+                                        <input id="edit-infoFileUpload" type="file" name="files[]">
+                                    </span>
+                                    <br>
+                                    <br>
+                                    <!-- The global progress bar -->
+                                    <div id="edit-progressInfo" class="progress">
+                                        <div class="progress-bar progress-bar-success"></div>
+                                    </div>
+
+                                    <div class="col-md-3" id="edit-photoInfo">
+                                    </div>
+                                </div>
+                                <div id="clear"></div>
+
+                                <!--Parent-->
+                                <div class="form-group">
+                                    <label for="info-parent" class="col-lg-4 control-label">Catégorie parente</label>
+                                    <div class="col-lg-8">
+                                        <select id="info-parent" class="form-control"></select>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-primary" id="infosEditButton">Enregistrer les modifs</button>
+                                <button type="button" class="btn btn-danger" id="infosDeleteButton">Supprimer !</button>
+                            </form>
                         </div>
-                        <p>Vous pouvez ajouter ou éditer des infos pratiques par cette interface.</p>
-                        <p>Sélectionnez une info ou une catégorie d'info dans l'arbre à gauche pour pouvoir l'éditer à droite. L'arborescence présentée sera exactement celle de la page "Infos pratiques" dans l'application.</p>
-						<p>Il est vivement conseillé de construire une arborescence propre (en mettant les infos dans des catégories et non l'inverse, par exemple). Sinon l'application mobile risque de mal fonctionner.</p>
-						<p>Il est possible de laisser des infos à la racine de l'arborescence ("Aucun parent").</p>
-                        <div id="onDeleteInfoAlert" class="alert alert-danger fade in">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            <h4>L'info/Catégorie a bien été supprimée !</h4>
-                            <p>(Les champs sont laissés plein au cas où tu voudrais copier/coller tout ça pour la recréer ;) )</p>
-                        </div>
-                        <div id="infos-div" class="row">
-                            <div id="infos-tree" class="col-md-3"></div>
-                            <div id="infos-edit-form" class="col-md-8">
-								<p id="infos-edit-text">Sélectionnez une info ou une catégorie dans l'arbre pour l'afficher en détail ici</p>
-                                <form id="infos-form" class="form-horizontal" role="form">
-                                    <input id="info-id" type="hidden" value="" name="id" />
-                                    <!--Name-->
-                                    <div class="form-group">
-                                        <label for="info-name" class="col-lg-4 control-label">Nom</label>
-                                        <div class="col-lg-8">
-                                            <input id="info-name" type="text" class="form-control" id="art-name" placeholder="Nom">
+                    </div>
+                    <!-- Button to trigger modal -->
+                    <a id="showInfoModalToAdd" data-toggle="modal" href="#addInfoModal" class="btn btn-primary btn-lg">Ajouter une Info</a>
+                    <!-- ADD Modal -->
+                    <div class="modal fade" id="addInfoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title">Ajouter une info</h4>
+                                </div>
+                                <form role="form">
+                                    <div class="modal-body">
+                                        <!--name-->
+                                        <input id="add-info-name" type="text" class="form-control" placeholder="Titre">
+                                        <br />
+                                        <!--isCategory-->
+                                        <input type="radio" name="isAddCategoryRadio" id="add-category" value="1">
+                                        <span>&nbsp;Catégorie&nbsp;</span>
+                                        <input type="radio" name="isAddCategoryRadio" id="add-info" value="0">
+                                        <span>&nbsp;Info&nbsp;</span>
+                                        <br />
+                                        <br />
+                                        <!--Description-->
+                                        <textarea id="add-info-content" class="form-control" rows="3" placeholder="Contenu"></textarea>
+                                        <br />
+                                        <!-- Image -->
+                                        <div class="form-group">
+                                            <label for="add-info-image" class="col-lg-2 control-label">Image</label>
+                                            <input id="add-info-image" type="hidden" value="" />
+                                            <span class="btn btn-success fileinput-button">
+                                                <i class="glyphicon glyphicon-plus"></i>
+                                                <span id="infoFileButtonName">Séléctionner un fichier</span>
+                                                <!-- The file input field used as target for the file upload widget -->
+                                                <input id="add-infoFileUpload" type="file" name="files[]">
+                                            </span>
+                                            <br>
+                                            <br>
+                                            <!-- The global progress bar -->
+                                            <div id="add-progressInfo" class="progress">
+                                                <div class="progress-bar progress-bar-success"></div>
+                                            </div>
+
+                                            <div class="col-md-3" id="add-photoInfo">
+                                            </div>
+
                                         </div>
+                                        <br>
+                                        <br>
+                                        <!--Parent-->
+                                        <label for="add-info-parent" class="col-lg-4 control-label">Catégorie parente</label>
+                                        <select id="add-info-parent" class="form-control"></select>
                                     </div>
-                                    <!--isCategory-->
-                                    <div class="form-group">
-                                        <label for="info-name" class="col-lg-4 control-label">Catégorie ou info ?</label>
-                                        <div class="col-lg-8">
-                                            <label class="radio">
-                                                <input type="radio" name="isCategoryRadio" id="category" value="1">Catégorie</label>
-                                            <label class="radio">
-                                                <input type="radio" name="isCategoryRadio" id="info" value="0">Info</label>
-                                        </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                                        <button type="button" class="btn btn-primary" id="addInfoButton">Ajouter</button>
                                     </div>
-                                    <!--Description-->
-                                    <div id="InfoContent" class="form-group">
-                                        <label for="info-content" class="col-lg-4 control-label">Description</label>
-                                        <div class="col-lg-8">
-                                            <textarea id="info-content" type="text" class="form-control" id="info-content" placeholder="Description"></textarea>
-                                        </div>
-                                    </div>
-                                    <!--PICTURE -->
-                                    <div class="form-group">
-                                        <label for="info-picture" class="col-lg-4 control-label">Image (icone)</label>
-                                        <div class="col-lg-8">
-                                            <img data-src="holder.js/100%x180" alt="...">
-                                        </div>
-                                    </div>
-                                    <!--Parent-->
-                                    <div class="form-group">
-                                        <label for="info-parent" class="col-lg-4 control-label">Catégorie parente</label>
-                                        <div class="col-lg-8">
-                                            <select id="info-parent" class="form-control"></select>
-                                        </div>
-                                    </div>
-                                    <button type="button" class="btn btn-primary" id="infosEditButton">Enregistrer les modifs</button>
-                                    <button type="button" class="btn btn-danger" id="infosDeleteButton">Supprimer !</button>
                                 </form>
                             </div>
+                            <!-- /.modal-content -->
                         </div>
-						<!-- Button to trigger modal -->
-                    	<a id="showInfoModalToAdd" data-toggle="modal" href="#addInfoModal" class="btn btn-primary btn-lg">Ajouter une Info</a>
-                        <!-- ADD Modal -->
-                        <div class="modal fade" id="addInfoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                        <h4 class="modal-title">Ajouter une info</h4>
-                                    </div>
-                                    <form role="form">
-                                        <div class="modal-body">
-                                            <!--name-->
-                                            <input id="add-info-name" type="text" class="form-control" placeholder="Titre">
-                                            <br />
-                                            <!--isCategory-->
-                                            <input type="radio" name="isAddCategoryRadio" id="add-category" value="1">Catégorie
-                                            <input type="radio" name="isAddCategoryRadio" id="add-info" value="0">Info
-                                            <br />
-                                            <br />
-                                            <!--Description-->
-                                            <textarea id="add-info-content" class="form-control" rows="3" placeholder="Contenu"></textarea>
-                                            <br />
-                                            <!--PICTURE -->
-                                            <input id="add-info-picture" type="text" class="form-control" placeholder="Image">
-                                            <br />
-                                            <!--Parent-->
-                                            <label for="add-info-parent" class="col-lg-4 control-label">Catégorie parente</label>
-                                            <select id="add-info-parent" class="form-control"></select>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
-                                            <button type="button" class="btn btn-primary" id="addInfoButton">Ajouter</button>
-                                        </div>
-                                    </form>
-                                </div>
-                                <!-- /.modal-content -->
-                            </div>
-                            <!-- /.modal-dialog -->
-                        </div>
-                        <!-- /.modal -->
+                        <!-- /.modal-dialog -->
                     </div>
-
-                    <!-- fin Infos
-================================================== -->
-
+                    <!-- /.modal -->
                 </div>
 
+                <!-- fin Infos
+================================================== -->
+
             </div>
+
         </div>
+    </div>
 
-		<footer class="bs-footer" role="contentinfo">
-			<div class="container">
-				<p>Imaginarium Festival</p>
-				<p>Réalisé par Titouan Rossier et Martin Salles</p>
-			</div>
-		</footer>
+    <footer class="bs-footer" role="contentinfo">
+        <div class="container">
+            <p>Imaginarium Festival</p>
+            <p>Réalisé par Titouan Rossier et Martin Salles</p>
+        </div>
+    </footer>
 
 
-        <!-- SCRIPTS -->
-        <script src="script/jquery-2.0.3.js"></script>
-        <script src="script/bootstrap.js"></script>
-        <script src="script/bootstrap-widgets.js"></script>
-        <script src="script/bootstrap-holder.js"></script>
-        <script src="script/bootstrap-application.js"></script>
-        <script src="script/bootstrap-timepicker.js"></script>
-        <script src="script/app.js?v=23"></script>
-        <script type="text/javascript" src="script/jqxcore.js"></script>
-        <script type="text/javascript" src="script/jqxbuttons.js"></script>
-        <script type="text/javascript" src="script/jqxscrollbar.js"></script>
-        <script type="text/javascript" src="script/jqxpanel.js"></script>
-        <script type="text/javascript" src="script/jqxtree.js"></script>
-        <script src="script/jquery.ui.widget.js"></script>
-        <script src="script/jquery.iframe-transport.js"></script>
-        <script src="script/jquery.fileupload.js"></script>
-    </body>
+    <!-- SCRIPTS -->
+    <script src="script/jquery-2.0.3.js"></script>
+    <script src="script/bootstrap.js"></script>
+    <script src="script/bootstrap-widgets.js"></script>
+    <script src="script/bootstrap-holder.js"></script>
+    <script src="script/bootstrap-application.js"></script>
+    <script src="script/bootstrap-timepicker.js"></script>
+    <script src="script/app.js?v=23"></script>
+    <script type="text/javascript" src="script/jqxcore.js"></script>
+    <script type="text/javascript" src="script/jqxbuttons.js"></script>
+    <script type="text/javascript" src="script/jqxscrollbar.js"></script>
+    <script type="text/javascript" src="script/jqxpanel.js"></script>
+    <script type="text/javascript" src="script/jqxtree.js"></script>
+    <script src="script/jquery.ui.widget.js"></script>
+    <script src="script/jquery.iframe-transport.js"></script>
+    <script src="script/jquery.fileupload.js"></script>
+</body>
+
 </html>

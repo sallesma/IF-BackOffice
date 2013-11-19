@@ -16,6 +16,27 @@ while($ParentIdRow = mysql_fetch_assoc($getParentIdResult)){
 $editChildrenQuery ="UPDATE infos SET parent='".$parentId."' WHERE parent=".$id;
 mysql_query($editChildrenQuery);
 
+
+//Picture deletion
+//get the url
+$getInfoImageUrlQuery = "SELECT picture FROM infos WHERE id =".$id;
+$getInfoImageUrlResult = mysql_query($getInfoImageUrlQuery);
+
+while($pictureRow = mysql_fetch_array($getInfoImageUrlResult)){
+	$url = $pictureRow[0];
+}
+
+//delete the filter file from server
+$beginPos = strpos($url, "data/");
+$urlToDelete = substr($url, $beginPos + strlen("data/") );
+
+if (!unlink($urlToDelete)) {
+	echo ("Error deleting $file");
+} else {
+	echo ("Deleted $file");
+}
+
+
 //Supprimer l'info
 $deleteInfoQuery ="DELETE FROM infos WHERE id=".$id;
 mysql_query($deleteInfoQuery);
