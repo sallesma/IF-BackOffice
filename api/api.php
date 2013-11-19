@@ -6,6 +6,7 @@ class API extends REST {
     public $data = "";
 
     private $db = NULL;
+	private $table_schema = NULL;
 
     public function __construct(){
         parent::__construct();				// Init parent contructor
@@ -20,6 +21,7 @@ class API extends REST {
         $this->db = mysql_connect($host,$login,$password);
         if($this->db)
             mysql_select_db($databaseName,$this->db);
+		$this->table_schema = $table_schema;
     }
 
     /*
@@ -63,7 +65,7 @@ class API extends REST {
         else {
 
 
-            $lastUpdateSql = mysql_query ("SELECT UPDATE_TIME FROM information_schema.TABLES WHERE TABLE_NAME =  'artists' LIMIT 0 , 30", $this->db);
+            $lastUpdateSql = mysql_query ("SELECT UPDATE_TIME FROM information_schema.TABLES WHERE TABLE_NAME = 'artists' AND TABLE_SCHEMA = '".$this->table_schema."'", $this->db);
             $lastUpdate = "";
             if(mysql_num_rows($lastUpdateSql) > 0) {
                  $lastUpdate = mysql_fetch_array($lastUpdateSql,MYSQL_ASSOC);
@@ -76,7 +78,7 @@ class API extends REST {
             $lastUpdateDate = strtotime($lastUpdate['UPDATE_TIME']);
 
             if ($lastRetrieveDate > $lastUpdateDate){
-                $this->response('Pas de nouvelles mises à jour disponible pour les artistes', 207);
+                $this->response('Pas de nouvelles mises à jour disponible pour les artistes', 304);
             } else {
                 $sql = mysql_query("SELECT * FROM artists", $this->db);
 
@@ -124,7 +126,7 @@ class API extends REST {
         else {
 
 
-            $lastUpdateSql = mysql_query ("SELECT UPDATE_TIME FROM information_schema.TABLES WHERE TABLE_NAME =  'infos' LIMIT 0 , 30", $this->db);
+            $lastUpdateSql = mysql_query ("SELECT UPDATE_TIME FROM information_schema.TABLES WHERE TABLE_NAME = 'infos' AND TABLE_SCHEMA = '".$this->table_schema."'", $this->db);
             $lastUpdate = "";
             if(mysql_num_rows($lastUpdateSql) > 0) {
                  $lastUpdate = mysql_fetch_array($lastUpdateSql,MYSQL_ASSOC);
@@ -137,7 +139,7 @@ class API extends REST {
             $lastUpdateDate = strtotime($lastUpdate['UPDATE_TIME']);
 
             if ($lastRetrieveDate > $lastUpdateDate){
-                $this->response('Pas de nouvelles mises à jour disponible pour les infos', 207);
+                $this->response('Pas de nouvelles mises à jour disponible pour les infos', 304);
             } else {
                 $sql = mysql_query("SELECT * FROM infos", $this->db);
 
@@ -186,7 +188,7 @@ class API extends REST {
         else {
 
 
-            $lastUpdateSql = mysql_query ("SELECT UPDATE_TIME FROM information_schema.TABLES WHERE TABLE_NAME =  'news' LIMIT 0 , 30", $this->db);
+            $lastUpdateSql = mysql_query ("SELECT UPDATE_TIME FROM information_schema.TABLES WHERE TABLE_NAME = 'news' AND TABLE_SCHEMA = '".$this->table_schema."'", $this->db);
             $lastUpdate = "";
             if(mysql_num_rows($lastUpdateSql) > 0) {
                  $lastUpdate = mysql_fetch_array($lastUpdateSql,MYSQL_ASSOC);
@@ -199,7 +201,7 @@ class API extends REST {
             $lastUpdateDate = strtotime($lastUpdate['UPDATE_TIME']);
 
             if ($lastRetrieveDate > $lastUpdateDate){
-                $this->response('Pas de nouvelles mises à jour disponible pour les news', 207);
+                $this->response('Pas de nouvelles mises à jour disponible pour les news', 304);
             } else {
                 $sql = mysql_query("SELECT * FROM news", $this->db);
 
@@ -246,21 +248,20 @@ class API extends REST {
         }
         else {
 
-
-            $lastUpdateSql = mysql_query ("SELECT UPDATE_TIME FROM information_schema.TABLES WHERE TABLE_NAME =  'filters' LIMIT 0 , 30", $this->db);
+            $lastUpdateSql = mysql_query ("SELECT UPDATE_TIME FROM information_schema.TABLES WHERE TABLE_NAME = 'filters' AND TABLE_SCHEMA = '".$this->table_schema."'", $this->db);
             $lastUpdate = "";
+
             if(mysql_num_rows($lastUpdateSql) > 0) {
                  $lastUpdate = mysql_fetch_array($lastUpdateSql,MYSQL_ASSOC);
             }
-            else
+            else {
                 $this->response('', 204);
-
+			}
 
             $lastRetrieveDate = strtotime($lastRetrieve);
             $lastUpdateDate = strtotime($lastUpdate['UPDATE_TIME']);
-
             if ($lastRetrieveDate > $lastUpdateDate){
-                $this->response('Pas de nouvelles mises à jour disponible pour les filtres photos', 207);
+                $this->response('Pas de nouvelles mises à jour disponible pour les filtres photos', 304);
             } else {
                 $sql = mysql_query("SELECT * FROM filters", $this->db);
 
