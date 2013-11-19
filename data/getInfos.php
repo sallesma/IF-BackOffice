@@ -21,11 +21,12 @@ while($infosRow = mysql_fetch_assoc($getInfosResult)) {
 }
 
 mysql_close($link);
-
+//We want no item to be before its parent in $treeArray so that the js tree can be constructed
 $listCursor = 0;
-while ( count($pool) > 0 && $listCursor < count($treeArray) ) { //On parcourt la liste définitive
+while ( count($pool) > 0 && $listCursor < count($treeArray) ) { //On parcourt la liste définitive (on s'arrête si le pool est vide ou si on a traité toute la liste des parents)
 	$poolCursor = 0;
-	while ($poolCursor <= count($pool)) { // pour chaque élément de la liste, on regarde dans le pool
+	$poolSize = count($pool);
+	while ($poolCursor <= $poolSize) { // pour chaque élément de la liste, on regarde dans le pool
 		if ($pool[$poolCursor]["parentId"] == $treeArray[$listCursor]["id"]) { //on chope les éléments du pool dont c'est le parent
 			array_push($treeArray, $pool[$poolCursor]);			// on les rajoute à la liste
 			unset($pool[$poolCursor]);							// on les enlève du pool
