@@ -3,7 +3,7 @@
 include('connection.php');
 
 
-$addFilterQuery ="INSERT INTO filters(url) VALUES ('".$_POST['url']."')";
+$addFilterQuery ="INSERT INTO filters(picture) VALUES ('".$_POST['url']."')";
 
 mysql_query($addFilterQuery);
 mysql_close($link);

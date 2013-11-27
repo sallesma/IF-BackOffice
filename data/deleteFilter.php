@@ -3,7 +3,7 @@
 include("connection.php");
 
 //get the url
-$getFilterUrlQuery = "SELECT url FROM filters WHERE id = ".$_GET['id'];
+$getFilterUrlQuery = "SELECT picture FROM filters WHERE id = ".$_GET['id'];
 $getFilterUrlResult = mysql_query($getFilterUrlQuery);
 
 while($filterRow = mysql_fetch_array($getFilterUrlResult)){

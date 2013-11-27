@@ -2,7 +2,7 @@
 
 include("connection.php");
 
-$getFiltersQuery = "SELECT id, url FROM filters";
+$getFiltersQuery = "SELECT id, picture FROM filters";
 $getFiltersResult = mysql_query($getFiltersQuery);
 
 while($filtersRow = mysql_fetch_array($getFiltersResult)){
