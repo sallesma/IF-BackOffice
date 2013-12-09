@@ -342,6 +342,66 @@ class API extends REST {
         }
     }
 
+		private function mapItems() {
+        // Cross validation if the request method is GET else it will return "Not Acceptable" status
+        if($this->get_request_method() != "GET"){
+            $this->response('',406);
+        }
+
+        $lastRetrieve = $_REQUEST['lastRetrieve'];
+
+        if (empty($lastRetrieve)) {
+             $sql = mysql_query("SELECT * FROM map", $this->db);
+
+                if(mysql_num_rows($sql) > 0){
+
+                    $result = array();
+                    while($rlt = mysql_fetch_array($sql,MYSQL_ASSOC)){
+                        $result[] = $rlt;
+                    }
+
+                    // If success everythig is good send header as "OK" and user details
+                    $this->response($this->json($result), 200);
+                }
+
+                $this->response('', 204);	// If no records "No Content" status
+        }
+        else {
+
+            $lastUpdateSql = mysql_query ("SELECT UPDATE_TIME FROM information_schema.TABLES WHERE TABLE_NAME = 'map' AND TABLE_SCHEMA = '".$this->table_schema."'", $this->db);
+            $lastUpdate = "";
+
+            if(mysql_num_rows($lastUpdateSql) > 0) {
+                 $lastUpdate = mysql_fetch_array($lastUpdateSql,MYSQL_ASSOC);
+            }
+            else {
+                $this->response('', 204);
+			}
+
+            $lastRetrieveDate = strtotime($lastRetrieve);
+            $lastUpdateDate = strtotime($lastUpdate['UPDATE_TIME']);
+            if ($lastRetrieveDate > $lastUpdateDate){
+                $this->response('Pas de nouvelles mises à jour disponible pour les éléments de la carte', 304);
+            } else {
+                $sql = mysql_query("SELECT * FROM partners", $this->db);
+
+                if(mysql_num_rows($sql) > 0){
+
+                    $result = array();
+                    while($rlt = mysql_fetch_array($sql,MYSQL_ASSOC)){
+                        $result[] = $rlt;
+                    }
+
+                    // If success everythig is good send header as "OK" and user details
+                    $this->response($this->json($result), 200);
+                }
+                else
+                    $this->response('', 204);	// If no records "No Content" status
+            }
+
+        }
+    }
+
 
     /*
 		 *	Encode array into JSON
