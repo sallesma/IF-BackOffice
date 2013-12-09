@@ -5,7 +5,7 @@ $('#addPartnerButton').click(function() {
         url : "data/addPartner.php",
         data : {
             name : $("#newName").val(),
-            weblink : $("#newWebLink").val()
+            website : $("#newWebsite").val()
         }
     }).done(function(msg) {
         $('#addPartnerModal').modal('hide');
@@ -25,11 +25,11 @@ $(document).on("click", ".modifyPartnerButton", function() {
 
     var id = formClass.find('input[name="id"]').val();
     var name = formClass.find('input[name="name"]').val();
-    var weblink = formClass.find('input[name="weblink"]').val();
+    var website = formClass.find('input[name="website"]').val();
 
     $('#editPartnerModal').find('input[id="id"]').val(id);
     $('#editPartnerModal').find('input[id="name"]').val(name);
-    $('#editPartnerModal').find('input[id="weblink"]').val(weblink);
+    $('#editPartnerModal').find('input[id="website"]').val(website);
 });
 
 // Modify an existing partner
@@ -37,7 +37,7 @@ $('#editPartnerButton').click(function() {
 
     var id = $('#editPartnerModal').find('input[id="id"]').val();
     var name =  $('#editPartnerModal').find('input[id="name"]').val();
-    var weblink = $('#editPartnerModal').find('input[id="weblink"]').val();
+    var website = $('#editPartnerModal').find('input[id="website"]').val();
 
     $.ajax({
         type : "POST",
@@ -45,7 +45,7 @@ $('#editPartnerButton').click(function() {
         data : {
             id : id,
             name : name,
-            weblink : weblink
+            website : website
         }
     }).done(function(msg) {
         $('#editPartnerModal').modal('hide');
