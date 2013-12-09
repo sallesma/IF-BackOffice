@@ -16,28 +16,28 @@ $('#addPartnerButton').click(function() {
 });
 
 
-// Open News modal with an existing partner
+// Open partner modal with an existing partner
 $(document).on("click", ".modifyPartnerButton", function() {
 
     $('#editPartnerModal').modal('show');
 
     var formClass = $(this).parent().parent();
 
-    var id = formClass.find('input[name="rowID"]').val();
+    var id = formClass.find('input[name="id"]').val();
     var name = formClass.find('input[name="name"]').val();
-    var weblink = formClass.find('input[name="webLink"]').val();
+    var weblink = formClass.find('input[name="weblink"]').val();
 
-    $('#editNewsModal').find('input[id="rowID"]').val(id);
-    $('#editNewsModal').find('input[id="newName"]').val(name);
-    $('#editNewsModal').find('textarea[id="newWebLink"]').val(weblink);
+    $('#editPartnerModal').find('input[id="id"]').val(id);
+    $('#editPartnerModal').find('input[id="name"]').val(name);
+    $('#editPartnerModal').find('input[id="weblink"]').val(weblink);
 });
 
-// Modify an existing news
+// Modify an existing partner
 $('#editPartnerButton').click(function() {
 
-    var id = $('#editPartnerModal').find('input[id="rowID"]').val();
-    var name =  $('#editPartnerModal').find('input[id="newName"]').val();
-    var weblink = $('#editPartnerModal').find('textarea[id="newWebLink"]').val();
+    var id = $('#editPartnerModal').find('input[id="id"]').val();
+    var name =  $('#editPartnerModal').find('input[id="name"]').val();
+    var weblink = $('#editPartnerModal').find('input[id="weblink"]').val();
 
     $.ajax({
         type : "POST",
