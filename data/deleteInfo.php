@@ -26,7 +26,7 @@ while($pictureRow = mysql_fetch_array($getInfoImageUrlResult)){
 	$url = $pictureRow[0];
 }
 
-//delete the filter file from server
+//delete the file from server
 $beginPos = strpos($url, "data/");
 $urlToDelete = substr($url, $beginPos + strlen("data/") );
 
@@ -36,6 +36,10 @@ if (!unlink($urlToDelete)) {
 	echo ("Deleted $file");
 }
 
+
+//Delete linked map item if exists
+$deleteInfoMapItemQuery = "DELETE FROM map WHERE infoId=".$id;
+mysql_query($deleteInfoMapItemQuery);
 
 //Supprimer l'info
 $deleteInfoQuery ="DELETE FROM infos WHERE id=".$id;

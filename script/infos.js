@@ -94,7 +94,7 @@ $('#infosEditButton').click(function() {
 });
 
 $('#infosDeleteButton').click(function() {
-    if (confirm('Es-tu sûr de vouloir supprimer ça ? C\'est définitif hein...') ) {
+    if (confirm('Si l\'info est liée à un point de la carte, il sera supprimé aussi. Es-tu sûr de vouloir supprimer ça ? C\'est définitif hein...') ) {
         var id = $('#infos-edit-form').find('#info-id').val();
 
         $.ajax({
@@ -105,6 +105,7 @@ $('#infosDeleteButton').click(function() {
             }
         }).done(function(msg) {
             getInfos();
+			getMapItems();
             $("#onDeleteInfoAlert").show();
             $('#infos-form').hide();
 			$('#infos-edit-text').show();
