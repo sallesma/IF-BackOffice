@@ -45,6 +45,13 @@ function getInfos() {
                 //content
                 infoForm.find('#info-content').val(msg.content);
 
+				//displayed on map ?
+				if (msg.isDisplayedOnMap == "1") {
+                    infoForm.find("#info-map").html("Oui");
+                } else {
+                    infoForm.find("#info-map").html("Non");
+                }
+
                 //parent
                 var infoSelect = infoForm.find('#info-parent');
                 infoSelect.html('');

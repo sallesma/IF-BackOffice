@@ -69,6 +69,7 @@ CREATE TABLE IF NOT EXISTS `infos` (
   `isCategory` tinyint(1) NOT NULL,
   `content` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
   `parent` int(11) NOT NULL,
+  `isDisplayedOnMap` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=93 ;
 
