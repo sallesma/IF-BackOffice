@@ -30,7 +30,7 @@
 
     <script src="js/artists.js"></script>
     <script src="js/infos.js?v=4"></script>
-    <script src="js/news.js"></script>
+    <script src="js/news.js?v=106"></script>
     <script src="js/filters.js"></script>
     <script src="js/partners.js?v=13"></script>
     <script src="js/map.js?v=7"></script>

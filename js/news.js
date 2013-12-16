@@ -2,7 +2,7 @@
 $('#addNewButton').click(function() {
     $.ajax({
         type : "POST",
-        url : "data/addNew.php",
+        url : "addNews",
         data : {
             title : $("#newTitle").val(),
             body : $("#newBody").val()
@@ -11,7 +11,7 @@ $('#addNewButton').click(function() {
         $('#addNewModal').modal('hide');
         getNews();
     }).fail(function(msg) {
-        alert("Failure");
+        alert("Echec à l'ajout d'une news");
     });
 });
 
@@ -41,7 +41,7 @@ $('#editNewButton').click(function() {
 
     $.ajax({
         type : "POST",
-        url : "data/updateNew.php",
+        url : "updateNews",
         data : {
             id : id,
             title : title,
@@ -51,7 +51,7 @@ $('#editNewButton').click(function() {
         $('#editNewsModal').modal('hide');
         getNews();
     }).fail(function(msg) {
-        alert("Failure");
+        alert("Echec à la modification d'une news");
     });
 
 });
@@ -62,18 +62,20 @@ $(document).on('click', '.newsDeleteButton', function (event) {
 
         $.ajax({
             type: "GET",
-            url: "data/deleteNews.php?id="+id,
+            url: "deleteNews/"+id,
         }).done(function (msg) {
             getNews();
             $("#onDeleteNewsAlert").show();
         }).fail(function (msg) {
-            alert("Failure");
+            alert("Echec à la suppression d'une news");
         });
     }
 });
 
 function getNews() {
-    $.get("data/getNews.php", function(data) {
+    $.get("getNews", function(data) {
         $("#news-table").html(data);
+    }).fail(function(msg) {
+        alert("Echec au chargement des news");
     });
 }
