@@ -7,39 +7,13 @@ It aims to provide data for both android and iOS apps, so that the crew can upda
 
 ## Information
 
-We know that the project is a bit messy right know (and will fiw that a bit later).
+The project uses slim framework : http://www.slimframework.com/
 
-Here is what each important folder stands for :
+Here is what non slim framework files and folders stand for :
 
 	/api
 
 Contains function calls used by mobile application to get the data from the server database
-
-
-	/data
-
-Contains all php treatment for the backoffice (mainly CRUD operations).  It also contains the files uploaded by the user.
-
-
-	/fonts
-
-Contains some files for the backoffice
-
-
-	/script
-
-Contains JavaScript libraries (such as jQuery) and our app.js file
-
-
-	/style
-
-Contains CSS librairies (such as Bootstrap) and our style.css file
-
-
-	index.html
-
-The main (and only) page of the backoffice
-
 
 	base.sql
 
