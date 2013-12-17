@@ -10,6 +10,7 @@
 require 'Slim/Slim.php';
 \Slim\Slim::registerAutoloader();
 
+require 'src/NewsManager.php';
 
 $app = new \Slim\Slim();
 
@@ -27,19 +28,30 @@ $app->get('/', function() use ($app) {
 
 
 $app->get('/getNews', function() use ($app) {
-	include("src/getNews.php");
+	$newsManager = new NewsManager();
+	echo $newsManager->getNews();
 });
 
 $app->post('/addNews', function() use ($app) {
-	include("src/addNews.php");
+	$newsManager = new NewsManager();
+
+	$title = $app->request->post('title');
+	$content = $app->request->post('content');
+	echo $newsManager->addNews( $title, $content);
 });
 
 $app->post('/updateNews', function() use ($app) {
-	include("src/updateNews.php");
+	$newsManager = new NewsManager();
+
+	$id = $app->request->post('id');
+	$title = $app->request->post('title');
+	$content = $app->request->post('content');
+	echo $newsManager->updateNews( $id, $title, $content );
 });
 
 $app->get('/deleteNews/:id', function( $id ) use ($app) {
-	include("src/deleteNews.php");
+	$newsManager = new NewsManager();
+	echo $newsManager->deleteNews( $id );
 });
 
 $app->run();

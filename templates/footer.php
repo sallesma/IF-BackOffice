@@ -30,18 +30,18 @@
 
     <script src="js/artists.js"></script>
     <script src="js/infos.js?v=4"></script>
-    <script src="js/news.js?v=106"></script>
+    <script src="js/news.js?v=125"></script>
     <script src="js/filters.js"></script>
     <script src="js/partners.js?v=13"></script>
     <script src="js/map.js?v=7"></script>
 	<script type="text/javascript" >
 		$(document).ready(function() {
 			getNews();
-			getArtists();
+/*			getArtists();
 			getFilters();
 			getInfos();
 			getPartners();
-			getMapItems();
+			getMapItems();*/
 		});
 	</script>
 </body>

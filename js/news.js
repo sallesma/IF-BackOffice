@@ -5,7 +5,7 @@ $('#addNewButton').click(function() {
         url : "addNews",
         data : {
             title : $("#newTitle").val(),
-            body : $("#newBody").val()
+            content : $("#newContent").val()
         }
     }).done(function(msg) {
         $('#addNewModal').modal('hide');
@@ -29,7 +29,7 @@ $(document).on("click", ".modifyNewButton", function() {
 
     $('#editNewsModal').find('input[id="rowID"]').val(id);
     $('#editNewsModal').find('input[id="newTitle"]').val(title);
-    $('#editNewsModal').find('textarea[id="newBody"]').val(content);
+    $('#editNewsModal').find('textarea[id="newContent"]').val(content);
 });
 
 // Modify an existing news
@@ -37,7 +37,7 @@ $('#editNewButton').click(function() {
 
     var id = $('#editNewsModal').find('input[id="rowID"]').val();
     var title =  $('#editNewsModal').find('input[id="newTitle"]').val();
-    var content = $('#editNewsModal').find('textarea[id="newBody"]').val();
+    var content = $('#editNewsModal').find('textarea[id="newContent"]').val();
 
     $.ajax({
         type : "POST",
@@ -73,8 +73,24 @@ $(document).on('click', '.newsDeleteButton', function (event) {
 });
 
 function getNews() {
-    $.get("getNews", function(data) {
-        $("#news-table").html(data);
+    $.get("getNews", function(jsonNewsTable) {
+		jsonNewsTable=JSON.parse(jsonNewsTable);
+		newsHtmlString = '';
+		$.each(jsonNewsTable, function(index, news) {
+			newsHtmlString += "<tr><form role='form'>";
+			newsHtmlString += "<input type='hidden' name='title' value='"+news.title+"'>";
+			newsHtmlString += "<input type='hidden' name='content' value='"+news.content+"'>";
+			newsHtmlString += "<td id='title'>"+news.title+"</td>";
+			newsHtmlString += "<td id='content'>"+news.content+"</td>";
+			newsHtmlString += "<td>"+news.date+"</td>";
+			newsHtmlString += "<td>";
+            newsHtmlString += "	<button type='button' class='btn btn-primary modifyNewButton'>Modifier</button>";
+            newsHtmlString += "	<button type='button' class='newsDeleteButton btn btn-danger'>Supprimer !</button>";
+			newsHtmlString += "</td>";
+			newsHtmlString += "<input type='hidden' name='rowID' value='"+news.id+"'>";
+			newsHtmlString += "</form></tr>";
+		});
+		$("#news-table").html(newsHtmlString);
     }).fail(function(msg) {
         alert("Echec au chargement des news");
     });
