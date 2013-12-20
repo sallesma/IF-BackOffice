@@ -72,8 +72,30 @@ $(document).on('click', '.partnerDeleteButton', function (event) {
     }
 });
 
-function getPartners() {
-    $.get("data/getPartners.php", function(data) {
-        $("#partners-table").html(data);
+function getPartners() {    
+     $.get("getPartners", function(jsonPartnersTable) {
+		jsonPartnersTable=JSON.parse(jsonPartnersTable);
+		partnerHtmlString = '';
+		$.each(jsonPartnersTable, function(index, partner) {
+			partnerHtmlString += "<tr><form role='form'>";
+			partnerHtmlString += "<input type=\"hidden\" name=\"name\" value=\""+partner.name+"\">";
+			partnerHtmlString += "<input type=\"hidden\" name=\"website\" value=\""+partner.website+"\">";
+            partnerHtmlString +=  "<input type=\"hidden\" name=\"id\" value=\""+partner.id+"\">";
+			partnerHtmlString += "<td>"+partner.name+"</td>";
+			partnerHtmlString += "<td>"+partner.picture+"</td>";
+			partnerHtmlString += "<td>"+partner.website+"</td>";
+			partnerHtmlString += "<td>";
+            partnerHtmlString += "	<button type='button' class='btn btn-primary modifyNewButton'>Modifier</button>";
+            partnerHtmlString += "	<button type='button' class='newsDeleteButton btn btn-danger'>Supprimer !</button>";
+			
+            partnerHtmlString += "</form>";
+	        partnerHtmlString += "</tr>";
+	        partnerHtmlString += "</tr>";
+			
+		});
+		$("#partners-table").html(partnerHtmlString);
+    }).fail(function(msg) {
+        alert("Echec au chargement des partenaires");
+
     });
 }
