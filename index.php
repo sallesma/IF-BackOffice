@@ -11,6 +11,7 @@ require 'Slim/Slim.php';
 \Slim\Slim::registerAutoloader();
 
 require 'src/NewsManager.php';
+require 'src/ArtistsManager.php';
 
 $app = new \Slim\Slim();
 
@@ -52,6 +53,58 @@ $app->post('/updateNews', function() use ($app) {
 $app->get('/deleteNews/:id', function( $id ) use ($app) {
 	$newsManager = new NewsManager();
 	echo $newsManager->deleteNews( $id );
+});
+
+$app->get('/getArtists', function() use ($app) {
+	$artistManager = new ArtistsManager();
+	echo $artistManager->getArtists();
+});
+
+$app->get('/getArtist/:id', function( $id ) use ($app) {
+	$artistManager = new ArtistsManager();
+	echo $artistManager->getArtist($id);
+});
+
+$app->post('/addArtist', function() use ($app) {
+	$artistManager = new ArtistsManager();
+
+	$name = $app->request->post('name');
+	$picture = $app->request->post('picture');
+	$style = $app->request->post('style');
+	$description = $app->request->post('description');
+	$day = $app->request->post('day');
+	$stage = $app->request->post('stage');
+	$startTime = $app->request->post('startTime');
+	$endTime = $app->request->post('endTime');
+	$website = $app->request->post('website');
+	$facebook = $app->request->post('facebook');
+	$twitter = $app->request->post('twitter');
+	$youtube = $app->request->post('youtube');
+	echo $artistManager->addArtists($name, $picture, $style, $description, $day, $stage, $startTime, $endTime, $website, $facebook, $twitter, $youtube);
+});
+
+$app->post('/updateArtist', function() use ($app) {
+	$artistManager = new ArtistsManager();
+
+	$id = $app->request->post('id');
+	$name = $app->request->post('name');
+	$picture = $app->request->post('picture');
+	$style = $app->request->post('style');
+	$description = $app->request->post('description');
+	$day = $app->request->post('day');
+	$stage = $app->request->post('stage');
+	$startTime = $app->request->post('startTime');
+	$endTime = $app->request->post('endTime');
+	$website = $app->request->post('website');
+	$facebook = $app->request->post('facebook');
+	$twitter = $app->request->post('twitter');
+	$youtube = $app->request->post('youtube');
+	echo $artistManager->updateArtists($id, $name, $picture, $style, $description, $day, $stage, $startTime, $endTime, $website, $facebook, $twitter, $youtube);
+});
+
+$app->get('/deleteArtist/:id', function( $id ) use ($app) {
+	$artistsManager = new ArtistsManager();
+	echo $artistsManager->deleteArtist( $id );
 });
 
 $app->run();

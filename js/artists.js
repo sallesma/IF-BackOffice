@@ -30,7 +30,7 @@ $('.visit-link').each(function() {
 $(function () {
     'use strict';
     // Change this to the location of your server-side upload handler:
-    var url = './data/fileUpload/index.php?directory=artists';
+    var url = './src/fileUpload/index.php?directory=artists';
     $('#artistFileUpload').fileupload({
         url: url,
         dataType: 'json',
@@ -58,7 +58,7 @@ $(document).on('click', '.showArtistButton', function (event) {
 
     $.ajax({
         type: "GET",
-        url: "data/getArtist.php?id="+id.val(),
+        url: "getArtist/"+id.val(),
     }).done(function (msg) {
         var artist = $.parseJSON(msg);
         loadArtistModalWithObject(artist);
@@ -75,7 +75,7 @@ $(document).on('click', '.artistDeleteButton', function (event) {
 
         $.ajax({
             type: "GET",
-            url: "data/deleteArtist.php?id="+id.val(),
+            url: "deleteArtist/"+id.val(),
         }).done(function (msg) {
             getArtists();
             $("#onDeleteArtistAlert").show();
@@ -94,11 +94,11 @@ $('#artistModalActionButton').click(function() {
         // New artist : add it to the DB
         $.ajax({
             type : "POST",
-            url : "data/addArtist.php",
+            url : "addArtist",
             data : {
                 name : $("#art-name").val(),
                 style : $("#art-style").val(),
-                image : $("#art-image").val(),
+                picture : $("#art-image").val(),
                 description : $("#art-description").val(),
                 day : $("#art-day").val(),
                 stage : $("#art-scene").val(),
@@ -121,11 +121,11 @@ $('#artistModalActionButton').click(function() {
         var modal = $('#artistModal');
         $.ajax({
             type : "POST",
-            url : "data/updateArtist.php",
+            url : "updateArtist",
             data : {
                 id : id,
                 name: modal.find('#art-name').val(),
-                image: modal.find('#art-image').val(),
+                picture: modal.find('#art-image').val(),
                 style: modal.find('#art-style').val(),
                 description: modal.find('#art-description').val(),
                 day: modal.find('#art-day').val(),
@@ -147,13 +147,27 @@ $('#artistModalActionButton').click(function() {
 
 });
 
-
 function getArtists() {
-    $.get("data/getArtists.php", function(data) {
-        $("#artists-table").html(data);
+    $.get("getArtists", function(jsonArtistsTable) {
+		jsonArtistsTable=JSON.parse(jsonArtistsTable);
+		artistsHtmlString = '';
+		$.each(jsonArtistsTable, function(index, artist) {
+			artistsHtmlString += "<tr>";
+			artistsHtmlString += "<td>" + artist.name + "</td>";
+			artistsHtmlString += "<td>" + artist.style + "</td>";
+			artistsHtmlString += "<td>" + artist.stage + "</td>";
+			artistsHtmlString += "<td>" + artist.day + "</td>";
+			artistsHtmlString += "<td>" + artist.beginHour + "</td>";
+			artistsHtmlString += "<td>";
+            artistsHtmlString += "	<input type='hidden' value='" + artist.id + "' name='id'/>";
+            artistsHtmlString += "	<button type='button' class='btn btn-primary showArtistButton'>Voir plus</button>";
+            artistsHtmlString += "	<button type='button' class='artistDeleteButton btn btn-danger'>Supprimer !</button>";
+			artistsHtmlString += "</td>";
+			artistsHtmlString += "</tr>";
+		});
+        $("#artists-table").html(artistsHtmlString);
     });
 }
-
 
 function loadArtistModalWithObject(artist){
     var modal = $('#artistModal');

@@ -28,7 +28,7 @@
     <script src="js/lib/jquery.iframe-transport.js"></script>
     <script src="js/lib/jquery.fileupload.js"></script>
 
-    <script src="js/artists.js"></script>
+    <script src="js/artists.js?v=105"></script>
     <script src="js/infos.js?v=4"></script>
     <script src="js/news.js?v=125"></script>
     <script src="js/filters.js"></script>
@@ -37,8 +37,8 @@
 	<script type="text/javascript" >
 		$(document).ready(function() {
 			getNews();
-/*			getArtists();
-			getFilters();
+			getArtists();
+/*			getFilters();
 			getInfos();
 			getPartners();
 			getMapItems();*/
