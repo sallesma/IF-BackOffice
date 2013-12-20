@@ -76,14 +76,14 @@ class ArtistsManager {
 		}
 
 		//delete the filter file from server
-		$beginPos = strpos($url, "src/");
-		$urlToDelete = substr($url, $beginPos + strlen("src/") );
+		$beginPos = strpos($url, "/src");
+		$urlToDelete = substr($url, $beginPos );
 
-		/*if (!unlink($urlToDelete)) {
-			return ("Error deleting $file");
+		if ( !unlink(getcwd().$urlToDelete) ) {
+			echo ("Error deleting ".$urlToDelete);
 		} else {
-			return ("Deleted $file");
-		}*/
+			echo ("Deleted ".$urlToDelete);
+		}
 
 		//Supprimer l'artiste
 		$deleteArtistQuery ="DELETE FROM artists WHERE id=".$id;
@@ -109,14 +109,14 @@ class ArtistsManager {
 			$url = $pictureRow[0];
 		}
 
-		if ($url != $picture) {
-			$beginPos = strpos($url, "data/");
-			$urlToDelete = substr($url, $beginPos + strlen("data/") );
+		if ($url != $picture && $url != "") {
+			$beginPos = strpos($url, "/src");
+			$urlToDelete = substr($url, $beginPos );
 
-			if (!unlink($urlToDelete)) {
-				echo ("Error deleting $file");
+			if ( !unlink(getcwd().$urlToDelete) ) {
+				return ("Error deleting ".$urlToDelete);
 			} else {
-				echo ("Deleted $file");
+				return ("Deleted ".$urlToDelete);
 			}
 		}
 
