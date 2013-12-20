@@ -80,7 +80,7 @@ $(document).on('click', '.artistDeleteButton', function (event) {
             getArtists();
             $("#onDeleteArtistAlert").show();
         }).fail(function (msg) {
-            alert("Failure");
+            alert("Echec à la suppression de l'artiste");
         });
     }
 });
@@ -113,7 +113,7 @@ $('#artistModalActionButton').click(function() {
             $("#artistModal").modal('hide');
             getArtists();
         }).fail(function(msg) {
-            alert("Failure");
+            alert("Echec à l'ajout de l'artiste");
         });
 
     } else {
@@ -141,7 +141,7 @@ $('#artistModalActionButton').click(function() {
             $('#artistModal').modal('hide');
             getArtists();
         }).fail(function(msg) {
-            alert("Failure");
+            alert("Echec à la mise à jour de l'artiste");
         });
     }
 
@@ -166,7 +166,9 @@ function getArtists() {
 			artistsHtmlString += "</tr>";
 		});
         $("#artists-table").html(artistsHtmlString);
-    });
+    }).fail(function(msg) {
+		alert("Echec au chargement des artistes");
+	});
 }
 
 function loadArtistModalWithObject(artist){

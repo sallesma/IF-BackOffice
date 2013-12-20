@@ -75,7 +75,7 @@ class ArtistsManager {
 			$url = $pictureRow[0];
 		}
 
-		//delete the filter file from server
+		//delete the picture file from server
 		$beginPos = strpos($url, "/src");
 		$urlToDelete = substr($url, $beginPos );
 
@@ -114,9 +114,9 @@ class ArtistsManager {
 			$urlToDelete = substr($url, $beginPos );
 
 			if ( !unlink(getcwd().$urlToDelete) ) {
-				return ("Error deleting ".$urlToDelete);
+				echo ("Error deleting ".$urlToDelete);
 			} else {
-				return ("Deleted ".$urlToDelete);
+				echo ("Deleted ".$urlToDelete);
 			}
 		}
 

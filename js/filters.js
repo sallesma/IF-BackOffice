@@ -2,7 +2,7 @@
 $(function () {
     'use strict';
     // Change this to the location of your server-side upload handler:
-    var url = './data/fileUpload/index.php?directory=filters';
+    var url = './src/fileUpload/index.php?directory=filters';
     $('#filtersFileUpload').fileupload({
         url: url,
         dataType: 'json',
@@ -11,15 +11,15 @@ $(function () {
 
                $.ajax({
                     type : "POST",
-                    url : "data/addFilter.php",
+                    url : "addFilter",
                     data : {
                         url : file.url,
 
                     }
                 }).done(function(msg) {
-                   getFilters()
+                   getFilters();
                 }).fail(function(msg) {
-                    alert("Failure");
+                    alert("Echec à l'ajout d'un filtre");
                 });
 
 
@@ -42,20 +42,33 @@ $(document).on('click', '.filterDeleteButton', function (event) {
 
         $.ajax({
             type: "GET",
-            url: "data/deleteFilter.php?id="+id,
+            url: "deleteFilter/"+id,
         }).done(function (msg) {
             getFilters();
             $("#onDeleteFiltersAlert").show();
         }).fail(function (msg) {
-            alert("Failure");
+            alert("Echec à la suppression d'un filtre");
         });
     }
 });
 
 function getFilters() {
-    $.get("data/getFilters.php", function(data) {
-        $("#photoFilter-edit").html(data);
+    $.get("getFilters", function(jsonFilters) {
+		jsonFilters=JSON.parse(jsonFilters);
+		filtersHtmlString = '';
+		$.each(jsonFilters, function(index, filter) {
+			filtersHtmlString += "<div class='col-sm-6 col-md-3'>";
+			filtersHtmlString += "	<form role='form'>";
+			filtersHtmlString += "		<a href='#photo-filter' class='thumbnail'>";
+			filtersHtmlString += "			<img src=\"" + filter.picture + "\" alt=\"...\">";
+			filtersHtmlString += "		</a>";
+            filtersHtmlString += "		<button type='button' class='filterDeleteButton btn btn-danger'>Supprimer</button>";
+            filtersHtmlString += "		<input type='hidden' name='filterId' value='" + filter.id + "'>";
+			filtersHtmlString += "	</form>";
+			filtersHtmlString += "</div>";
+		});
+		$("#photo-filters").html(filtersHtmlString);
     }).fail(function(msg) {
-		alert("Failure");
+		alert("Echec au chargement des filtres");
 	});
 }

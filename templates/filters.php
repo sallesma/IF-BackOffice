@@ -32,6 +32,6 @@
                         <p>(C'est trop tard, il n'est plus possible de le récupérer. )</p>
                     </div>
 
-                    <div class="row" id="photoFilter-edit">
+                    <div class="row" id="photo-filters">
                     </div>
                 </div>

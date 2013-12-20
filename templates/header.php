@@ -58,7 +58,7 @@
                                     <a href="#photoFilter-add">Ajouter un filtre</a>
                                 </li>
                                 <li>
-                                    <a href="#photoFilter-edit">Liste des filtres</a>
+                                    <a href="#photo-filters">Liste des filtres</a>
                                 </li>
                             </ul>
                         </li>

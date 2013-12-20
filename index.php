@@ -12,7 +12,8 @@ require 'Slim/Slim.php';
 
 require 'src/NewsManager.php';
 require 'src/ArtistsManager.php';
-require 'src/PartnersManager.php'
+require 'src/PartnersManager.php';
+require 'src/FiltersManager.php';
 
 $app = new \Slim\Slim();
 
@@ -108,10 +109,26 @@ $app->get('/deleteArtist/:id', function( $id ) use ($app) {
         echo $artistsManager->deleteArtist( $id );
 });
 
+$app->get('/getFilters', function() use ($app) {
+        $filtersManager = new FiltersManager();
+        echo $filtersManager->getFilters();
+});
+
+$app->post('/addFilter', function() use ($app) {
+        $filtersManager = new FiltersManager();
+        $url = $app->request->post('url');
+        echo $filtersManager->addFilter( $url );
+});
+
+$app->get('/deleteFilter/:id', function( $id ) use ($app) {
+    $filtersManager = new FiltersManager();
+	echo $filtersManager->deleteFilter( $id );
+});
+
 $app->get('/getPartners', function() use ($app) {
 	$partnersManager = new PartnersManager();
 	echo $partnersManager->getPartners();
-    
+
 });
 
 $app->run();
