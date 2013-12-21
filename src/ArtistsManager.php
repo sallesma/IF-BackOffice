@@ -76,13 +76,15 @@ class ArtistsManager {
 		}
 
 		//delete the picture file from server
-		$beginPos = strpos($url, "/src");
-		$urlToDelete = substr($url, $beginPos );
+		if ($url != "") {
+			$beginPos = strpos($url, "/src");
+			$urlToDelete = substr($url, $beginPos );
 
-		if ( !unlink(getcwd().$urlToDelete) ) {
-			echo ("Error deleting ".$urlToDelete);
-		} else {
-			echo ("Deleted ".$urlToDelete);
+			if ( !unlink(getcwd().$urlToDelete) ) {
+				echo ("Error deleting ".$urlToDelete);
+			} else {
+				echo ("Deleted ".$urlToDelete);
+			}
 		}
 
 		//Supprimer l'artiste

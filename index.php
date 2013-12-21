@@ -12,8 +12,9 @@ require 'Slim/Slim.php';
 
 require 'src/NewsManager.php';
 require 'src/ArtistsManager.php';
-require 'src/PartnersManager.php';
 require 'src/FiltersManager.php';
+require 'src/InfosManager.php';
+require 'src/PartnersManager.php';
 
 $app = new \Slim\Slim();
 
@@ -27,7 +28,6 @@ $app->get('/', function() use ($app) {
         $app->render('partners.php');
         $app->render('footer.php');
 });
-
 
 
 $app->get('/getNews', function() use ($app) {
@@ -123,6 +123,44 @@ $app->post('/addFilter', function() use ($app) {
 $app->get('/deleteFilter/:id', function( $id ) use ($app) {
     $filtersManager = new FiltersManager();
 	echo $filtersManager->deleteFilter( $id );
+});
+
+$app->get('/getInfos', function() use ($app) {
+        $infosManager = new InfosManager();
+        echo $infosManager->getInfos();
+});
+
+$app->get('/getInfo/:id', function( $id ) use ($app) {
+        $infosManager = new InfosManager();
+        echo $infosManager->getInfo($id);
+});
+
+$app->post('/addInfo', function() use ($app) {
+        $infosManager = new InfosManager();
+
+        $name = $app->request->post('name');
+        $picture = $app->request->post('picture');
+        $isCategory = $app->request->post('isCategory');
+        $content = $app->request->post('content');
+        $parent = $app->request->post('parent');
+        echo $infosManager->addInfo( $name, $picture, $isCategory, $content, $parent );
+});
+
+$app->post('/updateInfo', function() use ($app) {
+        $infosManager = new InfosManager();
+
+        $id = $app->request->post('id');
+        $name = $app->request->post('name');
+        $picture = $app->request->post('picture');
+        $isCategory = $app->request->post('isCategory');
+        $content = $app->request->post('content');
+        $parentId = $app->request->post('parentId');
+        echo $infosManager->updateInfo( $id, $name, $picture, $isCategory, $content, $parentId );
+});
+
+$app->get('/deleteInfo/:id', function( $id ) use ($app) {
+        $infosManager = new InfosManager();
+        echo $infosManager->deleteInfo( $id );
 });
 
 $app->get('/getPartners', function() use ($app) {

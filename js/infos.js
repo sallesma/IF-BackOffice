@@ -1,5 +1,5 @@
 function getInfos() {
-    $.getJSON("data/getInfos.php", function(data) {
+    $.getJSON("getInfos", function(data) {
         $('#infos-tree').jqxTree({ source:computeTree(data)});
         $('#infos-tree').jqxTree('refresh');
 
@@ -7,7 +7,7 @@ function getInfos() {
         $('#infos-tree').bind('select', function (event) {
             var htmlElement = event.args.element;
             var item = $('#infos-tree').jqxTree('getItem', htmlElement);
-            $.getJSON("data/getInfo.php?id="+item.id).done(function (msg) {
+            $.getJSON("getInfo/"+item.id).done(function (msg) {
                 var infoForm = $('#infos-edit-form');
 				$('#infos-form').show();
 				$('#infos-edit-text').hide();
@@ -21,11 +21,11 @@ function getInfos() {
                 if (msg.picture != "") {
                     $('#edit-infoFileButtonName').html('Modifier l\'icône');
                     infoForm.find('#edit-photoInfo').html('<a href="#" class="thumbnail"><img src="'+msg.picture + '" alt="..."></a></div>');
-                }
-
-                else {
+					infoForm.find('#edit-info-image').val(msg.picture);
+                } else {
                     $('#edit-infoFileButtonName').html('Séléctionner un fichier');
                     infoForm.find('#edit-photoInfo').html('<i>Pas d\'icône actuellement</i>');
+					infoForm.find('#edit-info-image').val("");
                 }
 
                 //isCategory
@@ -58,7 +58,7 @@ function getInfos() {
                 infoSelect.append('<option value="0"> Aucun parent </option>');
                 var items = $('#infos-tree').jqxTree('getItems');
                 $.each(items, function (key, it) {
-                    if (it.id != msg.id && it.value == "1") { //if category and not itself
+                    if (it.id != msg.id && it.value == "1") { //if category and not itself then display option
                         infoSelect.append('<option value="' + it.id + '">' + it.label + '</option>');
                     }
                 });
@@ -67,17 +67,19 @@ function getInfos() {
 
                 $('#infosDeleteButton').show();
             }).fail(function(msg) {
-                alert("Failure");
+                alert("Echec au chargement d'une info");
             });
         });
-    });
+    }).fail(function(msg) {
+		alert("Echec au chargement des infos");
+	});
 }
 
 $('#infosEditButton').click(function() {
     var infoForm = $('#infos-edit-form');
     $.ajax({
         type : "POST",
-        url : "data/updateInfo.php",
+        url : "updateInfo",
         data : {
             id : infoForm.find('#info-id').val(),
             name : infoForm.find('#info-name').val(),
@@ -89,7 +91,7 @@ $('#infosEditButton').click(function() {
     }).done(function(msg) {
         getInfos();
     }).fail(function(msg) {
-        alert("Failure");
+        alert("Echec lors de la mise à jour de l'info");
     });
 });
 
@@ -98,19 +100,16 @@ $('#infosDeleteButton').click(function() {
         var id = $('#infos-edit-form').find('#info-id').val();
 
         $.ajax({
-            type : "POST",
-            url : "data/deleteInfo.php",
-            data : {
-                id : $('#infos-edit-form').find('#info-id').val()
-            }
+            type: "GET",
+            url: "deleteInfo/"+id,
         }).done(function(msg) {
             getInfos();
-			getMapItems();
+			//getMapItems();
             $("#onDeleteInfoAlert").show();
             $('#infos-form').hide();
 			$('#infos-edit-text').show();
         }).fail(function(msg) {
-            alert("Failure");
+            alert("Echec lors de la suppression de l'info");
         });
     }
 });
@@ -119,7 +118,7 @@ $('#infosDeleteButton').click(function() {
 $('#addInfoButton').click(function() {
     $.ajax({
         type : "POST",
-        url : "data/addInfo.php",
+        url : "addInfo",
         data : {
             name : $("#add-info-name").val(),
             isCategory : $('input[type=radio][name=isAddCategoryRadio]:checked').attr('value'),
@@ -131,7 +130,7 @@ $('#addInfoButton').click(function() {
         $('#addInfoModal').modal('hide');
         getInfos();
     }).fail(function(msg) {
-        alert("Failure");
+        alert("Echec lors de l'ajout de l'info");
     });
 });
 
@@ -195,7 +194,7 @@ var computeTree = function (data) {
 $(function () {
     'use strict';
     // Change this to the location of your server-side upload handler:
-    var url = './data/fileUpload/index.php?directory=infos';
+    var url = './src/fileUpload/index.php?directory=infos';
     $('#add-infoFileUpload').fileupload({
         url: url,
         dataType: 'json',
@@ -220,7 +219,7 @@ $(function () {
 $(function () {
     'use strict';
     // Change this to the location of your server-side upload handler:
-    var url = './data/fileUpload/index.php?directory=infos';
+    var url = './src/fileUpload/index.php?directory=infos';
     $('#edit-infoFileUpload').fileupload({
         url: url,
         dataType: 'json',
