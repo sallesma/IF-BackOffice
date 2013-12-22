@@ -3,20 +3,13 @@
                         <h1 id="artists">Artistes</h1>
                     </div>
                     <p>Vous pouvez ajouter ou éditer des artistes par cette interface. Les changements sont pris en compte pour modifier la programmation en conséquence (en plus des fiches artiste).</p>
+					<p>Faites attention à bien écrire les styles des artistes. Sinon, ils seront mal classés dans l'affichage par style.</p>
                     <div id="onDeleteArtistAlert" class="alert alert-danger fade in">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                         <h4>L'artiste a bien été supprimé !</h4>
                         <p>(C'est trop tard, il n'est plus possible de le récupérer. )</p>
                     </div>
-                    <table id="artists-table" class="table table-hover">
-						<tr>
-							<th>Nom</th>
-							<th>Genre</th>
-							<th>Scène</th>
-							<th>Jour</th>
-							<th>Heure</th>
-						</tr>
-					</table>
+                    <table id="artists-table" class="table table-hover"></table>
 
                     <!-- Button to trigger modal -->
                     <button id="showArtistModalToAdd" class="btn btn-primary btn-lg">Ajouter un artiste</button>
@@ -57,6 +50,7 @@
                                             </span>
                                             <br>
                                             <br>
+											<p>Les photos d'artistes devraient avoir une résolution proche de <b>300*300 pixels</b>. C'est ce qui est utilisé dans l'application (une taille plus grande pourrait alourdir l'application).</p>
                                             <!-- The global progress bar -->
                                             <div id="progressArtist" class="progress">
                                                 <div class="progress-bar progress-bar-success"></div>

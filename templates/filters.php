@@ -4,7 +4,7 @@
                     </div>
 
                     <p>Vous pouvez ajouter des filtres photos qui seront utilisés pour la fonctionnalité d'appareil photo de l'application. L'utilisateur choisira un filtre et prendra une photo, la photo sera alors modifiée en ajoutant le filtre par dessus.</p>
-                    <p>Vous devez impérativement respecter la taille standard qui est de XXX*XXX pixels et utiliser le format png (pour utiliser la transparence).</p>
+                    <p>Idéalement, les filtres doivent avoir une résolution de <b>600*600 pixels</b> et être carrés. C'est ce qui est utilisé dans l'application (une taille plus grande sera réadaptée dans l'application). Vous devez impérativement utiliser le <b>format png</b> (pour utiliser la transparence).</p>
 
                     <h3 id="photoFilter-add">Ajouter un filtre</h3>
                     <form id="filter-add-form" class="form-horizontal" role="form">

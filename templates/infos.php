@@ -60,6 +60,7 @@
                                     </span>
                                     <br>
                                     <br>
+									<p>Les images pour les icônes devraient avoir une résolution proche de <b>300*300 pixels</b>. C'est ce qui est utilisé dans l'application (une taille plus grande pourrait alourdir l'application).</p>
                                     <!-- The global progress bar -->
                                     <div id="edit-progressInfo" class="progress">
                                         <div class="progress-bar progress-bar-success"></div>
@@ -119,6 +120,7 @@
                                             </span>
                                             <br>
                                             <br>
+											<p>Les images pour les icônes devraient avoir une résolution proche de <b>300*300 pixels</b>. C'est ce qui est utilisé dans l'application (une taille plus grande pourrait alourdir l'application).</p>
                                             <!-- The global progress bar -->
                                             <div id="add-progressInfo" class="progress">
                                                 <div class="progress-bar progress-bar-success"></div>

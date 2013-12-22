@@ -72,10 +72,10 @@ $(document).on('click', '.partnerDeleteButton', function (event) {
     }
 });
 
-function getPartners() {    
+function getPartners() {
      $.get("getPartners", function(jsonPartnersTable) {
 		jsonPartnersTable=JSON.parse(jsonPartnersTable);
-		partnerHtmlString = '';
+		partnerHtmlString = '<tr><th>Nom</th><th>Image</th><th>Lien</th></tr>';
 		$.each(jsonPartnersTable, function(index, partner) {
 			partnerHtmlString += "<tr><form role='form'>";
 			partnerHtmlString += "<input type=\"hidden\" name=\"name\" value=\""+partner.name+"\">";
@@ -87,11 +87,11 @@ function getPartners() {
 			partnerHtmlString += "<td>";
             partnerHtmlString += "	<button type='button' class='btn btn-primary modifyNewButton'>Modifier</button>";
             partnerHtmlString += "	<button type='button' class='newsDeleteButton btn btn-danger'>Supprimer !</button>";
-			
+
             partnerHtmlString += "</form>";
 	        partnerHtmlString += "</tr>";
 	        partnerHtmlString += "</tr>";
-			
+
 		});
 		$("#partners-table").html(partnerHtmlString);
     }).fail(function(msg) {
