@@ -32,7 +32,7 @@
     <script src="js/infos.js?v=16"></script>
     <script src="js/news.js?v=128"></script>
     <script src="js/filters.js?v=103"></script>
-    <script src="js/partners.js?v=115"></script>
+    <script src="js/partners.js?v=122"></script>
     <script src="js/map.js?v=7"></script>
 	<script type="text/javascript" >
 		$(document).ready(function() {

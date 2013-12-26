@@ -169,4 +169,30 @@ $app->get('/getPartners', function() use ($app) {
 
 });
 
+$app->post('/addPartner', function() use ($app) {
+        $partnersManager = new PartnersManager();
+
+        $name = $app->request->post('name');
+        $picture = $app->request->post('picture');
+        $website = $app->request->post('website');
+       
+        echo $partnersManager->addPartner( $name, $picture, $website);
+});
+
+$app->post('/updatePartner', function() use ($app) {
+        $partnersManager = new PartnersManager();
+
+        $id = $app->request->post('id');
+        $name = $app->request->post('name');
+        $picture = $app->request->post('picture');
+        $website = $app->request->post('website');
+        
+        echo $partnersManager->updatePartner( $id, $name, $picture, $website);
+});
+
+$app->get('/deletePartner/:id', function( $id ) use ($app) {
+        $partnersManager = new PartnersManager();
+        echo $partnersManager->deletePartner( $id );
+});
+
 $app->run();
