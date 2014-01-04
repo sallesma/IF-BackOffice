@@ -35,7 +35,26 @@ $(document).on("click", ".modifyMapItemButton", function() {
     $('#editMapItemModal').find('input[id="label"]').val(label);
     $('#editMapItemModal').find('input[id="x"]').val(x);
     $('#editMapItemModal').find('input[id="y"]').val(y);
-    $('#editMapItemModal').find('input[id="infoId"]').val(infoId);
+
+	$(document).on("click", "#edit-map", function(e) {
+		x_1000 = ( e.offsetX * 1000 ) / e.target.width;
+		y_1000 = ( e.offsetY * 1000 ) / e.target.height;
+		$('#editMapItemModal').find('input[id="x"]').val(x_1000);
+		$('#editMapItemModal').find('input[id="y"]').val(y_1000);
+	});
+
+	var infoIdSelect = $('#editMapItemModal').find('#mapItem-linked-info');
+	infoIdSelect.html('');
+	infoIdSelect.append('<option value="-1"> Aucune info </option>');
+	$.get("getInfos", function(jsonInfosTable) {
+		jsonInfosTable=JSON.parse(jsonInfosTable);
+		$.each(jsonInfosTable, function (key, it) {
+				infoIdSelect.append('<option value="' + it.id + '">' + it.name + '</option>');
+		});
+	});
+
+	infoIdSelect.find('option[value="'+infoId+'"]').attr('selected', 'selected');
+
 });
 
 // Modify an existing map item
@@ -44,7 +63,7 @@ $('#editMapItemButton').click(function() {
     var label =  $('#editMapItemModal').find('input[id="label"]').val();
     var x = $('#editMapItemModal').find('input[id="x"]').val();
     var y = $('#editMapItemModal').find('input[id="y"]').val();
-    var infoId = $('#editMapItemModal').find('input[id="infoId"]').val();
+    var infoId = $('#editMapItemModal').find('#mapItem-linked-info').val()
 
 	$.ajax({
         type : "POST",

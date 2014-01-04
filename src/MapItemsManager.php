@@ -30,6 +30,12 @@ class MapItemsManager {
 
 		$addMapItemQuery ="INSERT INTO map (label, x, y, infoId) VALUES ('".$label."', '".$x."', '".$y."', '".$infoId."')";
 		mysql_query($addMapItemQuery);
+
+		if ($infoId != "-1") {
+			$updateLinkedInfo = "UPDATE infos SET isDisplayedOnMap = 1 WHERE id=".$infoId;
+			mysql_query($updateLinkedInfo);
+		}
+
 		mysql_close($link);
 		return $addMapItemQuery;
 	}
@@ -39,12 +45,11 @@ class MapItemsManager {
 
 		$name = mysql_real_escape_string( $name );
 
-		if ($infoId == -1)
-			$editMapItemQuery ="UPDATE map SET label='".$label."', x='".$x."', y='".$y."' WHERE id=".$id."";
-		else
-			$editMapItemQuery ="UPDATE map SET label='".$label."', x='".$x."', y='".$y."', infoId='".$infoId."' WHERE id=".$id."";
-
+		$editMapItemQuery ="UPDATE map SET label='".$label."', x='".$x."', y='".$y."', infoId='".$infoId."' WHERE id=".$id."";
 		mysql_query($editMapItemQuery);
+
+		$updateLinkedInfo = "UPDATE infos SET isDisplayedOnMap = 1 WHERE id=".$infoId;
+		mysql_query($updateLinkedInfo);
 		mysql_close($link);
 	}
 

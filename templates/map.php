@@ -61,11 +61,21 @@
                                         <input id="id" type="hidden" value="">
                                         <input id="label" type="text" class="form-control" placeholder="Label">
                                         <br />
-                                        <input id="x" type="text" class="form-control" placeholder="Coordonnée X">
+										<p>Cliquez sur la carte pour placer le point (les coordonnées seront sélectionnées)</p>
+										<img src="img/map.jpg" id="edit-map" alt="Carte">
+										<br />
+                                        <input id="x" type="text" class="form-control" placeholder="Coordonnée X" disabled>
                                         <br />
-										<input id="y" type="text" class="form-control" placeholder="Coordonnée Y">
+										<input id="y" type="text" class="form-control" placeholder="Coordonnée Y" disabled>
                                         <br />
-										<input id="infoId" type="text" class="form-control" placeholder="InfoId">
+
+										<input id="infoId" type="hidden" class="form-control" placeholder="InfoId">
+										<div class="form-group">
+											<label for="info-parent" class="col-lg-4 control-label">Info pratique liée :</label>
+											<div class="col-lg-8">
+												<select id="mapItem-linked-info" class="form-control"></select>
+											</div>
+										</div>
                                         <br />
                                     </div>
                                     <div class="modal-footer">
