@@ -14,6 +14,7 @@ require 'src/NewsManager.php';
 require 'src/ArtistsManager.php';
 require 'src/FiltersManager.php';
 require 'src/InfosManager.php';
+require 'src/MapItemsManager.php';
 require 'src/PartnersManager.php';
 
 $app = new \Slim\Slim();
@@ -163,6 +164,40 @@ $app->get('/deleteInfo/:id', function( $id ) use ($app) {
         echo $infosManager->deleteInfo( $id );
 });
 
+$app->get('/getMapItems', function() use ($app) {
+	$mapItemManager = new MapItemsManager();
+	echo $mapItemManager->getMapItems();
+
+});
+
+$app->post('/addMapItem', function() use ($app) {
+        $mapItemManager = new MapItemsManager();
+
+        $label = $app->request->post('label');
+        $x = $app->request->post('x');
+        $y = $app->request->post('y');
+        $infoId = $app->request->post('infoId');
+
+        echo $mapItemManager->addMapItem( $label, $x, $y, $infoId );
+});
+
+$app->post('/updateMapItem', function() use ($app) {
+        $mapItemManager = new MapItemsManager();
+
+        $id = $app->request->post('id');
+        $label = $app->request->post('label');
+        $x = $app->request->post('x');
+        $y = $app->request->post('y');
+        $infoId = $app->request->post('infoId');
+
+        echo $mapItemManager->updateMapItem( $id, $label, $x, $y, $infoId);
+});
+
+$app->get('/deleteMapItem/:id', function( $id ) use ($app) {
+    $mapItemManager = new MapItemsManager();
+    echo $mapItemManager->deleteMapItem( $id );
+});
+
 $app->get('/getPartners', function() use ($app) {
 	$partnersManager = new PartnersManager();
 	echo $partnersManager->getPartners();
@@ -175,7 +210,7 @@ $app->post('/addPartner', function() use ($app) {
         $name = $app->request->post('name');
         $picture = $app->request->post('picture');
         $website = $app->request->post('website');
-       
+
         echo $partnersManager->addPartner( $name, $picture, $website);
 });
 
@@ -186,7 +221,7 @@ $app->post('/updatePartner', function() use ($app) {
         $name = $app->request->post('name');
         $picture = $app->request->post('picture');
         $website = $app->request->post('website');
-        
+
         echo $partnersManager->updatePartner( $id, $name, $picture, $website);
 });
 

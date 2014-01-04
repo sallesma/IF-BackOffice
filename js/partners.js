@@ -102,7 +102,6 @@ function getPartners() {
 
             partnerHtmlString += "</form>";
 	        partnerHtmlString += "</tr>";
-	        partnerHtmlString += "</tr>";
 
 		});
 		$("#partners-table").html(partnerHtmlString);

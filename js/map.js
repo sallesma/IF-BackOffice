@@ -2,7 +2,7 @@
 $('#addMapItemButton').click(function() {
     $.ajax({
         type : "POST",
-        url : "data/addMapItem.php",
+        url : "addMapItem",
         data : {
             label : $("#newLabel").val(),
             x : $("#newX").val(),
@@ -13,7 +13,7 @@ $('#addMapItemButton').click(function() {
         $('#addMapItemModal').modal('hide');
         getMapItems();
     }).fail(function(msg) {
-        alert("Failure");
+        alert("Echec à l'ajout d'un point");
     });
 });
 
@@ -48,7 +48,7 @@ $('#editMapItemButton').click(function() {
 
 	$.ajax({
         type : "POST",
-        url : "data/updateMapItem.php",
+        url : "updateMapItem",
         data : {
             id : id,
             label : label,
@@ -60,7 +60,7 @@ $('#editMapItemButton').click(function() {
         $('#editMapItemModal').modal('hide');
         getMapItems();
     }).fail(function(msg) {
-        alert("Failure");
+        alert("Echec à la mise à jour du point");
     });
 });
 
@@ -70,18 +70,38 @@ $(document).on('click', '.mapItemDeleteButton', function (event) {
 
         $.ajax({
             type: "GET",
-            url: "data/deleteMapItem.php?id="+id
+            url: "deleteMapItem/"+id
         }).done(function (msg) {
             getMapItems();
             $("#onDeleteMapItemsAlert").show();
         }).fail(function (msg) {
-            alert("Failure");
+            alert("Echec à la suppression du point");
         });
     }
 });
 
 function getMapItems() {
-    $.get("data/getMapItems.php", function(data) {
-        $("#mapItem-table").html(data);
-    });
+	$.get("getMapItems", function(jsonMapItemsTable) {
+		jsonMapItemsTable=JSON.parse(jsonMapItemsTable);
+		mapItemsHtmlString = '<tr><th>Label</th><th>X</th><th>Y</th></tr>';
+		$.each(jsonMapItemsTable, function(index, mapItem) {
+			mapItemsHtmlString += "<tr><form role='form'>";
+			mapItemsHtmlString += "<input type=\"hidden\" name=\"label\" value=\""+mapItem.label+"\">";
+			mapItemsHtmlString += "<input type=\"hidden\" name=\"x\" value=\""+mapItem.x+"\">";
+			mapItemsHtmlString += "<input type=\"hidden\" name=\"y\" value=\""+mapItem.y+"\">";
+			mapItemsHtmlString +=  "<input type=\"hidden\" name=\"id\" value=\""+mapItem.id+"\">";
+			mapItemsHtmlString +=  "<input type=\"hidden\" name=\"infoId\" value=\""+mapItem.infoId+"\">";
+			mapItemsHtmlString += "<td>"+mapItem.label+"</td>";
+			mapItemsHtmlString += "<td>"+mapItem.x+"</td>";
+			mapItemsHtmlString += "<td>"+mapItem.y+"</td>";
+			mapItemsHtmlString += "<td>";
+			mapItemsHtmlString += "	<button type='button' class='btn btn-primary modifyMapItemButton'>Modifier</button>";
+			mapItemsHtmlString += "	<button type='button' class='mapItemDeleteButton btn btn-danger'>Supprimer !</button>";
+			mapItemsHtmlString += "</form>";
+			mapItemsHtmlString += "</tr>";
+		});
+    	$("#mapItem-table").html(mapItemsHtmlString);
+	}).fail(function(msg) {
+		alert("Echec au chargement des points de la carte");
+	});
 }
