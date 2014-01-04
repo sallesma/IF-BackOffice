@@ -14,25 +14,25 @@ class PartnersManager {
 		while($partnerRow = mysql_fetch_assoc($getPartnersResult)){
 			$thisPartner = array('id'=> $partnerRow['id'],
 						 'name'=> $partnerRow['name'],
-						 'picture'=> $partnerRow['picture'],
+			 			 'picture'=> $partnerRow['picture'],
 						 'website'=> $partnerRow['website'] );
 			array_push($allPartners, $thisPartner);
 		}
 		mysql_close($link);
 		return (json_encode($allPartners));
 	}
-    
+
     public function addPartner($name, $picture, $website) {
 		include('connection.php');
 
 		$name = mysql_real_escape_string( $name );
-        
+
 		$addPartnerQuery ="INSERT INTO partners(name, picture, website)
 						VALUES ('".$name."', '".$picture."', '".$website."')";
 		mysql_query($addPartnerQuery);
 		mysql_close($link);
 	}
-    
+
     public function updatePartner ( $id, $name, $picture, $website) {
 		include("connection.php");
 
@@ -62,7 +62,7 @@ class PartnersManager {
 		mysql_close($link);
 	}
 
-    
+
     public function deletePartner( $id ) {
 		include("connection.php");
 
@@ -86,7 +86,7 @@ class PartnersManager {
 			}
 		}
 
-		//Supprimer l'artiste
+		//delete the artist
 		$deleteArtistQuery ="DELETE FROM partners WHERE id=".$id;
 		mysql_query($deleteArtistQuery);
 

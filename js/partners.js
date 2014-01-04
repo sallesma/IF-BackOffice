@@ -28,18 +28,16 @@ $(document).on("click", ".modifyPartnerButton", function() {
     var name = formClass.find('input[name="name"]').val();
     var picture = formClass.find('input[name="picture"]').val();
     var website = formClass.find('input[name="website"]').val();
-    
+
     $('#editPartnerModal').find('input[id="id"]').val(id);
     $('#editPartnerModal').find('input[id="name"]').val(name);
-    
-   
+
     if (picture) {
-        $('#editPartnerModal').find('input[id="edit-photoPartner"]').html("<img class=\"col-md-3\" src=\""+picture+" \"/>");
+        $('#editPartnerModal').find('#edit-photoPartner').html('<a href="#" class="thumbnail"><img src="'+ picture + '" alt="..."></a>');
+    } else {
+        $('#editPartnerModal').find('#edit-photoPartner').html("");
     }
-    else {
-        $('#editPartnerModal').find('input[id="edit-photoPartner"]').html("");
-    }    
-    
+
     $('#editPartnerModal').find('input[id="website"]').val(website);
 });
 
@@ -50,9 +48,7 @@ $('#editPartnerButton').click(function() {
     var name =  $('#editPartnerModal').find('input[id="name"]').val();
     var picture = $('#editPartnerModal').find('input[id="part-picture"]').val();
     var website = $('#editPartnerModal').find('input[id="website"]').val();
-    
-    alert(picture);
-    
+
     $.ajax({
         type : "POST",
         url : "updatePartner",
@@ -82,7 +78,7 @@ $(document).on('click', '.partnerDeleteButton', function (event) {
             getPartners();
             $("#onDeletePartnersAlert").show();
         }).fail(function (msg) {
-            alert("Failure");
+            alert("Failure deleting partner");
         });
     }
 });
@@ -150,7 +146,7 @@ $(function () {
         done: function (e, data) {
             $.each(data.result.files, function (index, file) {
             $("#part-picture").val(file.url);
-            $("#edit-photoPartner").html('<a href="#" class="thumbnail"><img src="'+file.url + '" alt="..."></a></div>');
+            $("#edit-photoPartner").html('<a href="#" class="thumbnail"><img src="'+file.url + '" alt="..."></a>');
             });
         },
         progressall: function (e, data) {

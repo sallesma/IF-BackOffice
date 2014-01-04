@@ -413,7 +413,7 @@ class UploadHandler
     protected function upcount_name_callback($matches) {
         $index = isset($matches[1]) ? intval($matches[1]) + 1 : 1;
         $ext = isset($matches[2]) ? $matches[2] : '';
-        return ' ('.$index.')'.$ext;
+        return '_'.$index.$ext;
     }
 
     protected function upcount_name($name) {
@@ -462,6 +462,9 @@ class UploadHandler
 
     protected function get_file_name($name,
             $type = null, $index = null, $content_range = null) {
+		$search = array(' ', 'à', 'â', 'ä', 'é', 'è', 'ê', 'ë', 'ù', 'û', 'ü', 'ô', 'ö', 'ï', 'î');
+		$replace = array('_', 'a', 'a', 'a', 'e', 'e', 'e', 'e', 'u', 'o', 'u', 'o', 'o', 'i', 'i');
+		$name = str_replace($search, $replace, $name);
         return $this->get_unique_filename(
             $this->trim_file_name($name, $type, $index, $content_range),
             $type,
@@ -1063,7 +1066,7 @@ class UploadHandler
     protected function body($str) {
         echo $str;
     }
-    
+
     protected function header($str) {
         header($str);
     }
@@ -1199,7 +1202,7 @@ class UploadHandler
         $this->header('Content-Disposition: inline; filename="files.json"');
         // Prevent Internet Explorer from MIME-sniffing the content-type:
         $this->header('X-Content-Type-Options: nosniff');
-        
+
         if ($this->options['access_control_allow_origin']) {
             $this->send_access_control_headers();
         }
