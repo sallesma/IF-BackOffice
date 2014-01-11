@@ -1,3 +1,23 @@
+//Clicks on addmodal map determine mapItem coordinates
+$(document).on("click", "#add-map", function(e) {
+	x_1000 = ( e.offsetX * 1000 ) / e.target.width;
+	y_1000 = ( e.offsetY * 1000 ) / e.target.height;
+	alert(x_1000 +", "+y_1000);
+	$('#addMapItemModal').find('input[id="newX"]').val(x_1000);
+	$('#addMapItemModal').find('input[id="newY"]').val(y_1000);
+});
+
+//Initializes the infoId selector in addModal
+var infoIdSelect = $('#addMapItemModal').find('#addMapItem-linked-info');
+infoIdSelect.html('');
+infoIdSelect.append('<option value="-1"> Aucune info </option>');
+$.get("getInfos", function(jsonInfosTable) {
+	jsonInfosTable=JSON.parse(jsonInfosTable);
+	$.each(jsonInfosTable, function (key, it) {
+			infoIdSelect.append('<option value="' + it.id + '">' + it.name + '</option>');
+	});
+});
+
 // Add a new map item
 $('#addMapItemButton').click(function() {
     $.ajax({
@@ -7,7 +27,7 @@ $('#addMapItemButton').click(function() {
             label : $("#newLabel").val(),
             x : $("#newX").val(),
             y : $("#newY").val(),
-            infoId : $("#newInfoId").val()
+            infoId : $('#addMapItemModal').find('#addMapItem-linked-info').val()
         }
     }).done(function(msg) {
         $('#addMapItemModal').modal('hide');
@@ -63,7 +83,7 @@ $('#editMapItemButton').click(function() {
     var label =  $('#editMapItemModal').find('input[id="label"]').val();
     var x = $('#editMapItemModal').find('input[id="x"]').val();
     var y = $('#editMapItemModal').find('input[id="y"]').val();
-    var infoId = $('#editMapItemModal').find('#mapItem-linked-info').val()
+    var infoId = $('#editMapItemModal').find('#mapItem-linked-info').val();
 
 	$.ajax({
         type : "POST",
@@ -102,20 +122,28 @@ $(document).on('click', '.mapItemDeleteButton', function (event) {
 function getMapItems() {
 	$.get("getMapItems", function(jsonMapItemsTable) {
 		jsonMapItemsTable=JSON.parse(jsonMapItemsTable);
-		mapItemsHtmlString = '<tr><th>Label</th><th>X</th><th>Y</th></tr>';
+		mapItemsHtmlString = '<tr><th>Label</th><th>X</th><th>Y</th><th>Info liée</th></tr>';
 		$.each(jsonMapItemsTable, function(index, mapItem) {
 			mapItemsHtmlString += "<tr><form role='form'>";
 			mapItemsHtmlString += "<input type=\"hidden\" name=\"label\" value=\""+mapItem.label+"\">";
 			mapItemsHtmlString += "<input type=\"hidden\" name=\"x\" value=\""+mapItem.x+"\">";
 			mapItemsHtmlString += "<input type=\"hidden\" name=\"y\" value=\""+mapItem.y+"\">";
-			mapItemsHtmlString +=  "<input type=\"hidden\" name=\"id\" value=\""+mapItem.id+"\">";
-			mapItemsHtmlString +=  "<input type=\"hidden\" name=\"infoId\" value=\""+mapItem.infoId+"\">";
+			mapItemsHtmlString += "<input type=\"hidden\" name=\"id\" value=\""+mapItem.id+"\">";
+			mapItemsHtmlString += "<input type=\"hidden\" name=\"infoId\" value=\""+mapItem.infoId+"\">";
 			mapItemsHtmlString += "<td>"+mapItem.label+"</td>";
 			mapItemsHtmlString += "<td>"+mapItem.x+"</td>";
 			mapItemsHtmlString += "<td>"+mapItem.y+"</td>";
+			$.getJSON("getInfo/"+mapItem.infoId).done(function (info) {
+				if (info && info.name != "") {
+					mapItemsHtmlString += "<td>"+info.name+"</td>";
+				} else {
+					mapItemsHtmlString += "<td>Aucune info</td>";
+				}
+            });
 			mapItemsHtmlString += "<td>";
 			mapItemsHtmlString += "	<button type='button' class='btn btn-primary modifyMapItemButton'>Modifier</button>";
 			mapItemsHtmlString += "	<button type='button' class='mapItemDeleteButton btn btn-danger'>Supprimer !</button>";
+			mapItemsHtmlString += "</td>";
 			mapItemsHtmlString += "</form>";
 			mapItemsHtmlString += "</tr>";
 		});
