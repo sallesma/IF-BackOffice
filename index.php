@@ -10,6 +10,7 @@
 require 'Slim/Slim.php';
 \Slim\Slim::registerAutoloader();
 
+require 'src/APIManager.php';
 require 'src/NewsManager.php';
 require 'src/ArtistsManager.php';
 require 'src/FiltersManager.php';
@@ -30,6 +31,10 @@ $app->get('/', function() use ($app) {
         $app->render('footer.php');
 });
 
+$app->get('/api/:table/:lastRetrieve', function( $table, $lastRetrieve ) use ($app) {
+	$apiManager = new APIManager();
+	echo $apiManager->webService( $table, $lastRetrieve );
+});
 
 $app->get('/getNews', function() use ($app) {
         $newsManager = new NewsManager();
@@ -167,7 +172,6 @@ $app->get('/deleteInfo/:id', function( $id ) use ($app) {
 $app->get('/getMapItems', function() use ($app) {
 	$mapItemManager = new MapItemsManager();
 	echo $mapItemManager->getMapItems();
-
 });
 
 $app->post('/addMapItem', function() use ($app) {
@@ -201,7 +205,6 @@ $app->get('/deleteMapItem/:id', function( $id ) use ($app) {
 $app->get('/getPartners', function() use ($app) {
 	$partnersManager = new PartnersManager();
 	echo $partnersManager->getPartners();
-
 });
 
 $app->post('/addPartner', function() use ($app) {
