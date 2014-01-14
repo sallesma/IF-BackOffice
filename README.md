@@ -9,11 +9,7 @@ It aims to provide data for both android and iOS apps, so that the crew can upda
 
 The project uses slim framework : http://www.slimframework.com/
 
-Here is what non slim framework files and folders stand for :
-
-	/api
-
-Contains function calls used by mobile application to get the data from the server database
+Here is what non slim framework files stand for :
 
 	base.sql
 
