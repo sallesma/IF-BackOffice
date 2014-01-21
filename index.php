@@ -1,12 +1,5 @@
 <?php
-/**
- * Step 1: Require the Slim Framework
- *
- * If you are not using Composer, you need to require the
- * Slim Framework and register its PSR-0 autoloader.
- *
- * If you are using Composer, you can skip this step.
- */
+
 require 'Slim/Slim.php';
 \Slim\Slim::registerAutoloader();
 
@@ -20,7 +13,13 @@ require 'src/PartnersManager.php';
 
 $app = new \Slim\Slim();
 
+$homeUrl = "http://titouanrossier.com/ifT";
+
 $app->get('/', function() use ($app) {
+	$app->redirect('login');
+});
+
+$app->get('/home', function() use ($app) {
         $app->render('header.php');
         $app->render('news.php');
         $app->render('artists.php');
@@ -31,7 +30,36 @@ $app->get('/', function() use ($app) {
         $app->render('footer.php');
 });
 
-$app->get('/api/:table/:lastRetrieve', function( $table, $lastRetrieve ) use ($app) {
+$app->get('/login', function() use ($app) {
+    // Si pas de ticket, c'est une invitation à se connecter
+    if(empty($_GET["ticket"])) {
+		global $homeUrl;
+		$app->redirect("https://cas.utc.fr/cas/login?service=".$homeUrl."/login");
+    } else {
+        // Connexion avec le ticket CAS
+        try {
+            $app->getLog()->debug("Trying loginCas");
+			//(vérifier que le ticket dans $_GET["ticket"] est bon et récupérer le login pour tester si la persnne est dans la liste des login autorisés)
+            /*$result = JsonClientFactory::getInstance()->getClient("MYACCOUNT")->loginCas(array(
+                "ticket" => $_GET["ticket"],
+                "service" => Config::get("casper_url").'login'
+            ));*/
+        } catch (Exception $e) {
+            $app->getLog()->warn("Error with CAS ticket ".$_GET["ticket"].": ".$e->getMessage());
+
+            // Affichage d'une page avec juste l'erreur
+            $app->render('error.php', array('error_message' => 'Erreur de login CAS<br /><a href="/">Réessayer</a>'));
+        }
+
+		$app->redirect('home');
+    }
+})->name('login');
+
+$app->get('/logout', function() use ($app) {
+    $app->redirect("https://cas.utc.fr/cas/logout");
+});
+
+$app->get('/api/:table(/:lastRetrieve)', function( $table, $lastRetrieve = null) use ($app) {
 	$apiManager = new APIManager();
 	echo $apiManager->webService( $table, $lastRetrieve );
 });
