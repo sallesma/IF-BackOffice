@@ -64,17 +64,19 @@ $(document).on("click", ".modifyMapItemButton", function() {
 	});
 
 	var infoIdSelect = $('#editMapItemModal').find('#mapItem-linked-info');
+    
+    
 	infoIdSelect.html('');
 	infoIdSelect.append('<option value="-1"> Aucune info </option>');
 	$.get("getInfos", function(jsonInfosTable) {
 		jsonInfosTable=JSON.parse(jsonInfosTable);
 		$.each(jsonInfosTable, function (key, it) {
-				infoIdSelect.append('<option value="' + it.id + '">' + it.name + '</option>');
+            if(it.id == infoId)
+				infoIdSelect.append('<option value="' + it.id + '" selected>' + it.name + '</option>');
+            else 
+                infoIdSelect.append('<option value="' + it.id + '">' + it.name + '</option>');
 		});
 	});
-
-	infoIdSelect.find('option[value="'+infoId+'"]').attr('selected', 'selected');
-
 });
 
 // Modify an existing map item

@@ -32,7 +32,7 @@
     <script src="js/artists.js?v=108"></script>
     <script src="js/filters.js?v=103"></script>
     <script src="js/infos.js?v=17"></script>
-    <script src="js/map.js?v=53"></script>
+    <script src="js/map.js?v=60"></script>
     <script src="js/partners.js?v=127"></script>
 	<script type="text/javascript" >
 		$(document).ready(function() {
