@@ -135,13 +135,20 @@ function getMapItems() {
 			mapItemsHtmlString += "<td>"+mapItem.label+"</td>";
 			mapItemsHtmlString += "<td>"+mapItem.x+"</td>";
 			mapItemsHtmlString += "<td>"+mapItem.y+"</td>";
-			$.getJSON("getInfo/"+mapItem.infoId).done(function (info) {
-				if (info && info.name != "") {
-					mapItemsHtmlString += "<td>"+info.name+"</td>";
-				} else {
-					mapItemsHtmlString += "<td>Aucune info</td>";
-				}
+            mapItemsHtmlString +="<td>";
+            
+            var infoName = "";
+            
+            $.ajax({
+              url: 'getInfo/'+mapItem.infoId,
+              async: false,
+              dataType: 'json',
+              success: function (json) {
+                infoName = json.name;
+              }
             });
+            mapItemsHtmlString += infoName;
+            mapItemsHtmlString += "</td>";
 			mapItemsHtmlString += "<td>";
 			mapItemsHtmlString += "	<button type='button' class='btn btn-primary modifyMapItemButton'>Modifier</button>";
 			mapItemsHtmlString += "	<button type='button' class='mapItemDeleteButton btn btn-danger'>Supprimer !</button>";
