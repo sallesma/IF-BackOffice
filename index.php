@@ -13,11 +13,40 @@ require 'src/PartnersManager.php';
 
 $app = new \Slim\Slim();
 
-$homeUrl = "http://titouanrossier.com/ifT";
+$homeUrl = "http://titouanrossier.com/ifT/";
+$authorizedLogins = array("sallesma", "trossier");
 
 $app->get('/', function() use ($app) {
-	$app->redirect('login');
-});
+	global $homeUrl;
+    // Si pas de ticket, c'est une invitation à se connecter
+    if(empty($_GET["ticket"])) {
+		$app->redirect("https://cas.utc.fr/cas/login?service=".$homeUrl);
+    } else {
+        // Connexion avec le ticket CAS
+        try {
+			$validateUrl = "https://cas.utc.fr/cas/serviceValidate?service=".$homeUrl."&ticket=".$_GET["ticket"];
+			$response = file_get_contents($validateUrl);
+			$xml = new SimpleXMLElement($response);
+
+			$namespaces = $xml->getNamespaces();
+			$serviceResponse = $xml->children($namespaces['cas']);
+			$user = $serviceResponse->authenticationSuccess->user;
+
+			global $authorizedLogins;
+			if (in_array((string)$user, $authorizedLogins))
+				$app->redirect('home');
+			else
+				throw new Exception();
+        } catch (Exception $e) {
+            $app->render('error.php', array('error_message' => 'Erreur de login CAS<br />Es-tu sûr d\'avoir accès à cette page ?  <a href="'.$app->urlFor('logout').'">Réessayer</a>'));
+        }
+    }
+})->name('/');
+
+$app->get('/logout', function() use ($app) {
+	global $homeUrl;
+    $app->redirect("https://cas.utc.fr/cas/logout?url=".$homeUrl);
+})->name('logout');
 
 $app->get('/home', function() use ($app) {
         $app->render('header.php');
@@ -28,35 +57,6 @@ $app->get('/home', function() use ($app) {
         $app->render('map.php');
         $app->render('partners.php');
         $app->render('footer.php');
-});
-
-$app->get('/login', function() use ($app) {
-    // Si pas de ticket, c'est une invitation à se connecter
-    if(empty($_GET["ticket"])) {
-		global $homeUrl;
-		$app->redirect("https://cas.utc.fr/cas/login?service=".$homeUrl."/login");
-    } else {
-        // Connexion avec le ticket CAS
-        try {
-            $app->getLog()->debug("Trying loginCas");
-			//(vérifier que le ticket dans $_GET["ticket"] est bon et récupérer le login pour tester si la persnne est dans la liste des login autorisés)
-            /*$result = JsonClientFactory::getInstance()->getClient("MYACCOUNT")->loginCas(array(
-                "ticket" => $_GET["ticket"],
-                "service" => Config::get("casper_url").'login'
-            ));*/
-        } catch (Exception $e) {
-            $app->getLog()->warn("Error with CAS ticket ".$_GET["ticket"].": ".$e->getMessage());
-
-            // Affichage d'une page avec juste l'erreur
-            $app->render('error.php', array('error_message' => 'Erreur de login CAS<br /><a href="/">Réessayer</a>'));
-        }
-
-		$app->redirect('home');
-    }
-})->name('login');
-
-$app->get('/logout', function() use ($app) {
-    $app->redirect("https://cas.utc.fr/cas/logout");
 });
 
 $app->get('/api/:table(/:lastRetrieve)', function( $table, $lastRetrieve = null) use ($app) {

@@ -95,6 +95,12 @@
                                 </li>
                             </ul>
                         </li>
+						<hr>
+						<li>
+							<a href="logout">
+								<button type="button" class="btn btn-danger">Déconnexion</button>
+							</a>
+						</li>
                     </ul>
                 </div>
             </div>
