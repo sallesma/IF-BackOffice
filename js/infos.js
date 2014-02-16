@@ -20,7 +20,7 @@ function getInfos() {
                 //picture
                 if (msg.picture != "") {
                     $('#edit-infoFileButtonName').html('Modifier l\'icône');
-                    infoForm.find('#edit-photoInfo').html('<a href="#" class="thumbnail"><img src="'+msg.picture + '" alt="..."></a></div>');
+                    infoForm.find('#edit-photoInfo').html('<a href="#" class="thumbnail"><img src="'+msg.picture + '" alt="..."></a>');
 					infoForm.find('#edit-info-image').val(msg.picture);
                 } else {
                     $('#edit-infoFileButtonName').html('Séléctionner un fichier');

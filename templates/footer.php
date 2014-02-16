@@ -28,7 +28,7 @@
     <script src="js/lib/jquery.iframe-transport.js"></script>
     <script src="js/lib/jquery.fileupload.js"></script>
 
-    <script src="js/news.js?v=128"></script>
+    <script src="js/news.js?v=138"></script>
     <script src="js/artists.js?v=108"></script>
     <script src="js/filters.js?v=103"></script>
     <script src="js/infos.js?v=17"></script>

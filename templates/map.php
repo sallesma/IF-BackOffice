@@ -28,7 +28,8 @@
                                 <form role="form">
                                     <div class="modal-body">
                                         <input id="newLabel" type="text" class="form-control" placeholder="Label">
-                                        <br />
+                                        <p>* Evitez de dépasser 20 caractères</p>
+										<br />
 										<p>Cliquez sur la carte pour placer le point (les coordonnées seront sélectionnées)</p>
 										<img src="img/map.jpg" id="add-map" alt="Carte">
 										<br />
@@ -69,6 +70,7 @@
                                     <div class="modal-body">
                                         <input id="id" type="hidden" value="">
                                         <input id="label" type="text" class="form-control" placeholder="Label">
+										<p>* Evitez de dépasser 20 caractères</p>
                                         <br />
 										<p>Cliquez sur la carte pour placer le point (les coordonnées seront sélectionnées)</p>
 										<img src="img/map.jpg" id="edit-map" alt="Carte">

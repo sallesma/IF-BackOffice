@@ -30,3 +30,7 @@ Then you need to update the file data/connection.php to set up your database con
 	$table_schema= "";
 
 Your backoffice is now available!
+
+## Contribution
+
+If you have any good ideas about a better interface, contact us :)

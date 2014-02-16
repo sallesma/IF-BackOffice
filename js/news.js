@@ -78,8 +78,8 @@ function getNews() {
 		newsHtmlString = '<tr><th>Nom</th><th>Description</th><th>Date</th></tr>';
 		$.each(jsonNewsTable, function(index, news) {
 			newsHtmlString += "<tr><form role='form'>";
-			newsHtmlString += "<input type='hidden' name='title' value='"+news.title+"'>";
-			newsHtmlString += "<input type='hidden' name='content' value='"+news.content+"'>";
+			newsHtmlString += "<input type='hidden' name='title' value='"+news.title.replace("'", "&apos;")+"'>";
+			newsHtmlString += "<input type='hidden' name='content' value='"+news.content.replace("'", "&apos;")+"'>";
 			newsHtmlString += "<td id='title'>"+news.title+"</td>";
 			newsHtmlString += "<td id='content'>"+news.content+"</td>";
 			newsHtmlString += "<td>"+news.date+"</td>";
