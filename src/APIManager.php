@@ -90,6 +90,11 @@ class APIManager {
 		exit;
 	}
 
+	private function set_headers(){
+		header("HTTP/1.1 ".$this->_code." ".$this->get_status_message());
+		header("Content-Type: application/json");
+	}
+
 	private function get_status_message(){
 		$status = array(
 					100 => 'Continue',
@@ -134,11 +139,6 @@ class APIManager {
 					504 => 'Gateway Timeout',
 					505 => 'HTTP Version Not Supported');
 		return ($status[$this->_code])?$status[$this->_code]:$status[500];
-	}
-
-	private function set_headers(){
-		header("HTTP/1.1 ".$this->_code." ".$this->get_status_message());
-		header("Content-Type: application/json");
 	}
 }
 ?>
