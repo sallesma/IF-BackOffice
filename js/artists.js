@@ -119,6 +119,7 @@ $('#artistModalActionButton').click(function() {
     } else {
         // Existing artist : update in the db
         var modal = $('#artistModal');
+		
         $.ajax({
             type : "POST",
             url : "updateArtist",
@@ -130,8 +131,8 @@ $('#artistModalActionButton').click(function() {
                 description: modal.find('#art-description').val(),
                 day: modal.find('#art-day').val(),
                 stage: modal.find('#art-scene').val(),
-                start_time: modal.find('#art-start-time').val(),
-                end_time: modal.find('#art-end-time').val(),
+                startTime: modal.find('#art-start-time').val(),
+                endTime: modal.find('#art-end-time').val(),
                 website: modal.find('#art-website').val(),
                 facebook: modal.find('#art-facebook').val(),
                 twitter: modal.find('#art-twitter').val(),

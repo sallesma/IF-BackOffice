@@ -96,13 +96,15 @@ class ArtistsManager {
 
 	public function updateArtists ( $id, $name, $picture, $style, $description, $day, $stage, $startTime, $endTime, $website, $facebook, $twitter, $youtube) {
 		include("connection.php");
-
+        
 		$name = mysql_real_escape_string($name );
 		$picture = mysql_real_escape_string( $picture );
 		$style = mysql_real_escape_string( $style );
 		$description = mysql_real_escape_string( $description );
 		$day = mysql_real_escape_string( $day );
 		$stage = mysql_real_escape_string( $stage );
+        $startTime = mysql_real_escape_string( $startTime );
+        $endTime = mysql_real_escape_string( $endTime );
 
 		$getArtistImageUrlQuery = "SELECT picture FROM artists where id=".$id."";
 		$getArtistImageUrlResult = mysql_query($getArtistImageUrlQuery);
@@ -122,8 +124,9 @@ class ArtistsManager {
 			}
 		}
 
-		$editArtistQuery ="UPDATE artists SET name='".$name."', picture='".$picture."' ,style='".$style."', description='".$description."', day='".$day."', stage='".$stage."', beginHour='".$start_time."', endHour='".$end_time."', website='".$website."', facebook='".$facebook."', twitter='".$twitter."', youtube='".$youtube."' WHERE id=".$id."";
+		$editArtistQuery ="UPDATE artists SET name='".$name."', picture='".$picture."' ,style='".$style."', description='".$description."', day='".$day."', stage='".$stage."', beginHour='".$startTime."', endHour='".$endTime."', website='".$website."', facebook='".$facebook."', twitter='".$twitter."', youtube='".$youtube."' WHERE id=".$id."";
 
+        
 		mysql_query($editArtistQuery);
 		mysql_close($link);
 	}
