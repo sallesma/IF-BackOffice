@@ -138,15 +138,21 @@ function getMapItems() {
             mapItemsHtmlString +="<td>";
             
             var infoName = "";
+            if (mapItem.infoId != -1) {
+                $.ajax({
+                    url: 'getInfo/'+mapItem.infoId,
+                    async: false,
+                    dataType: 'json',
+                    success: function (json) {
+                        infoName = json.name;
+                    }
+                });
+            }
+            else {
+            //No info 
+                infoName = "<i>Aucune info liée</i>"
+            }
             
-            $.ajax({
-              url: 'getInfo/'+mapItem.infoId,
-              async: false,
-              dataType: 'json',
-              success: function (json) {
-                infoName = json.name;
-              }
-            });
             mapItemsHtmlString += infoName;
             mapItemsHtmlString += "</td>";
 			mapItemsHtmlString += "<td>";
