@@ -5,9 +5,9 @@ class MapItemsManager {
 	public function __construct(){}
 
 	public function getMapItems(){
-		include("connection.php");
+		
 
-		$getMapItemsQuery = "SELECT id, label, x, y, infoId FROM map";
+		$getMapItemsQuery = "SELECT id, label, x, y, infoId FROM ".MAP_TABLE."";
 		$getMapItemsResult = mysql_query($getMapItemsQuery);
 
 		$allMapItems = Array();
@@ -19,7 +19,7 @@ class MapItemsManager {
 						 'infoId'=> $mapItemRow['infoId'] );
 			array_push($allMapItems, $thisMapItem);
 		}
-		mysql_close($link);
+		
 		return (json_encode($allMapItems));
 	}
 
@@ -28,7 +28,7 @@ class MapItemsManager {
 
 		$label = mysql_real_escape_string( $label );
 
-		$addMapItemQuery ="INSERT INTO map (label, x, y, infoId) VALUES ('".$label."', '".$x."', '".$y."', '".$infoId."')";
+		$addMapItemQuery ="INSERT INTO ".MAP_TABLE." (label, x, y, infoId) VALUES ('".$label."', '".$x."', '".$y."', '".$infoId."')";
 		mysql_query($addMapItemQuery);
 
 		if ($infoId != "-1") {
@@ -36,22 +36,22 @@ class MapItemsManager {
 			mysql_query($updateLinkedInfo);
 		}
 
-		mysql_close($link);
+		
 		return $addMapItemQuery;
 	}
 
     public function updateMapItem ( $id, $label, $x, $y, $infoId) {
-		include("connection.php");
+		
 
 		$name = mysql_real_escape_string( $name );
 
-		$getLinkedInfoIdQuery = "SELECT infoId FROM map WHERE id=".$id;
+		$getLinkedInfoIdQuery = "SELECT infoId FROM ".MAP_TABLE." WHERE id=".$id;
 		$getLinkedInfoIdResult = mysql_query($getLinkedInfoIdQuery);
 		while($infoIdRow = mysql_fetch_assoc($getLinkedInfoIdResult)){
 			$prevousInfoId = $infoIdRow['infoId'];
 		}
 
-		$editMapItemQuery ="UPDATE map SET label='".$label."', x='".$x."', y='".$y."', infoId='".$infoId."' WHERE id=".$id."";
+		$editMapItemQuery ="UPDATE ".MAP_TABLE." SET label='".$label."', x='".$x."', y='".$y."', infoId='".$infoId."' WHERE id=".$id."";
 		mysql_query($editMapItemQuery);
 
 		if ($prevousInfoId != $infoId) {
@@ -61,26 +61,26 @@ class MapItemsManager {
 			$updatePreviousLinkedInfo = "UPDATE infos SET isDisplayedOnMap = 0 WHERE id=".$prevousInfoId;
 			mysql_query($updatePreviousLinkedInfo);
 		}
-		mysql_close($link);
+		
 	}
 
     public function deleteMapItem( $id ) {
-		include("connection.php");
+		
 
-		$getLinkedInfoIdQuery = "SELECT infoId FROM map WHERE id=".$id;
+		$getLinkedInfoIdQuery = "SELECT infoId FROM ".MAP_TABLE." WHERE id=".$id;
 		$getLinkedInfoIdResult = mysql_query($getLinkedInfoIdQuery);
 		while($infoIdRow = mysql_fetch_assoc($getLinkedInfoIdResult)){
 			$infoId = $infoIdRow['infoId'];
 		}
 
 		if ($infoId != -1) {
-			$updateLinkedInfo = "UPDATE infos SET isDisplayedOnMap = 0 WHERE id=".$infoId;
+			$updateLinkedInfo = "UPDATE ".INFOS_TABLE." SET isDisplayedOnMap = 0 WHERE id=".$infoId;
 			mysql_query($updateLinkedInfo);
 		}
 
-		$deleteMapItemQuery ="DELETE FROM map WHERE id=".$id;
+		$deleteMapItemQuery ="DELETE FROM ".MAP_TABLE." WHERE id=".$id;
 		mysql_query($deleteMapItemQuery);
 
-		mysql_close($link);
+		
 	}
 }

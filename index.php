@@ -1,6 +1,8 @@
 <?php
 
 require 'Slim/Slim.php';
+require 'src/connection.php';
+
 \Slim\Slim::registerAutoloader();
 
 require 'src/APIManager.php';
@@ -274,3 +276,4 @@ $app->get('/deletePartner/:id', 'checkAuth', function( $id ) use ($app) {
 });
 
 $app->run();
+mysql_close($link);

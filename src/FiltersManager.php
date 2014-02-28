@@ -5,35 +5,27 @@ class FiltersManager {
 	public function __construct(){}
 
 	public function getFilters(){
-		include("connection.php");
-
-		$getFiltersQuery = "SELECT id, picture FROM filters";
+		$getFiltersQuery = "SELECT id, picture FROM ".FILTERS_TABLE."";
 		$getFiltersResult = mysql_query($getFiltersQuery);
-
+		
 		$allFilters = Array();
 		while($filterRow = mysql_fetch_assoc($getFiltersResult)){
 			$thisFilter = array('id'=> $filterRow['id'],
 						 'picture'=> $filterRow['picture'] );
 			array_push($allFilters, $thisFilter);
 		}
-		mysql_close($link);
 		return (json_encode($allFilters));
 	}
 
 	public function addFilter( $url ) {
-		include('connection.php');
-
-		$addFilterQuery ="INSERT INTO filters(picture) VALUES ('".$url."')";
-
+		$addFilterQuery ="INSERT INTO ".FILTERS_TABLE."(picture) VALUES ('".$url."')";
 		mysql_query($addFilterQuery);
-		mysql_close($link);
 	}
-
+	
 	public function deleteFilter( $id ) {
-		include("connection.php");
-
+	
 		//get the url
-		$getFilterUrlQuery = "SELECT picture FROM filters WHERE id = ".$id;
+		$getFilterUrlQuery = "SELECT picture FROM ".FILTERS_TABLE." WHERE id = ".$id;
 		$getFilterUrlResult = mysql_query($getFilterUrlQuery);
 
 		$filterRow = mysql_fetch_array($getFilterUrlResult);
@@ -50,9 +42,9 @@ class FiltersManager {
 		}
 
 		//delete the filter from database
-		$deleteFilterQuery ="DELETE FROM filters WHERE id= ".$id;
+		$deleteFilterQuery ="DELETE FROM ".FILTERS_TABLE." WHERE id= ".$id;
 		mysql_query($deleteFilterQuery);
 
-		mysql_close($link);
+		
 	}
 }

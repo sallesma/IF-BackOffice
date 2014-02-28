@@ -5,9 +5,9 @@ class InfosManager {
 	public function __construct(){}
 
 	public function getInfos(){
-		include("connection.php");
+		
 
-		$getInfosQuery = "SELECT id, name, parent, isCategory FROM infos ORDER BY parent";
+		$getInfosQuery = "SELECT id, name, parent, isCategory FROM ".INFOS_TABLE." ORDER BY parent";
 		$getInfosResult = mysql_query($getInfosQuery);
 
 		$treeArray = Array();
@@ -24,7 +24,7 @@ class InfosManager {
 				array_push($pool, $info); // on met les autre dans la piscine
 			}
 		}
-		mysql_close($link);
+		
 
 		//We want no item to be before its parent in $treeArray so that the js tree can be constructed
 		$listCursor = 0;
@@ -45,9 +45,9 @@ class InfosManager {
 	}
 
 	public function getInfo( $id ){
-		include("connection.php");
+		
 
-		$getInfoQuery = "SELECT id, name, parent, picture, isCategory, content, isDisplayedOnMap FROM infos WHERE id = ".$id;
+		$getInfoQuery = "SELECT id, name, parent, picture, isCategory, content, isDisplayedOnMap FROM ".INFOS_TABLE." WHERE id = ".$id;
 		$getInfoResult = mysql_query($getInfoQuery);
 
 		while($infoRow = mysql_fetch_assoc($getInfoResult)){
@@ -59,7 +59,7 @@ class InfosManager {
 						"content" => $infoRow['content'],
 						"isDisplayedOnMap" => $infoRow['isDisplayedOnMap']);
 		}
-		mysql_close($link);
+		
 
 		echo json_encode($info);
 	}
@@ -70,29 +70,29 @@ class InfosManager {
 		$name = mysql_real_escape_string( $name );
 		$content = mysql_real_escape_string( $content );
 
-		$addInfoQuery ="INSERT INTO infos(name, picture, isCategory, content, parent)
+		$addInfoQuery ="INSERT INTO ".INFOS_TABLE."(name, picture, isCategory, content, parent)
 						VALUES ('".$name."', '".$picture."', '".$isCategory."', '".$content."', '".$parent."')";
 		mysql_query($addInfoQuery);
-		mysql_close($link);
+		
 	}
 
 	public function deleteInfo( $id ) {
-		include("connection.php");
+		
 
 		//Récupérer le parentId
-		$getParentIdQuery = "SELECT parent FROM infos WHERE id = ".$id;
+		$getParentIdQuery = "SELECT parent FROM ".INFOS_TABLE." WHERE id = ".$id;
 		$getParentIdResult = mysql_query($getParentIdQuery);
 		while($ParentIdRow = mysql_fetch_assoc($getParentIdResult)){
 			$parentId = $ParentIdRow['parent'];
 		}
 
 		//replacer les enfants dans le parent
-		$editChildrenQuery ="UPDATE infos SET parent='".$parentId."' WHERE parent=".$id;
+		$editChildrenQuery ="UPDATE ".INFOS_TABLE." SET parent='".$parentId."' WHERE parent=".$id;
 		mysql_query($editChildrenQuery);
 
 		//Picture deletion
 		//get the url
-		$getInfoImageUrlQuery = "SELECT picture FROM infos WHERE id =".$id;
+		$getInfoImageUrlQuery = "SELECT picture FROM ".INFOS_TABLE." WHERE id =".$id;
 		$getInfoImageUrlResult = mysql_query($getInfoImageUrlQuery);
 
 		while($pictureRow = mysql_fetch_array($getInfoImageUrlResult)){
@@ -112,23 +112,22 @@ class InfosManager {
 		}
 
 		//Delete linked map item if exists
-		$deleteInfoMapItemQuery = "DELETE FROM map WHERE infoId=".$id;
+		$deleteInfoMapItemQuery = "DELETE FROM ".MAP_TABLE." WHERE infoId=".$id;
 		mysql_query($deleteInfoMapItemQuery);
 
 		//Supprimer l'info
-		$deleteInfoQuery ="DELETE FROM infos WHERE id=".$id;
+		$deleteInfoQuery ="DELETE FROM ".INFOS_TABLE." WHERE id=".$id;
 		mysql_query($deleteInfoQuery);
 
-		mysql_close($link);
+		
 	}
 
 	public function updateInfo ( $id, $name, $picture, $isCategory, $content, $parentId ) {
-		include("connection.php");
 
 		$name = mysql_real_escape_string( $name );
 		$content = mysql_real_escape_string( $content );
 
-		$getInfoImageUrlQuery = "SELECT picture FROM infos where id=".$id."";
+		$getInfoImageUrlQuery = "SELECT picture FROM ".INFOS_TABLE." where id=".$id."";
 		$getInfoImageUrlResult = mysql_query($getInfoImageUrlQuery);
 
 		while($pictureRow = mysql_fetch_array($getInfoImageUrlResult)){
@@ -146,9 +145,9 @@ class InfosManager {
 			}
 		}
 
-		$editInfoQuery ="UPDATE infos SET name='".$name."', picture='".$picture."', isCategory='".$isCategory."', parent='".$parentId."', content='".$content."' WHERE id=".$id;
+		$editInfoQuery ="UPDATE ".INFOS_TABLE." SET name='".$name."', picture='".$picture."', isCategory='".$isCategory."', parent='".$parentId."', content='".$content."' WHERE id=".$id;
 
 		mysql_query($editInfoQuery);
-		mysql_close($link);
+		
 	}
 }

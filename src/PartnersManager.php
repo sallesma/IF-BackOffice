@@ -5,9 +5,8 @@ class PartnersManager {
 	public function __construct(){}
 
 	public function getPartners(){
-		include("connection.php");
 
-		$getPartnersQuery = "SELECT id, name, picture, website FROM partners";
+		$getPartnersQuery = "SELECT id, name, picture, website FROM ".PARTNERS_TABLE."";
 		$getPartnersResult = mysql_query($getPartnersQuery);
 
 		$allPartners = Array();
@@ -18,7 +17,7 @@ class PartnersManager {
 						 'website'=> $partnerRow['website'] );
 			array_push($allPartners, $thisPartner);
 		}
-		mysql_close($link);
+		
 		return (json_encode($allPartners));
 	}
 
@@ -27,18 +26,18 @@ class PartnersManager {
 
 		$name = mysql_real_escape_string( $name );
 
-		$addPartnerQuery ="INSERT INTO partners(name, picture, website)
+		$addPartnerQuery ="INSERT INTO ".PARTNERS_TABLE."(name, picture, website)
 						VALUES ('".$name."', '".$picture."', '".$website."')";
 		mysql_query($addPartnerQuery);
-		mysql_close($link);
+		
 	}
 
     public function updatePartner ( $id, $name, $picture, $website) {
-		include("connection.php");
+		
 
 		$name = mysql_real_escape_string( $name );
 
-		$getPartnerImageUrlQuery = "SELECT picture FROM partners where id=".$id."";
+		$getPartnerImageUrlQuery = "SELECT picture FROM ".PARTNERS_TABLE." where id=".$id."";
 		$getPartnerImageUrlResult = mysql_query($getPartnerImageUrlQuery);
 
 		while($pictureRow = mysql_fetch_array($getPartnerImageUrlResult)){
@@ -56,18 +55,18 @@ class PartnersManager {
 			}
 		}
 
-		$editPartnerQuery ="UPDATE partners SET name='".$name."', picture='".$picture."', website='".$website."' WHERE id=".$id;
+		$editPartnerQuery ="UPDATE ".PARTNERS_TABLE." SET name='".$name."', picture='".$picture."', website='".$website."' WHERE id=".$id;
 
 		mysql_query($editPartnerQuery);
-		mysql_close($link);
+		
 	}
 
 
     public function deletePartner( $id ) {
-		include("connection.php");
+		
 
 		//get the url
-		$getPartnerImageUrlQuery = "SELECT picture FROM partners WHERE id = ".$id;
+		$getPartnerImageUrlQuery = "SELECT picture FROM ".PARTNERS_TABLE." WHERE id = ".$id;
 		$getPartnerImageUrlResult = mysql_query($getPartnerImageUrlQuery);
 
 		while($pictureRow = mysql_fetch_array($getPartnerImageUrlResult)){
@@ -87,10 +86,10 @@ class PartnersManager {
 		}
 
 		//delete the artist
-		$deleteArtistQuery ="DELETE FROM partners WHERE id=".$id;
+		$deleteArtistQuery ="DELETE FROM ".PARTNERS_TABLE." WHERE id=".$id;
 		mysql_query($deleteArtistQuery);
 
-		mysql_close($link);
+		
 	}
 
 

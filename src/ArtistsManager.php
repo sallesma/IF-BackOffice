@@ -5,9 +5,8 @@ class ArtistsManager {
 	public function __construct(){}
 
 	public function getArtists(){
-		include("connection.php");
-
-		$getArtistsQuery = "SELECT id, name, style, day, stage, beginHour FROM artists ORDER BY name";
+		
+		$getArtistsQuery = "SELECT id, name, style, day, stage, beginHour FROM ".ARTISTS_TABLE." ORDER BY name";
 		$getArtistsResult = mysql_query($getArtistsQuery);
 
 		$allArtists = Array();
@@ -20,14 +19,13 @@ class ArtistsManager {
 								'beginHour'=> $artistRow['beginHour'] );
 			array_push($allArtists, $thisArtist);
 		}
-		mysql_close($link);
 		return (json_encode($allArtists));
 	}
 
 	public function getArtist( $id ){
-		include("connection.php");
+		
 
-		$getArtistQuery = "SELECT * FROM artists WHERE id =".$id."";
+		$getArtistQuery = "SELECT * FROM ".ARTISTS_TABLE." WHERE id =".$id."";
 		$getArtistResult = mysql_query($getArtistQuery);
 
 		$artistRow = mysql_fetch_assoc($getArtistResult);
@@ -44,12 +42,10 @@ class ArtistsManager {
 					 'facebook'=> $artistRow['facebook'],
 					 'twitter'=> $artistRow['twitter'],
 					 'youtube'=> $artistRow['youtube'] );
-		mysql_close($link);
 		return (json_encode($artist));
 	}
 
 	public function addArtists($name, $picture, $style, $description, $day, $stage, $startTime, $endTime, $website, $facebook, $twitter, $youtube) {
-		include('connection.php');
 
 		$name = mysql_real_escape_string($name );
 		$picture = mysql_real_escape_string( $picture );
@@ -58,17 +54,17 @@ class ArtistsManager {
 		$day = mysql_real_escape_string( $day );
 		$stage = mysql_real_escape_string( $stage );
 
-		$addArtistQuery ="INSERT INTO artists(name, picture, style, description, day, stage, beginHour, endHour, website, facebook, twitter, youtube) VALUES ('".$name."','".$picture."' ,'".$style."', '".$description."', '".$day."', '".$stage."', '".$startTime."', '".$endTime."', '".$website."', '".$facebook."', '".$twitter."', '".$youtube."')";
+		$addArtistQuery ="INSERT INTO ".ARTISTS_TABLE."(name, picture, style, description, day, stage, beginHour, endHour, website, facebook, twitter, youtube) VALUES ('".$name."','".$picture."' ,'".$style."', '".$description."', '".$day."', '".$stage."', '".$startTime."', '".$endTime."', '".$website."', '".$facebook."', '".$twitter."', '".$youtube."')";
 
 		mysql_query($addArtistQuery);
-		mysql_close($link);
+
 	}
 
 	public function deleteArtist( $id ) {
-		include("connection.php");
+		
 
 		//get the url
-		$getArtistImageUrlQuery = "SELECT picture FROM artists WHERE id = ".$id;
+		$getArtistImageUrlQuery = "SELECT picture FROM ".ARTISTS_TABLE." WHERE id = ".$id;
 		$getArtistImageUrlResult = mysql_query($getArtistImageUrlQuery);
 
 		while($pictureRow = mysql_fetch_array($getArtistImageUrlResult)){
@@ -88,15 +84,14 @@ class ArtistsManager {
 		}
 
 		//Supprimer l'artiste
-		$deleteArtistQuery ="DELETE FROM artists WHERE id=".$id;
+		$deleteArtistQuery ="DELETE FROM ".ARTISTS_TABLE." WHERE id=".$id;
 		mysql_query($deleteArtistQuery);
 
-		mysql_close($link);
+		
 	}
 
 	public function updateArtists ( $id, $name, $picture, $style, $description, $day, $stage, $startTime, $endTime, $website, $facebook, $twitter, $youtube) {
-		include("connection.php");
-        
+		
 		$name = mysql_real_escape_string($name );
 		$picture = mysql_real_escape_string( $picture );
 		$style = mysql_real_escape_string( $style );
@@ -106,7 +101,7 @@ class ArtistsManager {
         $startTime = mysql_real_escape_string( $startTime );
         $endTime = mysql_real_escape_string( $endTime );
 
-		$getArtistImageUrlQuery = "SELECT picture FROM artists where id=".$id."";
+		$getArtistImageUrlQuery = "SELECT picture FROM ".ARTISTS_TABLE." where id=".$id."";
 		$getArtistImageUrlResult = mysql_query($getArtistImageUrlQuery);
 
 		while($pictureRow = mysql_fetch_array($getArtistImageUrlResult)){
@@ -124,10 +119,10 @@ class ArtistsManager {
 			}
 		}
 
-		$editArtistQuery ="UPDATE artists SET name='".$name."', picture='".$picture."' ,style='".$style."', description='".$description."', day='".$day."', stage='".$stage."', beginHour='".$startTime."', endHour='".$endTime."', website='".$website."', facebook='".$facebook."', twitter='".$twitter."', youtube='".$youtube."' WHERE id=".$id."";
+		$editArtistQuery ="UPDATE ".ARTISTS_TABLE." SET name='".$name."', picture='".$picture."' ,style='".$style."', description='".$description."', day='".$day."', stage='".$stage."', beginHour='".$startTime."', endHour='".$endTime."', website='".$website."', facebook='".$facebook."', twitter='".$twitter."', youtube='".$youtube."' WHERE id=".$id."";
 
         
 		mysql_query($editArtistQuery);
-		mysql_close($link);
+		
 	}
 }
