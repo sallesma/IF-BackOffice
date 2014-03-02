@@ -5,7 +5,6 @@ class APIManager {
 	private $table_schema = NULL;
 
     public function __construct(){
-        include("connection.php");
 		$this->table_schema = $table_schema;
     }
 
@@ -18,27 +17,27 @@ class APIManager {
     }
 
 	private function artistsWebService( $lastRetrieve ) {
-        $this->processWebService( "artists", $lastRetrieve );
+        $this->processWebService( ARTISTS_TABLE, $lastRetrieve );
     }
 
 	private function infosWebService( $lastRetrieve ) {
-        $this->processWebService( "infos", $lastRetrieve );
+        $this->processWebService( INFOS_TABLE, $lastRetrieve );
     }
 
 	private function newsWebService( $lastRetrieve ) {
-        $this->processWebService( "news", $lastRetrieve );
+        $this->processWebService( NEWS_TABLE, $lastRetrieve );
     }
 
 	private function filtersWebService( $lastRetrieve ) {
-        $this->processWebService( "filters", $lastRetrieve );
+        $this->processWebService( FILTERS_TABLE, $lastRetrieve );
     }
 
 	private function mapItemsWebService( $lastRetrieve ) {
-        $this->processWebService( "map", $lastRetrieve );
+        $this->processWebService( MAP_TABLE, $lastRetrieve );
     }
 
 	private function partnersWebService( $lastRetrieve ) {
-        $this->processWebService( "partners", $lastRetrieve );
+        $this->processWebService( PARTNERS_TABLE, $lastRetrieve );
     }
 
 	private function processWebService ( $table, $lastRetrieve ) {
