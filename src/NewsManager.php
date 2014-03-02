@@ -6,8 +6,7 @@ class NewsManager {
 
 	public function getNews(){
 		
-
-		$getNewsQuery = "SELECT id, title, content, date FROM "NEWS_TABLE" ORDER BY date DESC";
+		$getNewsQuery = "SELECT id, title, content, date FROM ".NEWS_TABLE." ORDER BY date DESC";
 		$getNewsResult = mysql_query($getNewsQuery);
 
 		$allNews = Array();
@@ -28,7 +27,7 @@ class NewsManager {
 		$title = mysql_real_escape_string( $title );
 		$body = mysql_real_escape_string( $content );
 
-		$addNewsQuery ="INSERT INTO "NEWS_TABLE"(title, content) VALUES ('".$title."', '".$body."')";
+		$addNewsQuery ="INSERT INTO ".NEWS_TABLE."(title, content) VALUES ('".$title."', '".$body."')";
 		echo $addNewsQuery;
 		mysql_query($addNewsQuery);
 		
@@ -37,7 +36,7 @@ class NewsManager {
 	public function deleteNews( $id ) {
 		
 
-		$deleteNewsQuery ="DELETE FROM "NEWS_TABLE" WHERE id=".$id;
+		$deleteNewsQuery ="DELETE FROM ".NEWS_TABLE." WHERE id=".$id;
 		mysql_query($deleteNewsQuery);
 		
 	}
@@ -48,7 +47,7 @@ class NewsManager {
 		$title = mysql_real_escape_string( $title );
 		$content = mysql_real_escape_string( $content );
 
-		$editNewsQuery ="UPDATE "NEWS_TABLE" SET title='".$title."', content='".$content."' WHERE id=".$id."";
+		$editNewsQuery ="UPDATE ".NEWS_TABLE." SET title='".$title."', content='".$content."' WHERE id=".$id."";
 		mysql_query($editNewsQuery);
 		
 	}
