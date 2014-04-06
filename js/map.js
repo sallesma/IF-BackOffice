@@ -64,8 +64,8 @@ $(document).on("click", ".modifyMapItemButton", function() {
 	});
 
 	var infoIdSelect = $('#editMapItemModal').find('#mapItem-linked-info');
-    
-    
+
+
 	infoIdSelect.html('');
 	infoIdSelect.append('<option value="-1"> Aucune info </option>');
 	$.get("getInfos", function(jsonInfosTable) {
@@ -73,7 +73,7 @@ $(document).on("click", ".modifyMapItemButton", function() {
 		$.each(jsonInfosTable, function (key, it) {
             if(it.id == infoId)
 				infoIdSelect.append('<option value="' + it.id + '" selected>' + it.name + '</option>');
-            else 
+            else
                 infoIdSelect.append('<option value="' + it.id + '">' + it.name + '</option>');
 		});
 	});
@@ -124,7 +124,7 @@ $(document).on('click', '.mapItemDeleteButton', function (event) {
 function getMapItems() {
 	$.get("getMapItems", function(jsonMapItemsTable) {
 		jsonMapItemsTable=JSON.parse(jsonMapItemsTable);
-		mapItemsHtmlString = '<tr><th>Label</th><th>X</th><th>Y</th><th>Info liée</th></tr>';
+		mapItemsHtmlString = '<tr><th>Label</th><th>X</th><th>Y</th><th>Info liée</th><th>Actions</th></tr>';
 		$.each(jsonMapItemsTable, function(index, mapItem) {
 			mapItemsHtmlString += "<tr><form role='form'>";
 			mapItemsHtmlString += "<input type=\"hidden\" name=\"label\" value=\""+mapItem.label+"\">";
@@ -136,7 +136,7 @@ function getMapItems() {
 			mapItemsHtmlString += "<td>"+mapItem.x+"</td>";
 			mapItemsHtmlString += "<td>"+mapItem.y+"</td>";
             mapItemsHtmlString +="<td>";
-            
+
             var infoName = "";
             if (mapItem.infoId != -1) {
                 $.ajax({
@@ -149,10 +149,10 @@ function getMapItems() {
                 });
             }
             else {
-            //No info 
+            //No info
                 infoName = "<i>Aucune info liée</i>"
             }
-            
+
             mapItemsHtmlString += infoName;
             mapItemsHtmlString += "</td>";
 			mapItemsHtmlString += "<td>";

@@ -11,7 +11,7 @@
 		<p>(C'est trop tard, il n'est plus possible de la récupérer. )</p>
 	</div>
 
-	<table id="news-table" class="table table-hover"></table>
+	<table id="news-table" class="table table-bordered table-stripped table-hover"></table>
 
 	<!-- Button to trigger modal -->
 	<a id="addNewsTriggerModal" data-toggle="modal" href="#addNewModal" class="btn btn-primary btn-lg">Ajouter une news</a>

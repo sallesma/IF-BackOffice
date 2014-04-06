@@ -9,7 +9,7 @@
                         <h4>L'artiste a bien été supprimé !</h4>
                         <p>(C'est trop tard, il n'est plus possible de le récupérer. )</p>
                     </div>
-                    <table id="artists-table" class="table table-hover"></table>
+                    <table id="artists-table" class="table table-bordered table-stripped table-hover"></table>
 
                     <!-- Button to trigger modal -->
                     <button id="showArtistModalToAdd" class="btn btn-primary btn-lg">Ajouter un artiste</button>

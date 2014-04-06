@@ -75,7 +75,7 @@ $(document).on('click', '.newsDeleteButton', function (event) {
 function getNews() {
     $.get("getNews", function(jsonNewsTable) {
 		jsonNewsTable=JSON.parse(jsonNewsTable);
-		newsHtmlString = '<tr><th>Nom</th><th>Description</th><th>Date</th></tr>';
+		newsHtmlString = '<tr><th>Nom</th><th>Description</th><th>Date</th><th>Actions</th></tr>';
 		$.each(jsonNewsTable, function(index, news) {
 			newsHtmlString += "<tr><form role='form'>";
 			newsHtmlString += "<input type='hidden' name='title' value='"+news.title.replace("'", "&apos;")+"'>";
