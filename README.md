@@ -11,7 +11,7 @@ The project uses slim framework : http://www.slimframework.com/
 
 Here is what non slim framework files stand for :
 
-	base.sql
+    base.sql
 
 A dump of the database that we use when we move to another server to install the database
 
@@ -21,13 +21,16 @@ To have the project running properly, put all the files in your web server file 
 
 Use base.sql to create your MySQL database with all the tables.
 
-Then you need to update the file data/connection.php to set up your database connection :
+Then you need to create the file src/parameters.ini to set up your database connection :
 
-	$host = "";
-	$login = "";
-	$password = "";
-	$databaseName = "";
-	$table_schema= "";
+    [connection]
+    db_driver = mysql
+    db_user =
+    db_password =
+
+    [dsn]
+    host =
+    dbname =
 
 Your backoffice is now available!
 
