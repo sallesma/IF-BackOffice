@@ -32,6 +32,8 @@ Then you need to create the file src/parameters.ini to set up your database conn
     host =
     dbname =
 
+Last but not least, set up the $homeUrl var with your local basePath in index.php
+
 Your backoffice is now available!
 
 ## Contribution
