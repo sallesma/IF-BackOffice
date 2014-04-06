@@ -1,58 +1,38 @@
 <?php
 
-class FiltersManager {
+require_once 'EntityManager.php';
 
-	public function __construct(){}
+class FiltersManager extends EntityManager
+{
+    public function listAll()
+    {
+        return json_encode(parent::listAll(FILTERS_TABLE, array('id', 'picture')));
+    }
 
-	public function getFilters(){
-		include("connection.php");
+    public function add($params)
+    {
+        return parent::add(FILTERS_TABLE, $params);
+    }
 
-		$getFiltersQuery = "SELECT id, picture FROM filters";
-		$getFiltersResult = mysql_query($getFiltersQuery);
+    public function delete($id)
+    {
+        $connection = Connection::getInstance();
 
-		$allFilters = Array();
-		while($filterRow = mysql_fetch_assoc($getFiltersResult)){
-			$thisFilter = array('id'=> $filterRow['id'],
-						 'picture'=> $filterRow['picture'] );
-			array_push($allFilters, $thisFilter);
-		}
-		mysql_close($link);
-		return (json_encode($allFilters));
-	}
+        return parent::delete(FILTERS_TABLE, $id, function () use ($connection, $id) {
+            $sth = $connection->prepare('SELECT picture FROM ' . FILTERS_TABLE . ' WHERE id = :id');
+            $sth->execute(array(
+                ':id' => $id
+            ));
 
-	public function addFilter( $url ) {
-		include('connection.php');
-
-		$addFilterQuery ="INSERT INTO filters(picture) VALUES ('".$url."')";
-
-		mysql_query($addFilterQuery);
-		mysql_close($link);
-	}
-
-	public function deleteFilter( $id ) {
-		include("connection.php");
-
-		//get the url
-		$getFilterUrlQuery = "SELECT picture FROM filters WHERE id = ".$id;
-		$getFilterUrlResult = mysql_query($getFilterUrlQuery);
-
-		$filterRow = mysql_fetch_array($getFilterUrlResult);
-		$url = $filterRow[0];
-
-		//delete the filter file from server
-		$beginPos = strpos($url, "/src");
-		$urlToDelete = substr($url, $beginPos );
-
-		if ( !unlink(getcwd().$urlToDelete) ) {
-			echo ("Error deleting ".$urlToDelete);
-		} else {
-			echo ("Deleted ".$urlToDelete);
-		}
-
-		//delete the filter from database
-		$deleteFilterQuery ="DELETE FROM filters WHERE id= ".$id;
-		mysql_query($deleteFilterQuery);
-
-		mysql_close($link);
-	}
+            if ($filter = $sth->fetch(PDO::FETCH_ASSOC)) {
+                // Delete filter picture
+                if (!empty($filter['picture'])) {
+                    $picturePath = substr($filter['picture'], strpos($filter['picture'], '/src'));
+                    if (!@unlink(getcwd() . $picturePath)) {
+                        echo ('Error deleting : ' . $picturePath);
+                    }
+                }
+            }
+        });
+    }
 }

@@ -1,133 +1,48 @@
 <?php
 
-class ArtistsManager {
+require_once 'EntityManager.php';
 
-	public function __construct(){}
+class ArtistsManager extends EntityManager
+{
+    public function listAll()
+    {
+        return json_encode(parent::listAll(ARTISTS_TABLE, array('id', ' name', ' style', ' day', ' stage', ' beginHour'), 'name'));
+    }
 
-	public function getArtists(){
-		include("connection.php");
+    public function add($params)
+    {
+        return parent::add(ARTISTS_TABLE, $params);
+    }
 
-		$getArtistsQuery = "SELECT id, name, style, day, stage, beginHour FROM artists ORDER BY name";
-		$getArtistsResult = mysql_query($getArtistsQuery);
+    public function find($id)
+    {
+        return json_encode(parent::find(ARTISTS_TABLE, $id));
+    }
 
-		$allArtists = Array();
-		while($artistRow = mysql_fetch_assoc($getArtistsResult)){
-			$thisArtist = array('id'=> $artistRow['id'],
-								'name'=> $artistRow['name'],
-								'style'=> $artistRow['style'],
-								'day'=> $artistRow['day'],
-								'stage'=> $artistRow['stage'],
-								'beginHour'=> $artistRow['beginHour'] );
-			array_push($allArtists, $thisArtist);
-		}
-		mysql_close($link);
-		return (json_encode($allArtists));
-	}
+    public function update($id, $params)
+    {
+        parent::update(ARTISTS_TABLE, $id, $params);
+    }
 
-	public function getArtist( $id ){
-		include("connection.php");
+    public function delete($id)
+    {
+        $connection = Connection::getInstance();
 
-		$getArtistQuery = "SELECT * FROM artists WHERE id =".$id."";
-		$getArtistResult = mysql_query($getArtistQuery);
+        return parent::delete(ARTISTS_TABLE, $id, function () use ($connection, $id) {
+            $sth = $connection->prepare('SELECT picture FROM ' . ARTISTS_TABLE . ' WHERE id = :id');
+            $sth->execute(array(
+                ':id' => $id
+            ));
 
-		$artistRow = mysql_fetch_assoc($getArtistResult);
-		$artist = array('id'=> $artistRow['id'],
-					 'name'=> $artistRow['name'],
-					 'picture'=> $artistRow['picture'],
-					 'style'=> $artistRow['style'],
-					 'description'=> $artistRow['description'],
-					 'jour'=> $artistRow['day'],
-					 'stage'=> $artistRow['stage'],
-					 'beginHour'=> $artistRow['beginHour'],
-					 'endHour'=> $artistRow['endHour'],
-					 'website'=> $artistRow['website'],
-					 'facebook'=> $artistRow['facebook'],
-					 'twitter'=> $artistRow['twitter'],
-					 'youtube'=> $artistRow['youtube'] );
-		mysql_close($link);
-		return (json_encode($artist));
-	}
-
-	public function addArtists($name, $picture, $style, $description, $day, $stage, $startTime, $endTime, $website, $facebook, $twitter, $youtube) {
-		include('connection.php');
-
-		$name = mysql_real_escape_string($name );
-		$picture = mysql_real_escape_string( $picture );
-		$style = mysql_real_escape_string( $style );
-		$description = mysql_real_escape_string( $description );
-		$day = mysql_real_escape_string( $day );
-		$stage = mysql_real_escape_string( $stage );
-
-		$addArtistQuery ="INSERT INTO artists(name, picture, style, description, day, stage, beginHour, endHour, website, facebook, twitter, youtube) VALUES ('".$name."','".$picture."' ,'".$style."', '".$description."', '".$day."', '".$stage."', '".$startTime."', '".$endTime."', '".$website."', '".$facebook."', '".$twitter."', '".$youtube."')";
-
-		mysql_query($addArtistQuery);
-		mysql_close($link);
-	}
-
-	public function deleteArtist( $id ) {
-		include("connection.php");
-
-		//get the url
-		$getArtistImageUrlQuery = "SELECT picture FROM artists WHERE id = ".$id;
-		$getArtistImageUrlResult = mysql_query($getArtistImageUrlQuery);
-
-		while($pictureRow = mysql_fetch_array($getArtistImageUrlResult)){
-			$url = $pictureRow[0];
-		}
-
-		//delete the picture file from server
-		if ($url != "") {
-			$beginPos = strpos($url, "/src");
-			$urlToDelete = substr($url, $beginPos );
-
-			if ( !unlink(getcwd().$urlToDelete) ) {
-				echo ("Error deleting ".$urlToDelete);
-			} else {
-				echo ("Deleted ".$urlToDelete);
-			}
-		}
-
-		//Supprimer l'artiste
-		$deleteArtistQuery ="DELETE FROM artists WHERE id=".$id;
-		mysql_query($deleteArtistQuery);
-
-		mysql_close($link);
-	}
-
-	public function updateArtists ( $id, $name, $picture, $style, $description, $day, $stage, $startTime, $endTime, $website, $facebook, $twitter, $youtube) {
-		include("connection.php");
-        
-		$name = mysql_real_escape_string($name );
-		$picture = mysql_real_escape_string( $picture );
-		$style = mysql_real_escape_string( $style );
-		$description = mysql_real_escape_string( $description );
-		$day = mysql_real_escape_string( $day );
-		$stage = mysql_real_escape_string( $stage );
-        $startTime = mysql_real_escape_string( $startTime );
-        $endTime = mysql_real_escape_string( $endTime );
-
-		$getArtistImageUrlQuery = "SELECT picture FROM artists where id=".$id."";
-		$getArtistImageUrlResult = mysql_query($getArtistImageUrlQuery);
-
-		while($pictureRow = mysql_fetch_array($getArtistImageUrlResult)){
-			$url = $pictureRow[0];
-		}
-
-		if ($url != $picture && $url != "") {
-			$beginPos = strpos($url, "/src");
-			$urlToDelete = substr($url, $beginPos );
-
-			if ( !unlink(getcwd().$urlToDelete) ) {
-				echo ("Error deleting ".$urlToDelete);
-			} else {
-				echo ("Deleted ".$urlToDelete);
-			}
-		}
-
-		$editArtistQuery ="UPDATE artists SET name='".$name."', picture='".$picture."' ,style='".$style."', description='".$description."', day='".$day."', stage='".$stage."', beginHour='".$startTime."', endHour='".$endTime."', website='".$website."', facebook='".$facebook."', twitter='".$twitter."', youtube='".$youtube."' WHERE id=".$id."";
-
-        
-		mysql_query($editArtistQuery);
-		mysql_close($link);
-	}
+            if ($artist = $sth->fetch(PDO::FETCH_ASSOC)) {
+                // Delete artist picture
+                if (!empty($artist['picture'])) {
+                    $picturePath = substr($artist['picture'], strpos($artist['picture'], '/src'));
+                    if (!@unlink(getcwd() . $picturePath)) {
+                        echo ('Error deleting : ' . $picturePath);
+                    }
+                }
+            }
+        });
+    }
 }

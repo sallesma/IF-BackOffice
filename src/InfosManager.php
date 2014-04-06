@@ -1,154 +1,122 @@
 <?php
 
-class InfosManager {
+require_once 'EntityManager.php';
 
-	public function __construct(){}
+class InfosManager extends EntityManager
+{
+    public function listAll()
+    {
+        $tree = array();
+        $pool = array();
+        $cursor = array(
+            'list' => 0,
+            'pool' => 0
+        );
 
-	public function getInfos(){
-		include("connection.php");
+        $infos = parent::listAll(INFOS_TABLE, array('id', 'name', 'parent as parentId', 'isCategory'), 'parent');
 
-		$getInfosQuery = "SELECT id, name, parent, isCategory FROM infos ORDER BY parent";
-		$getInfosResult = mysql_query($getInfosQuery);
+        foreach ($infos as $info) {
+            if ($info['parentId'] == '0') {
+                $tree[] = $info;
+            } else {
+                $pool[] = $info;
+            }
+        }
 
-		$treeArray = Array();
-		$pool = Array();
+        // We want no item to be before its parent in $tree so that the js tree can be constructed
+        // Check infos list until there is no child anymore or if all the root-level have been sorted.
+        while (count($pool) > 0 && $cursor['list'] < count($tree)) {
+            $cursor['pool'] = 0;
+            $poolSize = count($pool);
+            while ($cursor['pool'] <= $poolSize) {
+                // For each child of the current root-level info
+                if ($pool[$cursor['pool']]['parentId'] == $tree[$cursor['list']]['id']) {
+                    // Add it in the list
+                    $tree[] = $pool[$cursor['pool']];
+                    // Remove it from the children list
+                    unset($pool[$cursor['pool']]);
+                }
+                $cursor['pool']++;
+            }
+            $pool = array_values($pool);
+            $cursor['list']++;
+        }
 
-		while($infosRow = mysql_fetch_assoc($getInfosResult)) {
-			$info = array( "name" => $infosRow['name'],
-						  "id" => $infosRow['id'],
-						  "isCategory" => $infosRow['isCategory'],
-						  "parentId" =>$infosRow['parent']);
-			if ($info["parentId"] == "0") { // On prend les éléments qui sont à la racine
-				array_push($treeArray, $info); //on les met dans le tableau final
-			} else {
-				array_push($pool, $info); // on met les autre dans la piscine
-			}
-		}
-		mysql_close($link);
+        return json_encode($tree);
+    }
 
-		//We want no item to be before its parent in $treeArray so that the js tree can be constructed
-		$listCursor = 0;
-		while ( count($pool) > 0 && $listCursor < count($treeArray) ) { //On parcourt la liste définitive (on s'arrête si le pool est vide ou si on a traité toute la liste des parents)
-			$poolCursor = 0;
-			$poolSize = count($pool);
-			while ($poolCursor <= $poolSize) { // pour chaque élément de la liste, on regarde dans le pool
-				if ($pool[$poolCursor]["parentId"] == $treeArray[$listCursor]["id"]) { //on chope les éléments du pool dont c'est le parent
-					array_push($treeArray, $pool[$poolCursor]);			// on les rajoute à la liste
-					unset($pool[$poolCursor]);							// on les enlève du pool
-				}
-				$poolCursor = $poolCursor+1;
-			}
-			$pool = array_values($pool);								//on remet les indexs des éléments du pool normaux (sans trous)
-			$listCursor = $listCursor+1;
-		}
-		return (json_encode($treeArray));
-	}
+    public function find($id)
+    {
+        return json_encode(parent::find(INFOS_TABLE, $id));
+    }
 
-	public function getInfo( $id ){
-		include("connection.php");
+    public function add($params)
+    {
+        return parent::add(INFOS_TABLE, $params);
+    }
 
-		$getInfoQuery = "SELECT id, name, parent, picture, isCategory, content, isDisplayedOnMap FROM infos WHERE id = ".$id;
-		$getInfoResult = mysql_query($getInfoQuery);
+    public function update($id, $params)
+    {
+        $connection = Connection::getInstance();
 
-		while($infoRow = mysql_fetch_assoc($getInfoResult)){
-		$info = array( "name" => $infoRow['name'],
-						"id" => $infoRow['id'],
-						"parentid" =>$infoRow['parent'],
-						"picture" => $infoRow['picture'],
-						"isCategory" => $infoRow['isCategory'],
-						"content" => $infoRow['content'],
-						"isDisplayedOnMap" => $infoRow['isDisplayedOnMap']);
-		}
-		mysql_close($link);
+        return parent::update(INFOS_TABLE, $id, $params, function () use ($connection, $id, $params) {
+            $sth = $connection->prepare('SELECT picture FROM ' . INFOS_TABLE . ' WHERE id = :id');
+            $sth->execute(array(
+                'id' => $id
+            ));
 
-		echo json_encode($info);
-	}
+            if ($info = $sth->fetch()) {
+                // Delete info picture
+                if (!empty($info['picture']) && $info['picture'] != $params['picture']) {
+                    $picturePath = substr($info['picture'], strpos($info['picture'], '/src'));
+                    if (!@unlink(getcwd() . $picturePath)) {
+                        echo ('Error deleting : ' . $picturePath);
+                    }
+                }
+            }
+        });
+    }
 
-	public function addInfo($name, $picture, $isCategory, $content, $parent) {
-		include('connection.php');
+    public function delete($id)
+    {
+        $connection = Connection::getInstance();
 
-		$name = mysql_real_escape_string( $name );
-		$content = mysql_real_escape_string( $content );
+        return parent::delete(INFOS_TABLE, $id, function () use ($connection, $id) {
+            // Reset info children's parent as info's parent
+            $sth = $connection->prepare('SELECT parent FROM ' . INFOS_TABLE . ' WHERE id = :id');
+            $sth->execute(array(
+                'id' => $id
+            ));
 
-		$addInfoQuery ="INSERT INTO infos(name, picture, isCategory, content, parent)
-						VALUES ('".$name."', '".$picture."', '".$isCategory."', '".$content."', '".$parent."')";
-		mysql_query($addInfoQuery);
-		mysql_close($link);
-	}
+            if ($parent = $sth->fetch()) {
+                $sth = $connection->prepare('UPDATE ' . INFOS_TABLE . ' SET parent = :parent WHERE parent = :id');
+                $sth->execute(array(
+                    'parent' => $parent['parent'],
+                    'id' => $id
+                ));
+            }
 
-	public function deleteInfo( $id ) {
-		include("connection.php");
+            // Delete info's picture
+            $sth = $connection->prepare('SELECT picture FROM ' . INFOS_TABLE . 'WHERE id = :id');
+            $sth->execute(array(
+                'id' => $id
+            ));
 
-		//Récupérer le parentId
-		$getParentIdQuery = "SELECT parent FROM infos WHERE id = ".$id;
-		$getParentIdResult = mysql_query($getParentIdQuery);
-		while($ParentIdRow = mysql_fetch_assoc($getParentIdResult)){
-			$parentId = $ParentIdRow['parent'];
-		}
+            if ($info = $sth->fetch()) {
+                // Delete info picture
+                if (!empty($info['picture'])) {
+                    $picturePath = substr($info['picture'], strpos($info['picture'], '/src'));
+                    if (!@unlink(getcwd() . $picturePath)) {
+                        echo ('Error deleting : ' . $picturePath);
+                    }
+                }
+            }
 
-		//replacer les enfants dans le parent
-		$editChildrenQuery ="UPDATE infos SET parent='".$parentId."' WHERE parent=".$id;
-		mysql_query($editChildrenQuery);
-
-		//Picture deletion
-		//get the url
-		$getInfoImageUrlQuery = "SELECT picture FROM infos WHERE id =".$id;
-		$getInfoImageUrlResult = mysql_query($getInfoImageUrlQuery);
-
-		while($pictureRow = mysql_fetch_array($getInfoImageUrlResult)){
-			$url = $pictureRow[0];
-		}
-
-		//delete the file from server
-		if ($url != "") {
-			$beginPos = strpos($url, "/src");
-			$urlToDelete = substr($url, $beginPos );
-
-			if ( !unlink(getcwd().$urlToDelete) ) {
-				echo ("Error deleting ".$urlToDelete);
-			} else {
-				echo ("Deleted ".$urlToDelete);
-			}
-		}
-
-		//Delete linked map item if exists
-		$deleteInfoMapItemQuery = "DELETE FROM map WHERE infoId=".$id;
-		mysql_query($deleteInfoMapItemQuery);
-
-		//Supprimer l'info
-		$deleteInfoQuery ="DELETE FROM infos WHERE id=".$id;
-		mysql_query($deleteInfoQuery);
-
-		mysql_close($link);
-	}
-
-	public function updateInfo ( $id, $name, $picture, $isCategory, $content, $parentId ) {
-		include("connection.php");
-
-		$name = mysql_real_escape_string( $name );
-		$content = mysql_real_escape_string( $content );
-
-		$getInfoImageUrlQuery = "SELECT picture FROM infos where id=".$id."";
-		$getInfoImageUrlResult = mysql_query($getInfoImageUrlQuery);
-
-		while($pictureRow = mysql_fetch_array($getInfoImageUrlResult)){
-			$url = $pictureRow[0];
-		}
-
-		if ($url != $picture && $url != "") {
-			$beginPos = strpos($url, "/src");
-			$urlToDelete = substr($url, $beginPos );
-
-			if ( !unlink(getcwd().$urlToDelete) ) {
-				echo ("Error deleting ".$urlToDelete);
-			} else {
-				echo ("Deleted ".$urlToDelete);
-			}
-		}
-
-		$editInfoQuery ="UPDATE infos SET name='".$name."', picture='".$picture."', isCategory='".$isCategory."', parent='".$parentId."', content='".$content."' WHERE id=".$id;
-
-		mysql_query($editInfoQuery);
-		mysql_close($link);
-	}
+            // Delete linked map items if exists
+            $sth = $connection->prepare('DELETE FROM ' . MAP_TABLE . ' WHERE infoId = :id');
+            $sth->execute(array(
+                'id' => $id
+            ));
+        });
+    }
 }

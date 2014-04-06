@@ -1,97 +1,60 @@
 <?php
 
-class PartnersManager {
+require_once 'EntityManager.php';
 
-	public function __construct(){}
+class PartnersManager extends EntityManager
+{
+    public function listAll()
+    {
+        return json_encode(parent::listAll(PARTNERS_TABLE, array('id', 'name', 'picture', 'website')));
+    }
 
-	public function getPartners(){
-		include("connection.php");
+    public function add($params)
+    {
+        return parent::add(PARTNERS_TABLE, $params);
+    }
 
-		$getPartnersQuery = "SELECT id, name, picture, website FROM partners";
-		$getPartnersResult = mysql_query($getPartnersQuery);
+    public function update($id, $params)
+    {
+        $connection = Connection::getInstance();
 
-		$allPartners = Array();
-		while($partnerRow = mysql_fetch_assoc($getPartnersResult)){
-			$thisPartner = array('id'=> $partnerRow['id'],
-						 'name'=> $partnerRow['name'],
-			 			 'picture'=> $partnerRow['picture'],
-						 'website'=> $partnerRow['website'] );
-			array_push($allPartners, $thisPartner);
-		}
-		mysql_close($link);
-		return (json_encode($allPartners));
-	}
+        return parent::update(PARTNERS_TABLE, $id, $params, function ($connection, $id, $params) {
+            $sth = $connection->prepare('SELECT picture FROM ' . PARTNERS_TABLE . 'WHERE id = :id');
+            $sth->execute(array(
+                'id' => $id
+            ));
 
-    public function addPartner($name, $picture, $website) {
-		include('connection.php');
+            if ($partner = $sth->fetch()) {
+                // Delete partner picture
+                if (!empty($partner['picture']) && $partner['picture'] != $params['picture']) {
+                    $picturePath = substr($partner['picture'], strpos($partner['picture'], '/src'));
+                    if (!@unlink(getcwd() . $picturePath)) {
+                        echo ('Error deleting : ' . $picturePath);
+                    }
+                }
+            }
+        });
+    }
 
-		$name = mysql_real_escape_string( $name );
+    public function delete($id)
+    {
+        $connection = Connection::getInstance();
 
-		$addPartnerQuery ="INSERT INTO partners(name, picture, website)
-						VALUES ('".$name."', '".$picture."', '".$website."')";
-		mysql_query($addPartnerQuery);
-		mysql_close($link);
-	}
+        return parent::delete(PARTNERS_TABLE, $id, function ($connection, $id) {
+            $sth = $connection->prepare('SELECT picture FROM ' . PARTNERS_TABLE . 'WHERE id = :id');
+            $sth->execute(array(
+                'id' => $id
+            ));
 
-    public function updatePartner ( $id, $name, $picture, $website) {
-		include("connection.php");
-
-		$name = mysql_real_escape_string( $name );
-
-		$getPartnerImageUrlQuery = "SELECT picture FROM partners where id=".$id."";
-		$getPartnerImageUrlResult = mysql_query($getPartnerImageUrlQuery);
-
-		while($pictureRow = mysql_fetch_array($getPartnerImageUrlResult)){
-			$url = $pictureRow[0];
-		}
-
-		if ($url != $picture && $url != "") {
-			$beginPos = strpos($url, "/src");
-			$urlToDelete = substr($url, $beginPos );
-
-			if ( !unlink(getcwd().$urlToDelete) ) {
-				echo ("Error deleting ".$urlToDelete);
-			} else {
-				echo ("Deleted ".$urlToDelete);
-			}
-		}
-
-		$editPartnerQuery ="UPDATE partners SET name='".$name."', picture='".$picture."', website='".$website."' WHERE id=".$id;
-
-		mysql_query($editPartnerQuery);
-		mysql_close($link);
-	}
-
-
-    public function deletePartner( $id ) {
-		include("connection.php");
-
-		//get the url
-		$getPartnerImageUrlQuery = "SELECT picture FROM partners WHERE id = ".$id;
-		$getPartnerImageUrlResult = mysql_query($getPartnerImageUrlQuery);
-
-		while($pictureRow = mysql_fetch_array($getPartnerImageUrlResult)){
-			$url = $pictureRow[0];
-		}
-
-		//delete the picture file from server
-		if ($url != "") {
-			$beginPos = strpos($url, "/src");
-			$urlToDelete = substr($url, $beginPos );
-
-			if ( !unlink(getcwd().$urlToDelete) ) {
-				echo ("Error deleting ".$urlToDelete);
-			} else {
-				echo ("Deleted ".$urlToDelete);
-			}
-		}
-
-		//delete the artist
-		$deleteArtistQuery ="DELETE FROM partners WHERE id=".$id;
-		mysql_query($deleteArtistQuery);
-
-		mysql_close($link);
-	}
-
-
+            if ($partner = $sth->fetch()) {
+                // Delete partner picture
+                if (!empty($partner['picture'])) {
+                    $picturePath = substr($partner['picture'], strpos($partner['picture'], '/src'));
+                    if (!@unlink(getcwd() . $picturePath)) {
+                        echo ('Error deleting : ' . $picturePath);
+                    }
+                }
+            }
+        });
+    }
 }
