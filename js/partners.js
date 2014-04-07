@@ -86,7 +86,7 @@ $(document).on('click', '.partnerDeleteButton', function (event) {
 function getPartners() {
      $.get("getPartners", function(jsonPartnersTable) {
 		jsonPartnersTable=JSON.parse(jsonPartnersTable);
-		partnerHtmlString = '<tr><th>Nom</th><th>Image</th><th>Lien</th></tr>';
+		partnerHtmlString = '<tr><th>Nom</th><th>Image</th><th>Lien</th><th>Actions</th></tr>';
 		$.each(jsonPartnersTable, function(index, partner) {
 			partnerHtmlString += "<tr><form role='form'>";
 			partnerHtmlString += "<input type=\"hidden\" name=\"name\" value=\""+partner.name+"\">";

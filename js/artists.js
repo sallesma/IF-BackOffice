@@ -119,7 +119,7 @@ $('#artistModalActionButton').click(function() {
     } else {
         // Existing artist : update in the db
         var modal = $('#artistModal');
-		
+
         $.ajax({
             type : "POST",
             url : "updateArtist",
@@ -151,7 +151,7 @@ $('#artistModalActionButton').click(function() {
 function getArtists() {
     $.get("getArtists", function(jsonArtistsTable) {
 		jsonArtistsTable=JSON.parse(jsonArtistsTable);
-		artistsHtmlString = '<tr><th>Nom</th><th>Genre</th><th>Scène</th><th>Jour</th><th>Heure</th></tr>';
+		artistsHtmlString = '<tr><th>Nom</th><th>Genre</th><th>Scène</th><th>Jour</th><th>Heure</th><th>Actions</th></tr>';
 		$.each(jsonArtistsTable, function(index, artist) {
 			artistsHtmlString += "<tr>";
 			artistsHtmlString += "<td>" + artist.name + "</td>";
