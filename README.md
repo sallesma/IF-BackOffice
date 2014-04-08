@@ -23,6 +23,9 @@ Use base.sql to create your MySQL database with all the tables.
 
 Then you need to create the file src/parameters.ini to set up your database connection :
 
+    [website]
+    base_url = http://localhost/your/base/path
+
     [connection]
     db_driver = mysql
     db_user =
