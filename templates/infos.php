@@ -78,7 +78,7 @@
                                         <select id="info-parent" class="form-control"></select>
                                     </div>
                                 </div>
-                                <button type="button" class="btn btn-primary" id="infosEditButton">Enregistrer les modifs</button>
+                                <button type="button" class="btn btn-primary" id="infosEditButton" data-loading-text="Enregistrement...">Enregistrer les modifs</button>
                                 <button type="button" class="btn btn-danger" id="infosDeleteButton">Supprimer !</button>
                             </form>
                         </div>

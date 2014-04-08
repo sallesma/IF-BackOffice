@@ -28,7 +28,7 @@ class InfosManager extends EntityManager
         while (count($pool) > 0 && $cursor['list'] < count($tree)) {
             $cursor['pool'] = 0;
             $poolSize = count($pool);
-            while ($cursor['pool'] <= $poolSize) {
+            while ($cursor['pool'] < $poolSize) {
                 // For each child of the current root-level info
                 if ($pool[$cursor['pool']]['parentId'] == $tree[$cursor['list']]['id']) {
                     // Add it in the list

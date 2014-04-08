@@ -20,7 +20,13 @@ session_cache_limiter(false);
 session_start();
 $app = new \Slim\Slim();
 
-$homeUrl = "http://titouanrossier.com/ifT/";
+$parameters = parse_ini_file('src/parameters.ini', true);
+
+if (!$parameters || !array_key_exists('website', $parameters) || !array_key_exists('base_url', $parameters['website'])) {
+    die('Missing website base_url parameter in src/parameters.ini file !');
+}
+
+$homeUrl = $parameters['website']['base_url'];
 $authorizedLogins = array(
     "sallesma",
     "trossier",

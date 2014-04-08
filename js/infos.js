@@ -76,7 +76,10 @@ function getInfos() {
 }
 
 $('#infosEditButton').click(function() {
-    var infoForm = $('#infos-edit-form');
+    var infoForm = $('#infos-edit-form'),
+        button = $(this);
+    button.button('loading');
+
     $.ajax({
         type : "POST",
         url : "updateInfo",
@@ -86,12 +89,14 @@ $('#infosEditButton').click(function() {
             isCategory : $('input[type=radio][name=isCategoryRadio]:checked').attr('value'),
             content : infoForm.find('#info-content').val(),
             picture : infoForm.find('#edit-info-image').val(),
-            parentId : infoForm.find('#info-parent').val()
+            parent : infoForm.find('#info-parent').val()
         }
     }).done(function(msg) {
         getInfos();
     }).fail(function(msg) {
         alert("Echec lors de la mise à jour de l'info");
+    }).always(function () {
+        button.button('reset');
     });
 });
 
