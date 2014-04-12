@@ -66,7 +66,6 @@ class APIManager
                 $status = 204;
             }
         } else {
-            $connection = Connection::getInstance();
             $query = 'SELECT UPDATE_TIME FROM information_schema.TABLES WHERE TABLE_NAME = ' . $table;
             if ($this->table_schema) {
                 $query .= ' AND TABLE_SCHEMA = ' . $this->table_schema;
@@ -94,7 +93,8 @@ class APIManager
                     }
                 }
             } else {
-                $status = 204;
+                $content = 'Pas de nouvelles mises à jour disponible pour la table ' . $table;
+                $status = 304;
             }
         }
 
