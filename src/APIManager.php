@@ -63,11 +63,12 @@ class APIManager
             if ($sth->rowCount() > 0) {
                 $content = json_encode($sth->fetchAll());
             } else {
+				$content = 'Pas de données à renvoyer pour la table ' . $table;
                 $status = 204;
             }
         } else {
             $connection = Connection::getInstance();
-            $query = 'SELECT UPDATE_TIME FROM information_schema.TABLES WHERE TABLE_NAME = ' . $table;
+            $query = 'SELECT UPDATE_TIME FROM information_schema.TABLES WHERE TABLE_NAME = "' .$table.'"';
             if ($this->table_schema) {
                 $query .= ' AND TABLE_SCHEMA = ' . $this->table_schema;
             }
@@ -75,7 +76,7 @@ class APIManager
             $sth->execute();
 
             if ($sth->rowCount() > 0) {
-                $result = $sth->fetchAll();
+                $lastUpdate = $sth->fetchAll();
 
                 $lastRetrieveDate = strtotime($lastRetrieve);
                 $lastUpdateDate = strtotime($lastUpdate['UPDATE_TIME']);
@@ -90,11 +91,13 @@ class APIManager
                     if ($sth->rowCount() > 0) {
                         $content = json_encode($sth->fetchAll());
                     } else {
+						$content = 'Pas de données à renvoyer pour cette date pour la table ' . $table;
                         $status = 204;
                     }
                 }
             } else {
-                $status = 204;
+				$content = 'Impossible de trouver la date de dernière modification pour la table ' . $table;
+                $status = 500;
             }
         }
 
