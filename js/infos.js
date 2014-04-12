@@ -62,8 +62,7 @@ function getInfos() {
                         infoSelect.append('<option value="' + it.id + '">' + it.label + '</option>');
                     }
                 });
-
-                infoSelect.val(msg.parentid);
+                infoSelect.val(msg.parent);
 
                 $('#infosDeleteButton').show();
             }).fail(function(msg) {
