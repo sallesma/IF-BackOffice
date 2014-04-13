@@ -76,7 +76,7 @@ class APIManager
             $sth->execute();
 
             if ($sth->rowCount() > 0) {
-                $lastUpdate = $sth->fetchAll();
+                $lastUpdate = $sth->fetch();
 
                 $lastRetrieveDate = strtotime($lastRetrieve);
                 $lastUpdateDate = strtotime($lastUpdate['UPDATE_TIME']);
