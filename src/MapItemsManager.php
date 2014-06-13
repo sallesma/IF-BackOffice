@@ -6,7 +6,7 @@ class MapItemsManager extends EntityManager
 {
     public function listAll()
     {
-        return json_encode(parent::listAll(MAP_TABLE, array('id', 'label', 'x', 'y', 'label')));
+        return json_encode(parent::listAll(MAP_TABLE, array('id', 'label', 'x', 'y', 'infoId'), 'label'));
     }
 
     public function add($params)
