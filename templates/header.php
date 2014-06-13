@@ -13,6 +13,8 @@
     <link href="css/lib/bootstrap-timepicker.css" rel="stylesheet">
     <link href="css/lib/jqx.base.css" type="text/css" rel="stylesheet"  />
     <link href="css/lib/jquery.fileupload.css" rel="stylesheet" />
+
+	<link rel="icon" href="img/favicon.ico"
 </head>
 
 <body>
