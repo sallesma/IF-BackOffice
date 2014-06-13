@@ -13,7 +13,7 @@ class InfosManager extends EntityManager
             'pool' => 0
         );
 
-        $infos = parent::listAll(INFOS_TABLE, array('id', 'name', 'parent as parentId', 'isCategory'), 'parent');
+        $infos = parent::listAll(INFOS_TABLE, array('id', 'name', 'parent as parentId', 'isCategory'), 'name');
 
         foreach ($infos as $info) {
             if ($info['parentId'] == '0') {

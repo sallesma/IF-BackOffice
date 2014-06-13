@@ -6,7 +6,7 @@ class PartnersManager extends EntityManager
 {
     public function listAll()
     {
-        return json_encode(parent::listAll(PARTNERS_TABLE, array('id', 'name', 'picture', 'website')));
+        return json_encode(parent::listAll(PARTNERS_TABLE, array('id', 'name', 'picture', 'name')));
     }
 
     public function add($params)

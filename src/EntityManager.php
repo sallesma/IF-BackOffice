@@ -18,10 +18,8 @@ class EntityManager
             $fields = '*';
         }
 
-        $sth = $connection->prepare('SELECT ' . $fields . ' FROM ' . $table . ' ORDER BY :order');
-        $sth->execute(array(
-            'order' => $order
-        ));
+        $sth = $connection->prepare('SELECT ' . $fields . ' FROM ' . $table . ' ORDER BY ' . $order);
+        $sth->execute();
 
         foreach ($sth->fetchAll() as $artist) {
             $result[] = $artist;
