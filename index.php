@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 require_once 'Slim/Slim.php';
 require_once 'src/connection.php';
@@ -95,12 +95,12 @@ $app->get('/api/:table(/:lastRetrieve)', function( $table, $lastRetrieve = null)
 //
 // News
 //
-$app->get('/getNews', 'checkAuth', function() use ($app) {
+$app->get('/news', 'checkAuth', function() use ($app) {
     $newsManager = new NewsManager();
     echo $newsManager->listAll();
 });
 
-$app->post('/addNews', 'checkAuth', function() use ($app) {
+$app->post('/news', 'checkAuth', function() use ($app) {
     $newsManager = new NewsManager();
     echo $newsManager->add(array(
         'title' => $app->request->post('title'),
@@ -109,15 +109,15 @@ $app->post('/addNews', 'checkAuth', function() use ($app) {
     ));
 });
 
-$app->post('/updateNews', 'checkAuth', function() use ($app) {
+$app->put('/news/:id', 'checkAuth', function( $id ) use ($app) {
     $newsManager = new NewsManager();
-    echo $newsManager->update($app->request->post('id'), array(
+    echo $newsManager->update($id, array(
         'title' => $app->request->post('title'),
         'content' => $app->request->post('content')
     ));
 });
 
-$app->get('/deleteNews/:id', 'checkAuth', function( $id ) use ($app) {
+$app->delete('/news/:id', 'checkAuth', function( $id ) use ($app) {
     $newsManager = new NewsManager();
     echo $newsManager->delete($id);
 });
@@ -125,12 +125,12 @@ $app->get('/deleteNews/:id', 'checkAuth', function( $id ) use ($app) {
 //
 // Artists
 //
-$app->get('/getArtists', 'checkAuth', function() use ($app) {
+$app->get('/artist', 'checkAuth', function() use ($app) {
     $artistManager = new ArtistsManager();
     echo $artistManager->listAll();
 });
 
-$app->post('/addArtist', 'checkAuth', function() use ($app) {
+$app->post('/artist', 'checkAuth', function() use ($app) {
     $artistManager = new ArtistsManager();
 
     echo $artistManager->add(array(
@@ -149,15 +149,15 @@ $app->post('/addArtist', 'checkAuth', function() use ($app) {
     ));
 });
 
-$app->get('/getArtist/:id', 'checkAuth', function( $id ) use ($app) {
+$app->get('/artist/:id', 'checkAuth', function( $id ) use ($app) {
     $artistManager = new ArtistsManager();
     echo $artistManager->find($id);
 });
 
-$app->post('/updateArtist', 'checkAuth', function() use ($app) {
+$app->put('/artist/:id', 'checkAuth', function( $id ) use ($app) {
     $artistManager = new ArtistsManager();
 
-    echo $artistManager->update($app->request->post('id'), array(
+    echo $artistManager->update($id, array(
         'name' => $app->request->post('name'),
         'picture' => $app->request->post('picture'),
         'style' => $app->request->post('style'),
@@ -173,7 +173,7 @@ $app->post('/updateArtist', 'checkAuth', function() use ($app) {
     ));
 });
 
-$app->get('/deleteArtist/:id', 'checkAuth', function( $id ) use ($app) {
+$app->delete('/artist/:id', 'checkAuth', function( $id ) use ($app) {
     $artistsManager = new ArtistsManager();
     echo $artistsManager->delete($id);
 });
@@ -181,19 +181,19 @@ $app->get('/deleteArtist/:id', 'checkAuth', function( $id ) use ($app) {
 //
 // Filters
 //
-$app->get('/getFilters', 'checkAuth', function() use ($app) {
+$app->get('/filter', 'checkAuth', function() use ($app) {
     $filtersManager = new FiltersManager();
     echo $filtersManager->listAll();
 });
 
-$app->post('/addFilter', 'checkAuth', function() use ($app) {
+$app->post('/filter', 'checkAuth', function() use ($app) {
     $filtersManager = new FiltersManager();
     echo $filtersManager->add(array(
         'picture' => $app->request->post('url')
     ));
 });
 
-$app->get('/deleteFilter/:id', 'checkAuth', function( $id ) use ($app) {
+$app->delete('/filter/:id', 'checkAuth', function( $id ) use ($app) {
     $filtersManager = new FiltersManager();
     echo $filtersManager->delete($id);
 });
@@ -201,12 +201,12 @@ $app->get('/deleteFilter/:id', 'checkAuth', function( $id ) use ($app) {
 //
 // Infos
 //
-$app->get('/getInfos', 'checkAuth', function() use ($app) {
+$app->get('/info', 'checkAuth', function() use ($app) {
     $infosManager = new InfosManager();
     echo $infosManager->listAll();
 });
 
-$app->post('/addInfo', 'checkAuth', function() use ($app) {
+$app->post('/info', 'checkAuth', function() use ($app) {
     $infosManager = new InfosManager();
     echo $infosManager->add(array(
         'name' => $app->request->post('name'),
@@ -217,14 +217,14 @@ $app->post('/addInfo', 'checkAuth', function() use ($app) {
     ));
 });
 
-$app->get('/getInfo/:id', 'checkAuth', function( $id ) use ($app) {
+$app->get('/info/:id', 'checkAuth', function( $id ) use ($app) {
     $infosManager = new InfosManager();
     echo $infosManager->find($id);
 });
 
-$app->post('/updateInfo', 'checkAuth', function() use ($app) {
+$app->put('/info/:id', 'checkAuth', function( $id ) use ($app) {
     $infosManager = new InfosManager();
-    echo $infosManager->update($app->request->post('id'), array(
+    echo $infosManager->update($id, array(
         'name' => $app->request->post('name'),
         'picture' => $app->request->post('picture'),
         'isCategory' => $app->request->post('isCategory'),
@@ -233,7 +233,7 @@ $app->post('/updateInfo', 'checkAuth', function() use ($app) {
     ));
 });
 
-$app->get('/deleteInfo/:id', 'checkAuth', function( $id ) use ($app) {
+$app->delete('/info/:id', 'checkAuth', function( $id ) use ($app) {
     $infosManager = new InfosManager();
     echo $infosManager->delete($id);
 });
@@ -241,12 +241,12 @@ $app->get('/deleteInfo/:id', 'checkAuth', function( $id ) use ($app) {
 //
 // Map
 //
-$app->get('/getMapItems', 'checkAuth', function() use ($app) {
+$app->get('/mapItem', 'checkAuth', function() use ($app) {
     $mapItemManager = new MapItemsManager();
     echo $mapItemManager->listAll();
 });
 
-$app->post('/addMapItem', 'checkAuth', function() use ($app) {
+$app->post('/mapItem', 'checkAuth', function() use ($app) {
     $mapItemManager = new MapItemsManager();
     echo $mapItemManager->add(array(
         'label' => $app->request->post('label'),
@@ -256,9 +256,9 @@ $app->post('/addMapItem', 'checkAuth', function() use ($app) {
     ));
 });
 
-$app->post('/updateMapItem', 'checkAuth', function() use ($app) {
+$app->put('/mapItem/:id', 'checkAuth', function( $id ) use ($app) {
     $mapItemManager = new MapItemsManager();
-    echo $mapItemManager->update($app->request->post('id'), array(
+    echo $mapItemManager->update($id, array(
         'label' => $app->request->post('label'),
         'x' => $app->request->post('x'),
         'y' => $app->request->post('y'),
@@ -266,7 +266,7 @@ $app->post('/updateMapItem', 'checkAuth', function() use ($app) {
     ));
 });
 
-$app->get('/deleteMapItem/:id', 'checkAuth', function( $id ) use ($app) {
+$app->delete('/mapItem/:id', 'checkAuth', function( $id ) use ($app) {
     $mapItemManager = new MapItemsManager();
     echo $mapItemManager->delete($id);
 });
@@ -274,12 +274,12 @@ $app->get('/deleteMapItem/:id', 'checkAuth', function( $id ) use ($app) {
 //
 // Partners
 //
-$app->get('/getPartners', 'checkAuth', function() use ($app) {
+$app->get('/partner', 'checkAuth', function() use ($app) {
     $partnersManager = new PartnersManager();
     echo $partnersManager->listAll();
 });
 
-$app->post('/addPartner', 'checkAuth', function() use ($app) {
+$app->post('/partner', 'checkAuth', function() use ($app) {
     $partnersManager = new PartnersManager();
     echo $partnersManager->add(array(
         'name' => $app->request->post('name'),
@@ -288,16 +288,16 @@ $app->post('/addPartner', 'checkAuth', function() use ($app) {
     ));
 });
 
-$app->post('/updatePartner', 'checkAuth', function() use ($app) {
+$app->put('/partner/:id', 'checkAuth', function( $id ) use ($app) {
     $partnersManager = new PartnersManager();
-    echo $partnersManager->update($app->request->post('id'), array(
+    echo $partnersManager->update($id, array(
         'name' => $app->request->post('name'),
         'picture' => $app->request->post('picture'),
         'website' => $app->request->post('website')
     ));
 });
 
-$app->get('/deletePartner/:id', 'checkAuth', function( $id ) use ($app) {
+$app->delete('/partner/:id', 'checkAuth', function( $id ) use ($app) {
     $partnersManager = new PartnersManager();
     echo $partnersManager->delete($id);
 });

@@ -2,7 +2,7 @@
 $('#addNewButton').click(function() {
     $.ajax({
         type : "POST",
-        url : "addNews",
+        url : "news",
         data : {
             title : $("#newTitle").val(),
             content : $("#newContent").val()
@@ -40,10 +40,9 @@ $('#editNewButton').click(function() {
     var content = $('#editNewsModal').find('textarea[id="newContent"]').val();
 
     $.ajax({
-        type : "POST",
-        url : "updateNews",
+        type : "PUT",
+        url : "news/"+id,
         data : {
-            id : id,
             title : title,
             content : content
         }
@@ -61,8 +60,8 @@ $(document).on('click', '.newsDeleteButton', function (event) {
         var id = $(this).parent().parent().find('input[name="rowID"]').val();
 
         $.ajax({
-            type: "GET",
-            url: "deleteNews/"+id,
+            type: "DELETE",
+            url: "news/"+id,
         }).done(function (msg) {
             getNews();
             $("#onDeleteNewsAlert").show();
@@ -73,7 +72,7 @@ $(document).on('click', '.newsDeleteButton', function (event) {
 });
 
 function getNews() {
-    $.get("getNews", function(jsonNewsTable) {
+    $.get("news", function(jsonNewsTable) {
 		jsonNewsTable=JSON.parse(jsonNewsTable);
 		newsHtmlString = '<tr><th>Nom</th><th>Description</th><th>Date</th><th>Actions</th></tr>';
 		$.each(jsonNewsTable, function(index, news) {

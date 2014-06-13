@@ -11,7 +11,7 @@ $(function () {
 
                $.ajax({
                     type : "POST",
-                    url : "addFilter",
+                    url : "filter",
                     data : {
                         url : file.url,
 
@@ -41,8 +41,8 @@ $(document).on('click', '.filterDeleteButton', function (event) {
         var id = $(this).parent().parent().find('input[name="filterId"]').val();
 
         $.ajax({
-            type: "GET",
-            url: "deleteFilter/"+id,
+            type: "DELETE",
+            url: "filter/"+id,
         }).done(function (msg) {
             getFilters();
             $("#onDeleteFiltersAlert").show();
@@ -53,7 +53,7 @@ $(document).on('click', '.filterDeleteButton', function (event) {
 });
 
 function getFilters() {
-    $.get("getFilters", function(jsonFilters) {
+    $.get("filter", function(jsonFilters) {
 		jsonFilters=JSON.parse(jsonFilters);
 		filtersHtmlString = '';
 		$.each(jsonFilters, function(index, filter) {

@@ -11,7 +11,7 @@ $(document).on("click", "#add-map", function(e) {
 var infoIdSelect = $('#addMapItemModal').find('#addMapItem-linked-info');
 infoIdSelect.html('');
 infoIdSelect.append('<option value="-1"> Aucune info </option>');
-$.get("getInfos", function(jsonInfosTable) {
+$.get("info", function(jsonInfosTable) {
 	jsonInfosTable=JSON.parse(jsonInfosTable);
 	$.each(jsonInfosTable, function (key, it) {
 			infoIdSelect.append('<option value="' + it.id + '">' + it.name + '</option>');
@@ -22,7 +22,7 @@ $.get("getInfos", function(jsonInfosTable) {
 $('#addMapItemButton').click(function() {
     $.ajax({
         type : "POST",
-        url : "addMapItem",
+        url : "mapItem",
         data : {
             label : $("#newLabel").val(),
             x : $("#newX").val(),
@@ -68,7 +68,7 @@ $(document).on("click", ".modifyMapItemButton", function() {
 
 	infoIdSelect.html('');
 	infoIdSelect.append('<option value="-1"> Aucune info </option>');
-	$.get("getInfos", function(jsonInfosTable) {
+	$.get("info", function(jsonInfosTable) {
 		jsonInfosTable=JSON.parse(jsonInfosTable);
 		$.each(jsonInfosTable, function (key, it) {
             if(it.id == infoId)
@@ -88,10 +88,9 @@ $('#editMapItemButton').click(function() {
     var infoId = $('#editMapItemModal').find('#mapItem-linked-info').val();
 
 	$.ajax({
-        type : "POST",
-        url : "updateMapItem",
+        type : "PUT",
+        url : "mapItem/"+id,
         data : {
-            id : id,
             label : label,
             x : x,
             y : y,
@@ -110,8 +109,8 @@ $(document).on('click', '.mapItemDeleteButton', function (event) {
         var id = $(this).parent().parent().find('input[name="id"]').val();
 
         $.ajax({
-            type: "GET",
-            url: "deleteMapItem/"+id
+            type: "DELETE",
+            url: "mapItem/"+id
         }).done(function (msg) {
             getMapItems();
             $("#onDeleteMapItemsAlert").show();
@@ -122,7 +121,7 @@ $(document).on('click', '.mapItemDeleteButton', function (event) {
 });
 
 function getMapItems() {
-	$.get("getMapItems", function(jsonMapItemsTable) {
+	$.get("mapItem", function(jsonMapItemsTable) {
 		jsonMapItemsTable=JSON.parse(jsonMapItemsTable);
 		mapItemsHtmlString = '<tr><th>Label</th><th>X</th><th>Y</th><th>Info liée</th><th>Actions</th></tr>';
 		$.each(jsonMapItemsTable, function(index, mapItem) {
@@ -140,7 +139,7 @@ function getMapItems() {
             var infoName = "";
             if (mapItem.infoId != -1) {
                 $.ajax({
-                    url: 'getInfo/'+mapItem.infoId,
+                    url: 'info/'+mapItem.infoId,
                     async: false,
                     dataType: 'json',
                     success: function (json) {

@@ -2,7 +2,7 @@
 $('#addPartnerButton').click(function() {
     $.ajax({
         type : "POST",
-        url : "addPartner",
+        url : "partner",
         data : {
             name : $("#newName").val(),
             picture : $("#newPicture").val(),
@@ -50,10 +50,9 @@ $('#editPartnerButton').click(function() {
     var website = $('#editPartnerModal').find('input[id="website"]').val();
 
     $.ajax({
-        type : "POST",
-        url : "updatePartner",
+        type : "PUT",
+        url : "partner/"+id,
         data : {
-            id : id,
             name : name,
             picture: picture,
             website : website
@@ -72,8 +71,8 @@ $(document).on('click', '.partnerDeleteButton', function (event) {
         var id = $(this).parent().parent().find('input[name="id"]').val();
 
         $.ajax({
-            type: "GET",
-            url: "deletePartner/"+id,
+            type: "DELETE",
+            url: "partner/"+id,
         }).done(function (msg) {
             getPartners();
             $("#onDeletePartnersAlert").show();
@@ -84,7 +83,7 @@ $(document).on('click', '.partnerDeleteButton', function (event) {
 });
 
 function getPartners() {
-     $.get("getPartners", function(jsonPartnersTable) {
+     $.get("partner", function(jsonPartnersTable) {
 		jsonPartnersTable=JSON.parse(jsonPartnersTable);
 		partnerHtmlString = '<tr><th>Nom</th><th>Image</th><th>Lien</th><th>Actions</th></tr>';
 		$.each(jsonPartnersTable, function(index, partner) {

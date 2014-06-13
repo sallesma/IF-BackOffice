@@ -58,7 +58,7 @@ $(document).on('click', '.showArtistButton', function (event) {
 
     $.ajax({
         type: "GET",
-        url: "getArtist/"+id.val(),
+        url: "artist/"+id.val(),
     }).done(function (msg) {
         var artist = $.parseJSON(msg);
         loadArtistModalWithObject(artist);
@@ -74,8 +74,8 @@ $(document).on('click', '.artistDeleteButton', function (event) {
         var id = target.parent().find('input[name="id"]');
 
         $.ajax({
-            type: "GET",
-            url: "deleteArtist/"+id.val(),
+            type: "DELETE",
+            url: "artist/"+id.val(),
         }).done(function (msg) {
             getArtists();
             $("#onDeleteArtistAlert").show();
@@ -94,7 +94,7 @@ $('#artistModalActionButton').click(function() {
         // New artist : add it to the DB
         $.ajax({
             type : "POST",
-            url : "addArtist",
+            url : "artist",
             data : {
                 name : $("#art-name").val(),
                 style : $("#art-style").val(),
@@ -121,10 +121,9 @@ $('#artistModalActionButton').click(function() {
         var modal = $('#artistModal');
 
         $.ajax({
-            type : "POST",
-            url : "updateArtist",
+            type : "PUT",
+            url : "artist/"+id,
             data : {
-                id : id,
                 name: modal.find('#art-name').val(),
                 picture: modal.find('#art-image').val(),
                 style: modal.find('#art-style').val(),
@@ -149,7 +148,7 @@ $('#artistModalActionButton').click(function() {
 });
 
 function getArtists() {
-    $.get("getArtists", function(jsonArtistsTable) {
+    $.get("artist", function(jsonArtistsTable) {
 		jsonArtistsTable=JSON.parse(jsonArtistsTable);
 		artistsHtmlString = '<tr><th>Nom</th><th>Genre</th><th>Scène</th><th>Jour</th><th>Heure</th><th>Actions</th></tr>';
 		$.each(jsonArtistsTable, function(index, artist) {

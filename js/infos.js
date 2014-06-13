@@ -1,5 +1,5 @@
 function getInfos() {
-    $.getJSON("getInfos", function(data) {
+    $.getJSON("info", function(data) {
         $('#infos-tree').jqxTree({ source:computeTree(data)});
         $('#infos-tree').jqxTree('refresh');
 
@@ -7,7 +7,7 @@ function getInfos() {
         $('#infos-tree').bind('select', function (event) {
             var htmlElement = event.args.element;
             var item = $('#infos-tree').jqxTree('getItem', htmlElement);
-            $.getJSON("getInfo/"+item.id).done(function (msg) {
+            $.getJSON("info/"+item.id).done(function (msg) {
                 var infoForm = $('#infos-edit-form');
 				$('#infos-form').show();
 				$('#infos-edit-text').hide();
@@ -79,11 +79,12 @@ $('#infosEditButton').click(function() {
         button = $(this);
     button.button('loading');
 
+	var id = infoForm.find('#info-id').val()
+
     $.ajax({
-        type : "POST",
-        url : "updateInfo",
+        type : "PUT",
+        url : "info/"+id,
         data : {
-            id : infoForm.find('#info-id').val(),
             name : infoForm.find('#info-name').val(),
             isCategory : $('input[type=radio][name=isCategoryRadio]:checked').attr('value'),
             content : infoForm.find('#info-content').val(),
@@ -104,8 +105,8 @@ $('#infosDeleteButton').click(function() {
         var id = $('#infos-edit-form').find('#info-id').val();
 
         $.ajax({
-            type: "GET",
-            url: "deleteInfo/"+id,
+            type: "DELETE",
+            url: "info/"+id,
         }).done(function(msg) {
             getInfos();
 			//getMapItems();
@@ -122,7 +123,7 @@ $('#infosDeleteButton').click(function() {
 $('#addInfoButton').click(function() {
     $.ajax({
         type : "POST",
-        url : "addInfo",
+        url : "info",
         data : {
             name : $("#add-info-name").val(),
             isCategory : $('input[type=radio][name=isAddCategoryRadio]:checked').attr('value'),

@@ -28,12 +28,12 @@
     <script src="js/lib/jquery.iframe-transport.js"></script>
     <script src="js/lib/jquery.fileupload.js"></script>
 
-    <script src="js/news.js?v=138"></script>
-    <script src="js/artists.js?v=108"></script>
-    <script src="js/filters.js?v=103"></script>
-    <script src="js/infos.js?v=19"></script>
-    <script src="js/map.js?v=68"></script>
-    <script src="js/partners.js?v=127"></script>
+    <script src="js/news.js"></script>
+    <script src="js/artists.js"></script>
+    <script src="js/filters.js"></script>
+    <script src="js/infos.js"></script>
+    <script src="js/map.js"></script>
+    <script src="js/partners.js"></script>
 	<script type="text/javascript" >
 		$(document).ready(function() {
 			getNews();
