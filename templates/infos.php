@@ -78,8 +78,8 @@
                                         <select id="info-parent" class="form-control"></select>
                                     </div>
                                 </div>
-                                <button type="button" class="btn btn-primary" id="infosEditButton" data-loading-text="Enregistrement...">Enregistrer les modifs</button>
-                                <button type="button" class="btn btn-danger" id="infosDeleteButton">Supprimer !</button>
+                                <button class="btn btn-primary" id="infosEditButton" data-loading-text="Enregistrement...">Enregistrer les modifs</button>
+                                <button class="btn btn-danger" id="infosDeleteButton"><i class='fa fa-times'></i> Supprimer</button>
                             </form>
                         </div>
                     </div>
@@ -137,8 +137,8 @@
                                         <select id="add-info-parent" class="form-control"></select>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
-                                        <button type="button" class="btn btn-primary" id="addInfoButton">Ajouter</button>
+                                        <button class="btn btn-default" data-dismiss="modal">Annuler</button>
+                                        <button class="btn btn-primary" id="addInfoButton">Ajouter</button>
                                     </div>
                                 </form>
                             </div>

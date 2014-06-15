@@ -69,17 +69,21 @@ $(document).on('click', '.showArtistButton', function (event) {
 });
 
 $(document).on('click', '.artistDeleteButton', function (event) {
-    if (confirm('Es-tu sûr de vouloir supprimer ça ? C\'est définitif hein...') ) {
-        var target = $(event.currentTarget);
-        var id = target.parent().find('input[name="id"]');
+	if (confirm('Es-tu sûr de vouloir supprimer ça ? C\'est définitif hein...') ) {
+		var $button = $(this);
+		progress($button);
+
+        var id = $(event.currentTarget).parent().find('input[name="id"]');
 
         $.ajax({
             type: "DELETE",
             url: "artist/"+id.val(),
         }).done(function (msg) {
+			remove($button);
             getArtists();
             $("#onDeleteArtistAlert").show();
         }).fail(function (msg) {
+			remove($button);
             alert("Echec à la suppression de l'artiste");
         });
     }
@@ -150,7 +154,7 @@ $('#artistModalActionButton').click(function() {
 function getArtists() {
     $.get("artist", function(jsonArtistsTable) {
 		jsonArtistsTable=JSON.parse(jsonArtistsTable);
-		artistsHtmlString = '<tr><th>Nom</th><th>Genre</th><th>Scène</th><th>Jour</th><th>Heure</th><th>Actions</th></tr>';
+		artistsHtmlString = '';
 		$.each(jsonArtistsTable, function(index, artist) {
 			artistsHtmlString += "<tr>";
 			artistsHtmlString += "<td>" + artist.name + "</td>";
@@ -159,13 +163,15 @@ function getArtists() {
 			artistsHtmlString += "<td>" + artist.day + "</td>";
 			artistsHtmlString += "<td>" + artist.beginHour + "</td>";
 			artistsHtmlString += "<td>";
+			artistsHtmlString += "	<div class='btn-group'>";
             artistsHtmlString += "	<input type='hidden' value='" + artist.id + "' name='id'/>";
-            artistsHtmlString += "	<button type='button' class='btn btn-primary showArtistButton'>Voir plus</button>";
-            artistsHtmlString += "	<button type='button' class='artistDeleteButton btn btn-danger'>Supprimer !</button>";
+            artistsHtmlString += "	<button class='btn btn-default showArtistButton'><i class='fa fa-pencil'></i></button>";
+            artistsHtmlString += "	<button class='artistDeleteButton btn btn-default'><i class='fa fa-times'></i></button>";
+			artistsHtmlString += "	</div>";
 			artistsHtmlString += "</td>";
 			artistsHtmlString += "</tr>";
 		});
-        $("#artists-table").html(artistsHtmlString);
+        $("#artists-table tbody").html(artistsHtmlString);
     }).fail(function(msg) {
 		alert("Echec au chargement des artistes");
 	});

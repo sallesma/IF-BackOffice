@@ -11,7 +11,16 @@
                         <p>(C'est trop tard, il n'est plus possible de le récupérer. )</p>
                     </div>
 
-                    <table id="mapItem-table" class="table table-bordered table-stripped table-hover"></table>
+                    <table id="mapItem-table" class="table table-bordered table-stripped table-hover">
+						<thead>
+							<th>Label</th>
+							<th>X</th>
+							<th>Y</th>
+							<th>Info liée</th>
+							<th>Actions</th>
+						</thead>
+						<tbody></tbody>
+					</table>
 
                     <!-- Button to trigger modal -->
                     <a id="addMapItemTriggerModal" data-toggle="modal" href="#addMapItemModal" class="btn btn-primary btn-lg">Ajouter un élément</a>

@@ -11,7 +11,15 @@
                         <p>(C'est trop tard, il n'est plus possible de le récupérer. )</p>
                     </div>
 
-                    <table id="partners-table" class="table table-bordered table-stripped table-hover"></table>
+                    <table id="partners-table" class="table table-bordered table-stripped table-hover">
+						<thead>
+							<th style="width: 20%">Nom</th>
+							<th style="width: 20%">Image</th>
+							<th style="width: 40%">Lien</th>
+							<th style="width: 20%">Actions</th>
+						</thead>
+						<tbody></tbody>
+					</table>
 
                     <!-- Button to trigger modal -->
                     <a id="addPartnersTriggerModal" data-toggle="modal" href="#addPartnerModal" class="btn btn-primary btn-lg">Ajouter un partenaire</a>

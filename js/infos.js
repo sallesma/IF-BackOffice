@@ -102,6 +102,9 @@ $('#infosEditButton').click(function() {
 
 $('#infosDeleteButton').click(function() {
     if (confirm('Si l\'info est liée à un point de la carte, il sera supprimé aussi. Es-tu sûr de vouloir supprimer ça ? C\'est définitif hein...') ) {
+		var $button = $(this);
+		progress($button, " Supprimer");
+
         var id = $('#infos-edit-form').find('#info-id').val();
 
         $.ajax({
@@ -109,11 +112,13 @@ $('#infosDeleteButton').click(function() {
             url: "info/"+id,
         }).done(function(msg) {
             getInfos();
-			//getMapItems();
+			getMapItems();
+			remove($button, " Supprimer");
             $("#onDeleteInfoAlert").show();
             $('#infos-form').hide();
 			$('#infos-edit-text').show();
         }).fail(function(msg) {
+			remove($button, " Supprimer");
             alert("Echec lors de la suppression de l'info");
         });
     }

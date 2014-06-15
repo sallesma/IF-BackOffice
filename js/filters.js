@@ -38,15 +38,20 @@ $(function () {
 
 $(document).on('click', '.filterDeleteButton', function (event) {
     if (confirm('Es-tu sûr de vouloir supprimer ça ? C\'est définitif hein...') ) {
+		var $button = $(this);
+		progress($button);
+
         var id = $(this).parent().parent().find('input[name="filterId"]').val();
 
         $.ajax({
             type: "DELETE",
             url: "filter/"+id,
         }).done(function (msg) {
+			remove($button);
             getFilters();
             $("#onDeleteFiltersAlert").show();
         }).fail(function (msg) {
+			remove($button);
             alert("Echec à la suppression d'un filtre");
         });
     }
@@ -62,7 +67,7 @@ function getFilters() {
 			filtersHtmlString += "		<a href='#photo-filter' class='thumbnail'>";
 			filtersHtmlString += "			<img src=\"" + filter.picture + "\" alt=\"...\">";
 			filtersHtmlString += "		</a>";
-            filtersHtmlString += "		<button type='button' class='filterDeleteButton btn btn-danger'>Supprimer</button>";
+            filtersHtmlString += "		<button class='filterDeleteButton btn btn-default'><i class='fa fa-times'></i></button>";
             filtersHtmlString += "		<input type='hidden' name='filterId' value='" + filter.id + "'>";
 			filtersHtmlString += "	</form>";
 			filtersHtmlString += "</div>";

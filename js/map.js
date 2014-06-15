@@ -106,6 +106,9 @@ $('#editMapItemButton').click(function() {
 
 $(document).on('click', '.mapItemDeleteButton', function (event) {
     if (confirm('Es-tu sûr de vouloir supprimer ça ? C\'est définitif hein...') ) {
+		var $button = $(this);
+		progress($button);
+
         var id = $(this).parent().parent().find('input[name="id"]').val();
 
         $.ajax({
@@ -113,8 +116,10 @@ $(document).on('click', '.mapItemDeleteButton', function (event) {
             url: "mapItem/"+id
         }).done(function (msg) {
             getMapItems();
+			remove($button);
             $("#onDeleteMapItemsAlert").show();
         }).fail(function (msg) {
+			remove($button);
             alert("Echec à la suppression du point");
         });
     }
@@ -123,7 +128,7 @@ $(document).on('click', '.mapItemDeleteButton', function (event) {
 function getMapItems() {
 	$.get("mapItem", function(jsonMapItemsTable) {
 		jsonMapItemsTable=JSON.parse(jsonMapItemsTable);
-		mapItemsHtmlString = '<tr><th>Label</th><th>X</th><th>Y</th><th>Info liée</th><th>Actions</th></tr>';
+		mapItemsHtmlString = '';
 		$.each(jsonMapItemsTable, function(index, mapItem) {
 			mapItemsHtmlString += "<tr><form role='form'>";
 			mapItemsHtmlString += "<input type=\"hidden\" name=\"label\" value=\""+mapItem.label+"\">";
@@ -155,13 +160,15 @@ function getMapItems() {
             mapItemsHtmlString += infoName;
             mapItemsHtmlString += "</td>";
 			mapItemsHtmlString += "<td>";
-			mapItemsHtmlString += "	<button type='button' class='btn btn-primary modifyMapItemButton'>Modifier</button>";
-			mapItemsHtmlString += "	<button type='button' class='mapItemDeleteButton btn btn-danger'>Supprimer !</button>";
+			mapItemsHtmlString += " <div class='btn-group'>";
+			mapItemsHtmlString += "	<button class='btn btn-default modifyMapItemButton'><i class='fa fa-pencil'></i></button>";
+			mapItemsHtmlString += "	<button class='btn btn-default mapItemDeleteButton'><i class='fa fa-times'></i></button>";
+			mapItemsHtmlString += " </div>";
 			mapItemsHtmlString += "</td>";
 			mapItemsHtmlString += "</form>";
 			mapItemsHtmlString += "</tr>";
 		});
-    	$("#mapItem-table").html(mapItemsHtmlString);
+    	$("#mapItem-table tbody").html(mapItemsHtmlString);
 	}).fail(function(msg) {
 		alert("Echec au chargement des points de la carte");
 	});

@@ -56,9 +56,10 @@ $('#editNewButton').click(function() {
 });
 
 $(document).on('click', '.newsDeleteButton', function (event) {
-	var $button = $(this);
-	progress($button);
     if (confirm('Es-tu sûr de vouloir supprimer ça ? C\'est définitif hein...') ) {
+		var $button = $(this);
+		progress($button);
+
         var id = $(this).parent().parent().parent().find('input[name="rowID"]').val();
 
         $.ajax({
@@ -73,7 +74,6 @@ $(document).on('click', '.newsDeleteButton', function (event) {
             alert("Echec à la suppression d'une news");
         });
     }
-	remove($button);
 });
 
 function getNews() {

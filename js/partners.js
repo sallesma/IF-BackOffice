@@ -68,6 +68,9 @@ $('#editPartnerButton').click(function() {
 
 $(document).on('click', '.partnerDeleteButton', function (event) {
     if (confirm('Es-tu sûr de vouloir supprimer ça ? C\'est définitif hein...') ) {
+		var $button = $(this);
+		progress($button);
+
         var id = $(this).parent().parent().find('input[name="id"]').val();
 
         $.ajax({
@@ -75,8 +78,10 @@ $(document).on('click', '.partnerDeleteButton', function (event) {
             url: "partner/"+id,
         }).done(function (msg) {
             getPartners();
+			remove($button);
             $("#onDeletePartnersAlert").show();
         }).fail(function (msg) {
+			remove($button);
             alert("Failure deleting partner");
         });
     }
@@ -85,7 +90,7 @@ $(document).on('click', '.partnerDeleteButton', function (event) {
 function getPartners() {
      $.get("partner", function(jsonPartnersTable) {
 		jsonPartnersTable=JSON.parse(jsonPartnersTable);
-		partnerHtmlString = '<tr><th>Nom</th><th>Image</th><th>Lien</th><th>Actions</th></tr>';
+		partnerHtmlString = '';
 		$.each(jsonPartnersTable, function(index, partner) {
 			partnerHtmlString += "<tr><form role='form'>";
 			partnerHtmlString += "<input type=\"hidden\" name=\"name\" value=\""+partner.name+"\">";
@@ -93,17 +98,20 @@ function getPartners() {
             partnerHtmlString += "<input type=\"hidden\" name=\"picture\" value=\""+partner.picture+"\">";
             partnerHtmlString +=  "<input type=\"hidden\" name=\"id\" value=\""+partner.id+"\">";
 			partnerHtmlString += "<td>"+partner.name+"</td>";
-			partnerHtmlString += "<td><img class=\"col-md-3\" src=\" "+partner.picture+" \"/></td>";
+			partnerHtmlString += "<td><img class=\"col-md-9\" src=\" "+partner.picture+" \"/></td>";
 			partnerHtmlString += "<td>"+partner.website+"</td>";
 			partnerHtmlString += "<td>";
-            partnerHtmlString += "	<button type='button' class='btn btn-primary modifyPartnerButton'>Modifier</button>";
-            partnerHtmlString += "	<button type='button' class='partnerDeleteButton btn btn-danger'>Supprimer !</button>";
+			partnerHtmlString += " <div class='btn-group'>";
+            partnerHtmlString += "	<button class='btn btn-default modifyPartnerButton'><i class='fa fa-pencil'></i></button>";
+            partnerHtmlString += "	<button class='btn btn-default partnerDeleteButton'><i class='fa fa-times'></i></button>";
+			partnerHtmlString += "</td>";
+			partnerHtmlString += " <div>";
 
             partnerHtmlString += "</form>";
 	        partnerHtmlString += "</tr>";
 
 		});
-		$("#partners-table").html(partnerHtmlString);
+		$("#partners-table tbody").html(partnerHtmlString);
     }).fail(function(msg) {
         alert("Echec au chargement des partenaires");
 
