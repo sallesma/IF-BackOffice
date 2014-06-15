@@ -22,7 +22,7 @@
 	</table>
 
 	<!-- Button to trigger modal -->
-	<a id="addNewsTriggerModal" data-toggle="modal" href="#addNewModal" class="btn btn-primary btn-lg">Ajouter une news</a>
+	<a id="addNewsTriggerModal" data-toggle="modal" href="#addNewModal" class="btn btn-primary btn-lg fa fa-plus"> Ajouter une news</a>
 	<!-- ADD Modal -->
 	<div class="modal fade" id="addNewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
