@@ -21,7 +21,7 @@ $(document).on("click", ".modifyNewButton", function() {
 
     $('#editNewsModal').modal('show');
 
-    var formClass = $(this).parent().parent();
+    var formClass = $(this).parent().parent().parent();
 
     var id = formClass.find('input[name="rowID"]').val();
     var title = formClass.find('input[name="title"]').val();
@@ -56,25 +56,30 @@ $('#editNewButton').click(function() {
 });
 
 $(document).on('click', '.newsDeleteButton', function (event) {
+	var $button = $(this);
+	progress($button);
     if (confirm('Es-tu sûr de vouloir supprimer ça ? C\'est définitif hein...') ) {
-        var id = $(this).parent().parent().find('input[name="rowID"]').val();
+        var id = $(this).parent().parent().parent().find('input[name="rowID"]').val();
 
         $.ajax({
             type: "DELETE",
             url: "news/"+id,
         }).done(function (msg) {
+			remove($button);
             getNews();
             $("#onDeleteNewsAlert").show();
         }).fail(function (msg) {
+			remove($button);
             alert("Echec à la suppression d'une news");
         });
     }
+	remove($button);
 });
 
 function getNews() {
     $.get("news", function(jsonNewsTable) {
 		jsonNewsTable=JSON.parse(jsonNewsTable);
-		newsHtmlString = '<tr><th>Nom</th><th>Description</th><th>Date</th><th>Actions</th></tr>';
+		newsHtmlString = '';
 		$.each(jsonNewsTable, function(index, news) {
 			newsHtmlString += "<tr><form role='form'>";
 			newsHtmlString += "<input type='hidden' name='title' value='"+news.title.replace("'", "&apos;")+"'>";
@@ -83,13 +88,15 @@ function getNews() {
 			newsHtmlString += "<td id='content'>"+news.content+"</td>";
 			newsHtmlString += "<td>"+news.date+"</td>";
 			newsHtmlString += "<td>";
-            newsHtmlString += "	<button type='button' class='btn btn-primary modifyNewButton'>Modifier</button>";
-            newsHtmlString += "	<button type='button' class='newsDeleteButton btn btn-danger'>Supprimer !</button>";
+            newsHtmlString += " <div class='btn-group'>";
+            newsHtmlString += " <button class='btn btn-default modifyNewButton'><i class='fa fa-pencil'></i></button>";
+            newsHtmlString += " <button class='btn btn-default newsDeleteButton'><i class='fa fa-times'></i></button>";
+			newsHtmlString += " </div>";
 			newsHtmlString += "</td>";
 			newsHtmlString += "<input type='hidden' name='rowID' value='"+news.id+"'>";
 			newsHtmlString += "</form></tr>";
 		});
-		$("#news-table").html(newsHtmlString);
+		$("#news-table tbody").html(newsHtmlString);
     }).fail(function(msg) {
         alert("Echec au chargement des news");
     });

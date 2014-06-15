@@ -34,16 +34,8 @@
     <script src="js/infos.js"></script>
     <script src="js/map.js"></script>
     <script src="js/partners.js"></script>
-	<script type="text/javascript" >
-		$(document).ready(function() {
-			getNews();
-			getArtists();
-			getFilters();
-			getInfos();
-			getPartners();
-			getMapItems();
-		});
-	</script>
+	<script src="js/utils.js"></script>
+	<script src="js/main.js"></script>
 </body>
 
 </html>

@@ -11,6 +11,8 @@
     <link href="css/lib/bootstrap-docs.css" rel="stylesheet">
     <link href="css/lib/bootstrap-pygments-manni.css" rel="stylesheet">
     <link href="css/lib/bootstrap-timepicker.css" rel="stylesheet">
+	<link rel="stylesheet" href="css/lib/font-awesome-4.1.0/css/font-awesome.min.css">
+
     <link href="css/lib/jqx.base.css" type="text/css" rel="stylesheet"  />
     <link href="css/lib/jquery.fileupload.css" rel="stylesheet" />
 
