@@ -99,7 +99,7 @@ function getPartners() {
             partnerHtmlString +=  "<input type=\"hidden\" name=\"id\" value=\""+partner.id+"\">";
 			partnerHtmlString += "<td>"+partner.name+"</td>";
 			partnerHtmlString += "<td><img class=\"col-md-9\" src=\" "+partner.picture+" \"/></td>";
-			partnerHtmlString += "<td>"+partner.website+"</td>";
+			partnerHtmlString += "<td><a href='"+partner.website+"' target=blank>"+partner.website+"</a></td>";
 			partnerHtmlString += "<td>";
 			partnerHtmlString += " <div class='btn-group'>";
             partnerHtmlString += "	<button class='btn btn-default modifyPartnerButton'><i class='fa fa-pencil'></i></button>";
