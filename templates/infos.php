@@ -84,7 +84,7 @@
                         </div>
                     </div>
                     <!-- Button to trigger modal -->
-                    <a id="showInfoModalToAdd" data-toggle="modal" href="#addInfoModal" class="btn btn-primary btn-lg">Ajouter une Info</a>
+                    <a id="showInfoModalToAdd" data-toggle="modal" href="#addInfoModal" class="btn btn-primary btn-lg"><i class='fa fa-plus'></i> Ajouter une Info</a>
                     <!-- ADD Modal -->
                     <div class="modal fade" id="addInfoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                         <div class="modal-dialog">

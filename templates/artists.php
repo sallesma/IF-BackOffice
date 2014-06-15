@@ -22,7 +22,7 @@
 					</table>
 
                     <!-- Button to trigger modal -->
-                    <button id="showArtistModalToAdd" class="btn btn-primary btn-lg">Ajouter un artiste</button>
+                    <button id="showArtistModalToAdd" class="btn btn-primary btn-lg"><i class='fa fa-plus'></i> Ajouter un artiste</button>
                     <!-- Modal -->
                     <div class="modal fade" id="artistModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                         <div class="modal-dialog">

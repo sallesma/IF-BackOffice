@@ -23,7 +23,7 @@
 					</table>
 
                     <!-- Button to trigger modal -->
-                    <a id="addMapItemTriggerModal" data-toggle="modal" href="#addMapItemModal" class="btn btn-primary btn-lg">Ajouter un élément</a>
+                    <a id="addMapItemTriggerModal" data-toggle="modal" href="#addMapItemModal" class="btn btn-primary btn-lg"><i class='fa fa-plus'></i> Ajouter un élément</a>
 
                     <!-- ADD Modal -->
                     <div class="modal fade" id="addMapItemModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
