@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 require_once 'Slim/Slim.php';
 require_once 'src/connection.php';
@@ -104,8 +104,7 @@ $app->post('/news', 'checkAuth', function() use ($app) {
     $newsManager = new NewsManager();
     echo $newsManager->add(array(
         'title' => $app->request->post('title'),
-        'content' => $app->request->post('content'),
-        'date' => time()
+        'content' => $app->request->post('content')
     ));
 });
 
