@@ -16,9 +16,8 @@ class PartnersManager extends EntityManager
 
     public function update($id, $params)
     {
-        $connection = Connection::getInstance();
-
         return parent::update(PARTNERS_TABLE, $id, $params, function ($connection, $id, $params) {
+            $connection = Connection::getInstance();
             $sth = $connection->prepare('SELECT picture FROM ' . PARTNERS_TABLE . 'WHERE id = :id');
             $sth->execute(array(
                 'id' => $id
@@ -38,9 +37,8 @@ class PartnersManager extends EntityManager
 
     public function delete($id)
     {
-        $connection = Connection::getInstance();
-
         return parent::delete(PARTNERS_TABLE, $id, function ($connection, $id) {
+            $connection = Connection::getInstance();
             $sth = $connection->prepare('SELECT picture FROM ' . PARTNERS_TABLE . 'WHERE id = :id');
             $sth->execute(array(
                 'id' => $id

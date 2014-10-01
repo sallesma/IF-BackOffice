@@ -22,7 +22,7 @@ $(document).on("click", ".modifyPartnerButton", function() {
 
     $('#editPartnerModal').modal('show');
 
-    var formClass = $(this).parent().parent();
+    var formClass = $(this).parent().parent().parent();
 
     var id = formClass.find('input[name="id"]').val();
     var name = formClass.find('input[name="name"]').val();
@@ -71,7 +71,7 @@ $(document).on('click', '.partnerDeleteButton', function (event) {
 		var $button = $(this);
 		progress($button);
 
-        var id = $(this).parent().parent().find('input[name="id"]').val();
+        var id = $(this).parent().parent().parent().find('input[name="id"]').val();
 
         $.ajax({
             type: "DELETE",

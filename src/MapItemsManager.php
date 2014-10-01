@@ -56,9 +56,8 @@ class MapItemsManager extends EntityManager
 
     public function delete($id)
     {
-        $connection = Connection::getInstance();
-
         return parent::delete(MAP_TABLE, $id, function ($connection, $id) {
+            $connection = Connection::getInstance();
             $sth = $connection->prepare('SELECT infoId FROM ' . MAP_TABLE . ' WHERE id = :id');
             $sth->execute(array(
                 'id' => $id

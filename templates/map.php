@@ -5,7 +5,7 @@
                     <p>Pour ajouter, éditer et supprimer des éléments sur la carte du festival.</p>
                     <p>Ils seront affichées sur la carte dans l'application, avec possibilité de filtrer.</p>
 
-                    <div id="onDeleteMapItemAlert" class="alert alert-danger fade in">
+                    <div id="onDeleteMapItemsAlert" class="alert alert-danger fade in">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                         <h4>L'élément a bien été supprimé !</h4>
                         <p>(C'est trop tard, il n'est plus possible de le récupérer. )</p>
