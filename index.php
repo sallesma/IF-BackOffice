@@ -1,7 +1,7 @@
 <?php
 
 require_once 'Slim/Slim.php';
-require_once 'src/connection.php';
+require_once 'src/Connection.php';
 
 $connection = Connection::getInstance();
 $table_schema = '';
@@ -27,11 +27,7 @@ if (!$parameters || !array_key_exists('website', $parameters) || !array_key_exis
 }
 
 $homeUrl = $parameters['website']['base_url'];
-$authorizedLogins = array(
-    "sallesma",
-    "trossier",
-    "fschildk",
-);
+$authorizedLogins = $parameters['authorizedLogins'];
 
 function checkAuth(){
     if (!isset($_SESSION['loggedUser'])) {

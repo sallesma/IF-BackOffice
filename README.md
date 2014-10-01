@@ -23,19 +23,23 @@ Use base.sql to create your MySQL database with all the tables.
 
 Then you need to create the file src/parameters.ini to set up your database connection :
 
+    authorizedLogins[] = login1
+    authorizedLogins[] = login2
+    authorizedLogins[] = login3
+    ...
+    
     [website]
     base_url = http://localhost/your/base/path
-
+    
     [connection]
     db_driver = mysql
     db_user =
     db_password =
-
+    
     [dsn]
     host =
     dbname =
 
-Last but not least, set up the $homeUrl var with your local basePath in index.php
 
 Your backoffice is now available!
 
