@@ -60,6 +60,7 @@
 
                                         </div>
                                         <input id="newWebsite" type="text" class="form-control" placeholder="Lien web">
+                                        <br />
                                         <input id="newPriority" type="text" class="form-control" placeholder="Priorité">
                                         <br />
                                     </div>
@@ -111,6 +112,7 @@
 
                                         </div>
                                         <input id="website" type="text" class="form-control" placeholder="Lien web">
+                                        <br />
                                         <input id="priority" type="text" class="form-control" placeholder="Priorité">
                                         <br />
                                     </div>

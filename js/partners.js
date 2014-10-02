@@ -33,6 +33,7 @@ $(document).on("click", ".modifyPartnerButton", function() {
 
     $('#editPartnerModal').find('input[id="id"]').val(id);
     $('#editPartnerModal').find('input[id="name"]').val(name);
+    $('#editPartnerModal').find('#part-picture').val(picture);
 
     if (picture) {
         $('#editPartnerModal').find('#edit-photoPartner').html('<a href="#" class="thumbnail"><img src="'+ picture + '" alt="..."></a>');
