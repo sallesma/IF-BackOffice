@@ -279,7 +279,8 @@ $app->post('/partner', 'checkAuth', function() use ($app) {
     echo $partnersManager->add(array(
         'name' => $app->request->post('name'),
         'picture' => $app->request->post('picture'),
-        'website' => $app->request->post('website')
+        'website' => $app->request->post('website'),
+        'priority' => $app->request->post('priority')
     ));
 });
 
@@ -288,7 +289,8 @@ $app->put('/partner/:id', 'checkAuth', function( $id ) use ($app) {
     echo $partnersManager->update($id, array(
         'name' => $app->request->post('name'),
         'picture' => $app->request->post('picture'),
-        'website' => $app->request->post('website')
+        'website' => $app->request->post('website'),
+        'priority' => $app->request->post('priority')
     ));
 });
 

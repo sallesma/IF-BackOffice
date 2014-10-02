@@ -6,7 +6,8 @@ $('#addPartnerButton').click(function() {
         data : {
             name : $("#newName").val(),
             picture : $("#newPicture").val(),
-            website : $("#newWebsite").val()
+            website : $("#newWebsite").val(),
+            priority : $("#newPriority").val()
         }
     }).done(function(msg) {
         $('#addPartnerModal').modal('hide');
@@ -28,6 +29,7 @@ $(document).on("click", ".modifyPartnerButton", function() {
     var name = formClass.find('input[name="name"]').val();
     var picture = formClass.find('input[name="picture"]').val();
     var website = formClass.find('input[name="website"]').val();
+    var priority = formClass.find('input[name="priority"]').val();
 
     $('#editPartnerModal').find('input[id="id"]').val(id);
     $('#editPartnerModal').find('input[id="name"]').val(name);
@@ -39,6 +41,7 @@ $(document).on("click", ".modifyPartnerButton", function() {
     }
 
     $('#editPartnerModal').find('input[id="website"]').val(website);
+    $('#editPartnerModal').find('input[id="priority"]').val(priority);
 });
 
 // Modify an existing partner
@@ -48,6 +51,7 @@ $('#editPartnerButton').click(function() {
     var name =  $('#editPartnerModal').find('input[id="name"]').val();
     var picture = $('#editPartnerModal').find('input[id="part-picture"]').val();
     var website = $('#editPartnerModal').find('input[id="website"]').val();
+    var priority = $('#editPartnerModal').find('input[id="priority"]').val();
 
     $.ajax({
         type : "PUT",
@@ -55,7 +59,8 @@ $('#editPartnerButton').click(function() {
         data : {
             name : name,
             picture: picture,
-            website : website
+            website : website,
+            priority : priority
         }
     }).done(function(msg) {
         $('#editPartnerModal').modal('hide');
@@ -95,11 +100,13 @@ function getPartners() {
 			partnerHtmlString += "<tr><form role='form'>";
 			partnerHtmlString += "<input type=\"hidden\" name=\"name\" value=\""+partner.name+"\">";
 			partnerHtmlString += "<input type=\"hidden\" name=\"website\" value=\""+partner.website+"\">";
+			partnerHtmlString += "<input type=\"hidden\" name=\"priority\" value=\""+partner.priority+"\">";
             partnerHtmlString += "<input type=\"hidden\" name=\"picture\" value=\""+partner.picture+"\">";
             partnerHtmlString +=  "<input type=\"hidden\" name=\"id\" value=\""+partner.id+"\">";
 			partnerHtmlString += "<td>"+partner.name+"</td>";
 			partnerHtmlString += "<td><img class=\"col-md-9\" src=\" "+partner.picture+" \"/></td>";
 			partnerHtmlString += "<td><a href='"+partner.website+"' target=blank>"+partner.website+"</a></td>";
+			partnerHtmlString += "<td>"+partner.priority+"</td>";
 			partnerHtmlString += "<td>";
 			partnerHtmlString += " <div class='btn-group'>";
             partnerHtmlString += "	<button class='btn btn-default modifyPartnerButton'><i class='fa fa-pencil'></i></button>";

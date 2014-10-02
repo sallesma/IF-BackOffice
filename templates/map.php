@@ -11,7 +11,7 @@
                         <p>(C'est trop tard, il n'est plus possible de le récupérer. )</p>
                     </div>
 
-                    <table id="mapItem-table" class="table table-bordered table-stripped table-hover">
+                    <table id="mapItem-table" class="table table-hover">
 						<thead>
 							<th>Label</th>
 							<th>X</th>

@@ -23,10 +23,10 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Structure de la table `artists`
+-- Structure de la table `bo_artists`
 --
 
-CREATE TABLE IF NOT EXISTS `artists` (
+CREATE TABLE IF NOT EXISTS `bo_artists` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `picture` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
@@ -47,22 +47,22 @@ CREATE TABLE IF NOT EXISTS `artists` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `filters`
+-- Structure de la table `bo_filters`
 --
 
-CREATE TABLE IF NOT EXISTS `filters` (
+CREATE TABLE IF NOT EXISTS `bo_filters` (
   `id` tinyint(4) NOT NULL AUTO_INCREMENT,
-  `url` text NOT NULL,
+  `picture` text NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=24 ;
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `infos`
+-- Structure de la table `bo_infos`
 --
 
-CREATE TABLE IF NOT EXISTS `infos` (
+CREATE TABLE IF NOT EXISTS `bo_infos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `picture` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
@@ -76,10 +76,10 @@ CREATE TABLE IF NOT EXISTS `infos` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `news`
+-- Structure de la table `bo_news`
 --
 
-CREATE TABLE IF NOT EXISTS `news` (
+CREATE TABLE IF NOT EXISTS `bo_news` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
   `content` text COLLATE utf8_unicode_ci NOT NULL,
@@ -91,24 +91,25 @@ CREATE TABLE IF NOT EXISTS `news` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `partner`
+-- Structure de la table `bo_partner`
 --
 
-CREATE TABLE IF NOT EXISTS `partner` (
+CREATE TABLE IF NOT EXISTS `bo_partner` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   `picture` varchar(255) NOT NULL,
-  `weblink` varchar(255) NOT NULL,
+  `website` varchar(255) NOT NULL,
+  `priority` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `map`
+-- Structure de la table `bo_map`
 --
 
-CREATE TABLE IF NOT EXISTS `map` (
+CREATE TABLE IF NOT EXISTS `bo_map` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `label` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `x` float NOT NULL,

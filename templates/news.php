@@ -11,7 +11,7 @@
 		<p>(C'est trop tard, il n'est plus possible de la récupérer. )</p>
 	</div>
 
-	<table id="news-table" class="table table-bordered table-stripped table-hover">
+	<table id="news-table" class="table table-hover">
 		<thead>
 			<th style="width: 20%;">Nom</th>
 			<th style="width: 58%;">Description</th>

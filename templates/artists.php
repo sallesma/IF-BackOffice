@@ -9,7 +9,7 @@
                         <h4>L'artiste a bien été supprimé !</h4>
                         <p>(C'est trop tard, il n'est plus possible de le récupérer. )</p>
                     </div>
-                    <table id="artists-table" class="table table-bordered table-stripped table-hover">
+                    <table id="artists-table" class="table table-hover">
 						<thead>
 							<th>Nom</th>
 							<th>Genre</th>

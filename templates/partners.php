@@ -3,7 +3,7 @@
                         <h1 id="partners">Partenaires</h1>
                     </div>
                     <p>Pour ajouter, éditer et supprimer les partenaires du festival.</p>
-                    <p>Elles seront affichées dans l'ordre décroissant (la plus récente en premier) dans l'application.</p>
+                    <p>Ils seront affichés par priorité décroissante : la plus grande priorité en premier dans l'application.</p>
 
                     <div id="onDeletePartnersAlert" class="alert alert-danger fade in">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -11,12 +11,13 @@
                         <p>(C'est trop tard, il n'est plus possible de le récupérer. )</p>
                     </div>
 
-                    <table id="partners-table" class="table table-bordered table-stripped table-hover">
+                    <table id="partners-table" class="table table-hover">
 						<thead>
 							<th style="width: 20%">Nom</th>
-							<th style="width: 20%">Image</th>
+							<th style="width: 15%">Image</th>
 							<th style="width: 40%">Lien</th>
-							<th style="width: 20%">Actions</th>
+							<th style="width: 10%">Priorité</th>
+							<th style="width: 15%">Actions</th>
 						</thead>
 						<tbody></tbody>
 					</table>
@@ -59,6 +60,7 @@
 
                                         </div>
                                         <input id="newWebsite" type="text" class="form-control" placeholder="Lien web">
+                                        <input id="newPriority" type="text" class="form-control" placeholder="Priorité">
                                         <br />
                                     </div>
                                     <div class="modal-footer">
@@ -109,6 +111,7 @@
 
                                         </div>
                                         <input id="website" type="text" class="form-control" placeholder="Lien web">
+                                        <input id="priority" type="text" class="form-control" placeholder="Priorité">
                                         <br />
                                     </div>
                                     <div class="modal-footer">
