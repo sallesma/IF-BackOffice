@@ -54,7 +54,7 @@ $(function () {
 // Open artist modal with a specific artist
 $(document).on('click', '.showArtistButton', function (event) {
     var target = $(event.currentTarget);
-    var id = target.parent().find('input[name="id"]');
+    var id = target.parent().parent().find('input[name="id"]');
 
     $.ajax({
         type: "GET",
@@ -73,7 +73,7 @@ $(document).on('click', '.artistDeleteButton', function (event) {
 		var $button = $(this);
 		progress($button);
 
-        var id = $(event.currentTarget).parent().find('input[name="id"]');
+        var id = $(event.currentTarget).parent().parent().find('input[name="id"]');
 
         $.ajax({
             type: "DELETE",
@@ -163,8 +163,8 @@ function getArtists() {
 			artistsHtmlString += "<td>" + artist.day + "</td>";
 			artistsHtmlString += "<td>" + artist.beginHour + "</td>";
 			artistsHtmlString += "<td>";
-			artistsHtmlString += "	<div class='btn-group'>";
             artistsHtmlString += "	<input type='hidden' value='" + artist.id + "' name='id'/>";
+			artistsHtmlString += "	<div class='btn-group'>";
             artistsHtmlString += "	<button class='btn btn-default showArtistButton'><i class='fa fa-pencil'></i></button>";
             artistsHtmlString += "	<button class='artistDeleteButton btn btn-default'><i class='fa fa-times'></i></button>";
 			artistsHtmlString += "	</div>";
