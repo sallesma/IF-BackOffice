@@ -46,10 +46,10 @@ function getInfos() {
                 infoForm.find('#info-content').val(msg.content);
 
 				//displayed on map ?
-				if (msg.isDisplayedOnMap == "1") {
-                    infoForm.find("#info-map").html("Oui");
-                } else {
+				if (msg.isDisplayedOnMap == "0") {
                     infoForm.find("#info-map").html("Non");
+                } else {
+                    infoForm.find("#info-map").html("Oui");
                 }
 
                 //parent

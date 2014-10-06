@@ -47,7 +47,24 @@ class InfosManager extends EntityManager
 
     public function find($id)
     {
-        return json_encode(parent::find(INFOS_TABLE, $id));
+        $connection = Connection::getInstance();
+        $sth = $connection->prepare('SELECT
+infos.`id`,
+infos.`name`,
+infos.`picture`,
+infos.`isCategory`,
+infos.`content`,
+infos.`parent`,
+infos.`year`,
+(Select count(*) from ' . MAP_TABLE . ' map where map.`infoId` = infos.`id`) as `isDisplayedOnMap`
+FROM ' . INFOS_TABLE . ' infos WHERE infos.id = :id');
+        $sth->execute(array(
+            'id' => $id
+        ));
+        
+        $result = $sth->fetch();
+        
+        return json_encode($result);
     }
 
     public function add($params)
