@@ -1,5 +1,10 @@
 //Clicks on addmodal map determine mapItem coordinates
 $(document).on("click", "#add-map", function(e) {
+    if(typeof e.offsetX === "undefined" || typeof e.offsetY === "undefined") {
+        var targetOffset = $(e.target).offset();
+        e.offsetX = e.pageX - targetOffset.left;
+        e.offsetY = e.pageY - targetOffset.top;
+    }
 	x_1000 = ( e.offsetX * 1000 ) / e.target.width;
 	y_1000 = ( e.offsetY * 1000 ) / e.target.height;
 	alert(x_1000 +", "+y_1000);
@@ -57,6 +62,11 @@ $(document).on("click", ".modifyMapItemButton", function() {
     $('#editMapItemModal').find('input[id="y"]').val(y);
 
 	$(document).on("click", "#edit-map", function(e) {
+	    if(typeof e.offsetX === "undefined" || typeof e.offsetY === "undefined") {
+            var targetOffset = $(e.target).offset();
+            e.offsetX = e.pageX - targetOffset.left;
+            e.offsetY = e.pageY - targetOffset.top;
+        }
 		x_1000 = ( e.offsetX * 1000 ) / e.target.width;
 		y_1000 = ( e.offsetY * 1000 ) / e.target.height;
 		$('#editMapItemModal').find('input[id="x"]').val(x_1000);
