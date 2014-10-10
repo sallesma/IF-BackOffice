@@ -43,6 +43,21 @@ Then you need to create the file src/parameters.ini to set up your database conn
 
 Your backoffice is now available!
 
+## Testing
+
+We have no unit tests because we have very few logic in our code. We only use casperjs to run functional tests on the application.
+
+The documentation is waiting for you there : http://casperjs.org/
+
+You need to input three parameters when you run a test : backoffice url, login and password.
+
+Run the authentication test:
+
+    casperjs test test/authentication.js --url="yoururl" --login="yourlogin" --password="yourpassword"
+Run all the tests in the test/ folder:
+
+    casperjs test test/ --url="yoururl" --login="yourlogin" --password="yourpassword"
+
 ## Contribution
 
 If you have any good ideas about a better interface, contact us :)
