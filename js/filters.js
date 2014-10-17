@@ -37,7 +37,7 @@ $(function () {
 });
 
 $(document).on('click', '.filterDeleteButton', function (event) {
-    if (confirm('Es-tu sûr de vouloir supprimer ça ? C\'est définitif hein...') ) {
+    if (confirm('Es-tu sûr de vouloir supprimer ce filtre photo ?\n\nC\'est définitif hein...') ) {
 		var $button = $(this);
 		progress($button);
 

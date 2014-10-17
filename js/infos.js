@@ -101,7 +101,8 @@ $('#infosEditButton').click(function() {
 });
 
 $('#infosDeleteButton').click(function() {
-    if (confirm('Si l\'info est liée à un point de la carte, il sera supprimé aussi. Es-tu sûr de vouloir supprimer ça ? C\'est définitif hein...') ) {
+    var name = $('#infos-edit-form').find('#info-name').val();
+    if (confirm('Info : ' + name + '\n\nSi l\'info est liée à un point de la carte, il sera supprimé aussi. Es-tu sûr de vouloir la supprimer ?\n\nC\'est définitif hein...') ) {
 		var $button = $(this);
 		progress($button, " Supprimer");
 

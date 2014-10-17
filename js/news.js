@@ -56,7 +56,9 @@ $('#editNewButton').click(function() {
 });
 
 $(document).on('click', '.newsDeleteButton', function (event) {
-    if (confirm('Es-tu sûr de vouloir supprimer ça ? C\'est définitif hein...') ) {
+    var name = $(this).parent().parent().parent().find('input[name="title"]').val();
+    var content = $(this).parent().parent().parent().find('input[name="content"]').val();
+    if (confirm('Titre : ' + name + '\nContenu : ' + content.substring(0, 20) + '\n\nEs-tu sûr de vouloir supprimer cette news ?\n\n C\'est définitif hein...') ) {
 		var $button = $(this);
 		progress($button);
 

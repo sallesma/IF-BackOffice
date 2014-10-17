@@ -9,7 +9,7 @@
                     <div id="onDeleteInfoAlert" class="alert alert-danger fade in">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                         <h4>L'info/Catégorie a bien été supprimée !</h4>
-                        <p>(Les champs sont laissés plein au cas où tu voudrais copier/coller tout ça pour la recréer ;) )</p>
+                        <p>(C'est trop tard, il n'est plus possible de le récupérer. )</p>
                     </div>
                     <div id="infos-div" class="row">
                         <div id="infos-tree" class="col-md-3"></div>

@@ -73,7 +73,8 @@ $('#editPartnerButton').click(function() {
 });
 
 $(document).on('click', '.partnerDeleteButton', function (event) {
-    if (confirm('Es-tu sûr de vouloir supprimer ça ? C\'est définitif hein...') ) {
+    var name = $(this).parent().parent().parent().find('input[name="name"]').val();
+    if (confirm('Partenaire : ' + name + '\n\nEs-tu sûr de vouloir supprimer ce partenaire ?\n\nC\'est définitif hein...') ) {
 		var $button = $(this);
 		progress($button);
 

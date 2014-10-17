@@ -115,7 +115,8 @@ $('#editMapItemButton').click(function() {
 });
 
 $(document).on('click', '.mapItemDeleteButton', function (event) {
-    if (confirm('Es-tu sûr de vouloir supprimer ça ? C\'est définitif hein...') ) {
+    var name = $(this).parent().parent().parent().find('input[name="label"]').val();
+    if (confirm('Point : ' + name + '\n\nEs-tu sûr de vouloir supprimer ce point ?\n\nC\'est définitif hein...') ) {
 		var $button = $(this);
 		progress($button);
 

@@ -69,7 +69,8 @@ $(document).on('click', '.showArtistButton', function (event) {
 });
 
 $(document).on('click', '.artistDeleteButton', function (event) {
-	if (confirm('Es-tu sûr de vouloir supprimer ça ? C\'est définitif hein...') ) {
+    var name = $(event.currentTarget).parent().parent().parent().find('td:first-child').html();
+	if (confirm('Artiste : ' + name + '\n\nEs-tu sûr de vouloir supprimer cet artiste ?\n\nC\'est définitif hein...') ) {
 		var $button = $(this);
 		progress($button);
 
