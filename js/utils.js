@@ -18,3 +18,11 @@ function edit (button, text) {
 	button.removeAttr("disabled");
 	button.html("<i class='fa fa-pencil'></i>" + text);
 }
+
+function disable (buttons) {
+	buttons.attr('disabled', 'disabled');
+}
+
+function enable (buttons) {
+	buttons.removeAttr("disabled");
+}

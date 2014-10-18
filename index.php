@@ -72,6 +72,7 @@ $app->get('/logout', function() use ($app) {
 })->name('logout');
 
 $app->get('/home', 'checkAuth', function() use ($app) {
+    $_SESSION['currentYear'] = date("Y");
     $app->render('header.php');
     $app->render('news.php');
     $app->render('artists.php');
@@ -89,15 +90,43 @@ $app->get('/api/:table(/:lastRetrieve)', function( $table, $lastRetrieve = null)
 });
 
 //
+// Years
+//
+$app->get('/year', 'checkAuth', function() use ($app) {
+    $newsManager = new NewsManager();
+    $artistsManager = new ArtistsManager();
+    $filtersManager = new FiltersManager();
+    $infosManager = new InfosManager();
+    $mapItemManager = new MapItemsManager();
+    $partnersManager = new PartnersManager();
+    
+    $years = array_unique(
+        array_merge($newsManager->getYears(),
+            $artistsManager->getYears(),
+            $filtersManager->getYears(),
+            $infosManager->getYears(),
+            $mapItemManager->getYears(),
+            $partnersManager->getYears()
+        )
+    );
+    echo json_encode($years);
+});
+
+$app->put('/year', 'checkAuth', function() use ($app) {
+    $_SESSION['currentYear'] = $app->request->post('year');
+    echo $_SESSION['currentYear'];
+});
+
+//
 // News
 //
 $app->get('/news', 'checkAuth', function() use ($app) {
-    $newsManager = new NewsManager();
+    $newsManager = new NewsManager($_SESSION['currentYear']);
     echo $newsManager->listAll();
 });
 
 $app->post('/news', 'checkAuth', function() use ($app) {
-    $newsManager = new NewsManager();
+    $newsManager = new NewsManager($_SESSION['currentYear']);
     echo $newsManager->add(array(
         'title' => $app->request->post('title'),
         'content' => $app->request->post('content')
@@ -105,7 +134,7 @@ $app->post('/news', 'checkAuth', function() use ($app) {
 });
 
 $app->put('/news/:id', 'checkAuth', function( $id ) use ($app) {
-    $newsManager = new NewsManager();
+    $newsManager = new NewsManager($_SESSION['currentYear']);
     echo $newsManager->update($id, array(
         'title' => $app->request->post('title'),
         'content' => $app->request->post('content')
@@ -113,7 +142,7 @@ $app->put('/news/:id', 'checkAuth', function( $id ) use ($app) {
 });
 
 $app->delete('/news/:id', 'checkAuth', function( $id ) use ($app) {
-    $newsManager = new NewsManager();
+    $newsManager = new NewsManager($_SESSION['currentYear']);
     echo $newsManager->delete($id);
 });
 
@@ -121,12 +150,12 @@ $app->delete('/news/:id', 'checkAuth', function( $id ) use ($app) {
 // Artists
 //
 $app->get('/artist', 'checkAuth', function() use ($app) {
-    $artistManager = new ArtistsManager();
+    $artistManager = new ArtistsManager($_SESSION['currentYear']);
     echo $artistManager->listAll();
 });
 
 $app->post('/artist', 'checkAuth', function() use ($app) {
-    $artistManager = new ArtistsManager();
+    $artistManager = new ArtistsManager($_SESSION['currentYear']);
 
     echo $artistManager->add(array(
         'name' => $app->request->post('name'),
@@ -145,12 +174,12 @@ $app->post('/artist', 'checkAuth', function() use ($app) {
 });
 
 $app->get('/artist/:id', 'checkAuth', function( $id ) use ($app) {
-    $artistManager = new ArtistsManager();
+    $artistManager = new ArtistsManager($_SESSION['currentYear']);
     echo $artistManager->find($id);
 });
 
 $app->put('/artist/:id', 'checkAuth', function( $id ) use ($app) {
-    $artistManager = new ArtistsManager();
+    $artistManager = new ArtistsManager($_SESSION['currentYear']);
 
     echo $artistManager->update($id, array(
         'name' => $app->request->post('name'),
@@ -169,7 +198,7 @@ $app->put('/artist/:id', 'checkAuth', function( $id ) use ($app) {
 });
 
 $app->delete('/artist/:id', 'checkAuth', function( $id ) use ($app) {
-    $artistsManager = new ArtistsManager();
+    $artistsManager = new ArtistsManager($_SESSION['currentYear']);
     echo $artistsManager->delete($id);
 });
 
@@ -177,19 +206,19 @@ $app->delete('/artist/:id', 'checkAuth', function( $id ) use ($app) {
 // Filters
 //
 $app->get('/filter', 'checkAuth', function() use ($app) {
-    $filtersManager = new FiltersManager();
+    $filtersManager = new FiltersManager($_SESSION['currentYear']);
     echo $filtersManager->listAll();
 });
 
 $app->post('/filter', 'checkAuth', function() use ($app) {
-    $filtersManager = new FiltersManager();
+    $filtersManager = new FiltersManager($_SESSION['currentYear']);
     echo $filtersManager->add(array(
         'picture' => $app->request->post('url')
     ));
 });
 
 $app->delete('/filter/:id', 'checkAuth', function( $id ) use ($app) {
-    $filtersManager = new FiltersManager();
+    $filtersManager = new FiltersManager($_SESSION['currentYear']);
     echo $filtersManager->delete($id);
 });
 
@@ -197,12 +226,12 @@ $app->delete('/filter/:id', 'checkAuth', function( $id ) use ($app) {
 // Infos
 //
 $app->get('/info', 'checkAuth', function() use ($app) {
-    $infosManager = new InfosManager();
+    $infosManager = new InfosManager($_SESSION['currentYear']);
     echo $infosManager->listAll();
 });
 
 $app->post('/info', 'checkAuth', function() use ($app) {
-    $infosManager = new InfosManager();
+    $infosManager = new InfosManager($_SESSION['currentYear']);
     echo $infosManager->add(array(
         'name' => $app->request->post('name'),
         'picture' => $app->request->post('picture'),
@@ -213,12 +242,12 @@ $app->post('/info', 'checkAuth', function() use ($app) {
 });
 
 $app->get('/info/:id', 'checkAuth', function( $id ) use ($app) {
-    $infosManager = new InfosManager();
+    $infosManager = new InfosManager($_SESSION['currentYear']);
     echo $infosManager->find($id);
 });
 
 $app->put('/info/:id', 'checkAuth', function( $id ) use ($app) {
-    $infosManager = new InfosManager();
+    $infosManager = new InfosManager($_SESSION['currentYear']);
     echo $infosManager->update($id, array(
         'name' => $app->request->post('name'),
         'picture' => $app->request->post('picture'),
@@ -229,7 +258,7 @@ $app->put('/info/:id', 'checkAuth', function( $id ) use ($app) {
 });
 
 $app->delete('/info/:id', 'checkAuth', function( $id ) use ($app) {
-    $infosManager = new InfosManager();
+    $infosManager = new InfosManager($_SESSION['currentYear']);
     echo $infosManager->delete($id);
 });
 
@@ -237,12 +266,12 @@ $app->delete('/info/:id', 'checkAuth', function( $id ) use ($app) {
 // Map
 //
 $app->get('/mapItem', 'checkAuth', function() use ($app) {
-    $mapItemManager = new MapItemsManager();
+    $mapItemManager = new MapItemsManager($_SESSION['currentYear']);
     echo $mapItemManager->listAll();
 });
 
 $app->post('/mapItem', 'checkAuth', function() use ($app) {
-    $mapItemManager = new MapItemsManager();
+    $mapItemManager = new MapItemsManager($_SESSION['currentYear']);
     echo $mapItemManager->add(array(
         'label' => $app->request->post('label'),
         'x' => $app->request->post('x'),
@@ -252,7 +281,7 @@ $app->post('/mapItem', 'checkAuth', function() use ($app) {
 });
 
 $app->put('/mapItem/:id', 'checkAuth', function( $id ) use ($app) {
-    $mapItemManager = new MapItemsManager();
+    $mapItemManager = new MapItemsManager($_SESSION['currentYear']);
     echo $mapItemManager->update($id, array(
         'label' => $app->request->post('label'),
         'x' => $app->request->post('x'),
@@ -262,7 +291,7 @@ $app->put('/mapItem/:id', 'checkAuth', function( $id ) use ($app) {
 });
 
 $app->delete('/mapItem/:id', 'checkAuth', function( $id ) use ($app) {
-    $mapItemManager = new MapItemsManager();
+    $mapItemManager = new MapItemsManager($_SESSION['currentYear']);
     echo $mapItemManager->delete($id);
 });
 
@@ -270,12 +299,12 @@ $app->delete('/mapItem/:id', 'checkAuth', function( $id ) use ($app) {
 // Partners
 //
 $app->get('/partner', 'checkAuth', function() use ($app) {
-    $partnersManager = new PartnersManager();
+    $partnersManager = new PartnersManager($_SESSION['currentYear']);
     echo $partnersManager->listAll();
 });
 
 $app->post('/partner', 'checkAuth', function() use ($app) {
-    $partnersManager = new PartnersManager();
+    $partnersManager = new PartnersManager($_SESSION['currentYear']);
     echo $partnersManager->add(array(
         'name' => $app->request->post('name'),
         'picture' => $app->request->post('picture'),
@@ -285,7 +314,7 @@ $app->post('/partner', 'checkAuth', function() use ($app) {
 });
 
 $app->put('/partner/:id', 'checkAuth', function( $id ) use ($app) {
-    $partnersManager = new PartnersManager();
+    $partnersManager = new PartnersManager($_SESSION['currentYear']);
     echo $partnersManager->update($id, array(
         'name' => $app->request->post('name'),
         'picture' => $app->request->post('picture'),
@@ -295,7 +324,7 @@ $app->put('/partner/:id', 'checkAuth', function( $id ) use ($app) {
 });
 
 $app->delete('/partner/:id', 'checkAuth', function( $id ) use ($app) {
-    $partnersManager = new PartnersManager();
+    $partnersManager = new PartnersManager($_SESSION['currentYear']);
     echo $partnersManager->delete($id);
 });
 

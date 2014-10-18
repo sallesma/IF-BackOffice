@@ -44,6 +44,11 @@ class InfosManager extends EntityManager
 
         return json_encode($tree);
     }
+    
+    public function getYears()
+    {
+        return parent::getColumnValues(INFOS_TABLE, 'year');
+    }
 
     public function find($id)
     {

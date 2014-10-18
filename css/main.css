@@ -6,6 +6,15 @@
     margin-top:90px;
 }
 
+.year-menu {
+    padding: 5px 20px;
+}
+
+#year-message {
+    padding-top: 10px;
+    padding-left: 10px;
+}
+
 #infos-div {
     margin-bottom: 20px;
 	border:1px solid #C7C7C7;

@@ -2,6 +2,16 @@
 
 class EntityManager
 {
+    /*
+     * The year of the data the class will manipulate
+     */
+    var $currentYear;
+    
+    function EntityManager($currentYear)
+    {
+        $this->currentYear = $currentYear ?: date("Y");
+    }
+    
     /**
      * Get an array of Entities from database
      *
@@ -18,12 +28,30 @@ class EntityManager
             $fields = '*';
         }
 
-        $sth = $connection->prepare('SELECT ' . $fields . ' FROM ' . $table . ' ORDER BY ' . $order);
+        $sth = $connection->prepare('SELECT ' . $fields . ' FROM ' . $table . ' WHERE year = ' . $this->currentYear . ' ORDER BY ' . $order);
         $sth->execute();
 
-        foreach ($sth->fetchAll() as $artist) {
-            $result[] = $artist;
+        foreach ($sth->fetchAll() as $element) {
+            $result[] = $element;
         }
+
+        return $result;
+    }
+    
+    /**
+     * Get an array of values a given column in the database
+     *
+     * @return array
+     */
+    public function getColumnValues($table, $field)
+    {
+        $result = array();
+        $connection = Connection::getInstance();
+
+        $sth = $connection->prepare('SELECT ' . $field . ' FROM ' . $table . ' GROUP BY ' . $field);
+        $sth->execute();
+
+        $result = $sth->fetchAll(PDO::FETCH_COLUMN, 0);
 
         return $result;
     }

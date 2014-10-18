@@ -8,6 +8,11 @@ class MapItemsManager extends EntityManager
     {
         return json_encode(parent::listAll(MAP_TABLE, array('id', 'label', 'x', 'y', 'infoId'), 'label'));
     }
+    
+    public function getYears()
+    {
+        return parent::getColumnValues(MAP_TABLE, 'year');
+    }
 
     public function add($params)
     {

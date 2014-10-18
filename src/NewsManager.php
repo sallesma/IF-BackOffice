@@ -8,6 +8,11 @@ class NewsManager extends EntityManager
     {
         return json_encode(parent::listAll(NEWS_TABLE, array('id', 'title', 'content', 'date'), 'date DESC'));
     }
+    
+    public function getYears()
+    {
+        return parent::getColumnValues(NEWS_TABLE, 'year');
+    }
 
     public function add($params)
     {

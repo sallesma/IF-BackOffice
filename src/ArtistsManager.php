@@ -8,6 +8,11 @@ class ArtistsManager extends EntityManager
     {
         return json_encode(parent::listAll(ARTISTS_TABLE, array('id', ' name', ' style', ' day', ' stage', ' beginHour'), 'name'));
     }
+    
+    public function getYears()
+    {
+        return parent::getColumnValues(ARTISTS_TABLE, 'year');
+    }
 
     public function add($params)
     {

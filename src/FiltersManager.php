@@ -8,6 +8,11 @@ class FiltersManager extends EntityManager
     {
         return json_encode(parent::listAll(FILTERS_TABLE, array('id', 'picture')));
     }
+    
+    public function getYears()
+    {
+        return parent::getColumnValues(FILTERS_TABLE, 'year');
+    }
 
     public function add($params)
     {

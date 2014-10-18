@@ -100,6 +100,14 @@
                             </ul>
                         </li>
 						<hr>
+						<li class="year-menu">
+						    <p>Prochaine édition : <span id="current-year"><span></p>
+				            <div class="form-group">
+				                <label for="year-select">Changer l'année affichée</label>
+				                <select id="year-select" class="form-control"></select>
+				                <p id="year-message" class="text-danger"><p>
+					        </div>
+						</li>
 						<li>
 							<a href="logout">
 								<button type="button" class="btn btn-danger">Déconnexion</button>

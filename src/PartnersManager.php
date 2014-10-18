@@ -8,6 +8,11 @@ class PartnersManager extends EntityManager
     {
         return json_encode(parent::listAll(PARTNERS_TABLE, array('id', 'name', 'picture', 'website', 'priority'), 'priority DESC, name'));
     }
+    
+    public function getYears()
+    {
+        return parent::getColumnValues(PARTNERS_TABLE, 'year');
+    }
 
     public function add($params)
     {

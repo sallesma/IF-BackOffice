@@ -85,7 +85,8 @@ class APIManager
                     $content = 'Pas de nouvelles mises à jour disponible pour la table ' . $table;
                     $status = 304;
                 } else {
-                    $sth = $connection->prepare('SELECT * FROM ' . $table);
+                    $currentYear = date("Y");
+                    $sth = $connection->prepare('SELECT * FROM ' . $table . ' WHERE year = '. $currentYear);
                     $sth->execute();
 
                     if ($sth->rowCount() > 0) {
@@ -100,7 +101,6 @@ class APIManager
                 $status = 500;
             }
         }
-
         $this->generateResponse($content, $status);
     }
 
