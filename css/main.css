@@ -11,8 +11,10 @@
 }
 
 #year-message {
+	display: none;
     padding-top: 10px;
     padding-left: 10px;
+    font-weight: bold;
 }
 
 #infos-div {

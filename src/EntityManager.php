@@ -83,6 +83,8 @@ class EntityManager
      */
     public function add($table, $params, $closure = null)
     {
+        $params["year"] = $this->currentYear;
+        
         $preparedParams = array_keys($params);
 
         foreach ($preparedParams as &$param) {

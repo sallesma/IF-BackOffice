@@ -101,11 +101,14 @@
                         </li>
 						<hr>
 						<li class="year-menu">
-						    <p>Prochaine édition : <span id="current-year"><span></p>
+						    <p>Édition de cette année : <span id="current-year"><span></p>
 				            <div class="form-group">
 				                <label for="year-select">Changer l'année affichée</label>
 				                <select id="year-select" class="form-control"></select>
-				                <p id="year-message" class="text-danger"><p>
+				                <p id="year-message" class="text-danger">
+				                    <i class="fa fa-warning"></i>
+				                    Le backoffice est en lecture seule car l'année sélectionnée n'est pas l'année courante
+				                </p>
 					        </div>
 						</li>
 						<li>
