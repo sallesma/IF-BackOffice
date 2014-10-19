@@ -40,10 +40,19 @@ function manageReadOnly(selectedYear) {
     if (selectedYear == currentYear) {
         $('#year-message').html('');
         enable($(affectedElements));
+        $('div#main-content').css('cursor', 'default');
+        $('div#main-content').off('click');
     }
     else {
         $('#year-message').html('<i class="fa fa-warning"></i> Le backoffice est en lecture seule car l\'année sélectionnée n\'est pas celle de la prochaine édition du festival');
         disable($(affectedElements));
+        $('div#main-content').css('cursor', 'not-allowed');
+        $('div#main-content').on('click', function( event ) {
+            disable($(affectedElements));
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            $('#year-message').fadeOut( "50" ).fadeIn("50");
+        });
     }
 }
 
