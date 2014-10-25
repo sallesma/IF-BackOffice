@@ -4,20 +4,20 @@ casper.test.begin('Testing backoffice authentication', 5, function suite(test) {
    
    casper.then(function() {
       test.assertEquals(this.getCurrentUrl(), 'https://cas.utc.fr/cas/login?service=' + url, "Redirection to CAS because not logged in");
-      this.fillSelectors("form#fm1", {
+      this.fillSelectors("form#credentials", {
 	 'input[name="username"]': 'wronglogin',
 	 'input[name="password"]': 'wrongpassword'
       }, false);
-      this.click('input.btn-submit[name="submit_btn"]');
+      this.click('button.SubmitBtn[name="Submit1"]');
       var regexp_url = new RegExp("https://cas.utc.fr/cas/login.*?service=" + url);
       this.waitForUrl(regexp_url, function() {
          test.pass("Stays on CAS because bad credentials");
 
-	 this.fillSelectors("form#fm1", {
+	 this.fillSelectors("form#credentials", {
 	    'input[name="username"]': casper.cli.get("login"),
 	    'input[name="password"]': casper.cli.get("password")
          }, false);
-	 this.click('input.btn-submit[name="submit_btn"]');
+	 this.click('button.SubmitBtn[name="Submit1"]');
          this.waitForUrl(url, function() {
 	    test.pass("Redirection to backoffice after login");
 	    this.click('a[href="logout"]');

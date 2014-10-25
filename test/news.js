@@ -8,11 +8,11 @@ casper.test.begin('Testing news manipulation', 9, function suite(test) {
 
    casper.then(function() {
       test.info('Logging in');
-      this.fillSelectors('form#fm1', {
+      this.fillSelectors('form#credentials', {
 	 'input[name="username"]': username,
 	 'input[name="password"]': password
       }, false);
-      this.click('input.btn-submit[name="submit_btn"]');
+      this.click('button.SubmitBtn[name="Submit1"]');
       this.waitForUrl(url, function(){
 	 test.pass('Logged in');
       }, function () {
@@ -35,7 +35,7 @@ casper.test.begin('Testing news manipulation', 9, function suite(test) {
 	    'div#addNewModal form textarea#newContent': 'testtesttest'
 	 }, false);
 	 this.click('button#addNewButton');
-	 this.wait(500, function() {
+	 this.wait(3000, function() {
 	    test.assertSelectorHasText('table#news-table tbody tr:first-child td#title', 'test', 'New title is ok');
 	    test.assertSelectorHasText('table#news-table tbody tr:first-child td#content', 'testtesttest', 'New content is ok');
 	 }, function() {
@@ -79,7 +79,7 @@ casper.test.begin('Testing news manipulation', 9, function suite(test) {
       }, function() {
 	 test.fail('News delete alert did not show up');
       });
-      this.wait(500, function() {
+      this.wait(3000, function() {
          var newCount = this.evaluate(function() {
             return __utils__.findAll('table#news-table tbody tr').length;
          });
