@@ -24,9 +24,9 @@ class PartnersManager extends EntityManager
     {
         return parent::update(PARTNERS_TABLE, $id, $params, function ($connection, $id, $params) {
             $connection = Connection::getInstance();
-            $sth = $connection->prepare('SELECT picture FROM ' . PARTNERS_TABLE . 'WHERE id = :id');
+            $sth = $connection->prepare('SELECT picture FROM ' . PARTNERS_TABLE . ' WHERE id = :id');
             $sth->execute(array(
-                'id' => $id
+                ':id' => $id
             ));
 
             if ($partner = $sth->fetch()) {
@@ -43,15 +43,16 @@ class PartnersManager extends EntityManager
 
     public function delete($id)
     {
-        return parent::delete(PARTNERS_TABLE, $id, function ($connection, $id) {
-            $connection = Connection::getInstance();
-            $sth = $connection->prepare('SELECT picture FROM ' . PARTNERS_TABLE . 'WHERE id = :id');
+        $connection = Connection::getInstance();
+        
+        return parent::delete(PARTNERS_TABLE, $id, function () use ($connection, $id) {
+            $sth = $connection->prepare('SELECT picture FROM ' . PARTNERS_TABLE . ' WHERE id = :id');
             $sth->execute(array(
-                'id' => $id
+                ':id' => $id
             ));
 
-            if ($partner = $sth->fetch()) {
-                // Delete partner picture
+            if ($partner = $sth->fetch(PDO::FETCH_ASSOC)) {
+                // Delete filter picture
                 if (!empty($partner['picture'])) {
                     $picturePath = substr($partner['picture'], strpos($partner['picture'], '/src'));
                     if (!@unlink(getcwd() . $picturePath)) {

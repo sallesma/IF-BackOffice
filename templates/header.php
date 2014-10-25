@@ -95,7 +95,7 @@
                                     <a href="#partners">Liste des partenaires</a>
                                 </li>
                                 <li>
-                                    <a href="#addPartnerTriggerModal">Ajouter un partenaire</a>
+                                    <a href="#addPartnersTriggerModal">Ajouter un partenaire</a>
                                 </li>
                             </ul>
                         </li>
