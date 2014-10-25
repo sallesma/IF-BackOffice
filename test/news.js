@@ -1,5 +1,3 @@
-phantom.injectJs('./global.js');
-
 casper.test.begin('Testing news manipulation', 9, function suite(test) {
    var url = casper.cli.get('url');
    var username = casper.cli.get('login');
@@ -8,15 +6,17 @@ casper.test.begin('Testing news manipulation', 9, function suite(test) {
 
    casper.then(function() {
       test.info('Logging in');
-      this.fillSelectors('form#credentials', {
-	 'input[name="username"]': username,
-	 'input[name="password"]': password
-      }, false);
-      this.click('button.SubmitBtn[name="Submit1"]');
+      if(this.exists('form#credentials')) {
+         this.fillSelectors('form#credentials', {
+            'input[name="username"]': username,
+            'input[name="password"]': password
+         }, false);
+         this.click('button.SubmitBtn[name="Submit1"]');
+      }
       this.waitForUrl(url, function(){
 	 test.pass('Logged in');
       }, function () {
-	 test.fail('Could not log in the backoffice');
+	 test.fail('Did not log in the backoffice');
       });
    });
   
