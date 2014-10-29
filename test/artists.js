@@ -1,7 +1,7 @@
 var fs = require('fs');
 var emptyfilesize = 514;
 
-casper.test.begin('Testing artists manipulation', 15, function suite(test) {
+casper.test.begin('Testing artists manipulation', 16, function suite(test) {
    var url = casper.cli.get('url');
    var username = casper.cli.get('login');
    var password = casper.cli.get('password');
@@ -31,6 +31,9 @@ casper.test.begin('Testing artists manipulation', 15, function suite(test) {
 
    casper.then(function() {
       test.info('Testing artists add');
+      var count = this.evaluate(function() {
+	 return __utils__.findAll('table#artists-table tbody tr').length;
+      });
       this.click('#showArtistModalToAdd');
       this.waitUntilVisible('div#artistModal', function() {
 	 this.fill('div#artistModal form#artist-add-form', {
@@ -57,7 +60,10 @@ casper.test.begin('Testing artists manipulation', 15, function suite(test) {
 	       test.assertSelectorHasText('table#artists-table tbody tr:first-child td:nth-of-type(3)', 'principale', 'New stage is ok');
 	       test.assertSelectorHasText('table#artists-table tbody tr:first-child td:nth-of-type(4)', 'vendredi', 'New day is ok');
 	       test.assertSelectorHasText('table#artists-table tbody tr:first-child td:nth-of-type(5)', '01:00', 'New hour is ok');
-
+               var newCount = this.evaluate(function() {
+                  return __utils__.findAll('table#artists-table tbody tr').length;
+               });
+	       test.assertEquals(newCount, count + 1, 'One artist has been added');
 	       this.download(url + '/src/fileUpload/artists/image.png', 'uploaded.png');
 	       test.assertNotEquals(fs.size('uploaded.png'), emptyfilesize, 'Artist picture was uploaded');
 	       fs.remove('uploaded.png');
@@ -87,7 +93,7 @@ casper.test.begin('Testing artists manipulation', 15, function suite(test) {
          var newCount = this.evaluate(function() {
             return __utils__.findAll('table#artists-table tbody tr').length;
          });
-	 test.assert(newCount == count - 1, 'One artist has been removed');
+	 test.assertEquals(newCount, count - 1, 'One artist has been removed');
 	 test.assertSelectorDoesntHaveText('table#artists-table tbody tr:first-child td:nth-of-type(1)', '000test');
 	 test.assertSelectorDoesntHaveText('table#artists-table tbody tr:first-child td:nth-of-type(2)', 'teststyle');
 	 test.assertSelectorDoesntHaveText('table#artists-table tbody tr:first-child td:nth-of-type(5)', '01:00');

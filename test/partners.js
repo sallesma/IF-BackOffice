@@ -1,7 +1,7 @@
 var fs = require('fs');
 var emptyfilesize = 514;
 
-casper.test.begin('Testing partners manipulation', 15, function suite(test) {
+casper.test.begin('Testing partners manipulation', 16, function suite(test) {
    var url = casper.cli.get('url');
    var username = casper.cli.get('login');
    var password = casper.cli.get('password');
@@ -31,6 +31,9 @@ casper.test.begin('Testing partners manipulation', 15, function suite(test) {
 
    casper.then(function() {
       test.info('Testing partners add');
+      var count = this.evaluate(function() {
+	 return __utils__.findAll('table#partners-table tbody tr').length;
+      });
       this.click('a#addPartnersTriggerModal');
       this.waitUntilVisible('div#addPartnerModal', function() {
 	 this.fill('div#addPartnerModal form', {
@@ -44,6 +47,10 @@ casper.test.begin('Testing partners manipulation', 15, function suite(test) {
 	    }, false);
 	    this.click('button#addPartnerButton');
 	    this.wait(3000, function() {
+               var newCount = this.evaluate(function() {
+                  return __utils__.findAll('table#partners-table tbody tr').length;
+               });
+               test.assertEquals(newCount, count + 1, 'One partner has been removed');
 	       test.assertSelectorHasText('table#partners-table tbody tr:first-child td:nth-of-type(1)', 'test', 'New name is ok');
 	       test.assertEvalEquals(function() {
 		  return document.querySelectorAll('table#partners-table tbody tr:first-child td:nth-of-type(2) img')[0].getAttribute("src");
@@ -79,7 +86,7 @@ casper.test.begin('Testing partners manipulation', 15, function suite(test) {
          var newCount = this.evaluate(function() {
             return __utils__.findAll('table#partners-table tbody tr').length;
          });
-	 test.assert(newCount == count -1, 'One partner has been removed');
+	 test.assertEquals(newCount, count -1, 'One partner has been removed');
 	 test.assertSelectorDoesntHaveText('table#partners-table tbody tr:first-child td:nth-of-type(1)', 'test');
 	 test.assertEval(function (url) {
 	    return document.querySelectorAll('table#partners-table tbody tr:first-child td:nth-of-type(2) img')[0].getAttribute('src') != url + 'src/fileUpload/partners/image.png';

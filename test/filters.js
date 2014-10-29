@@ -1,6 +1,6 @@
 var emptyfilesize = 514;
 
-casper.test.begin('Testing filters manipulation', 9, function suite(test) {
+casper.test.begin('Testing filters manipulation', 10, function suite(test) {
    var url = casper.cli.get('url');
    var username = casper.cli.get('login');
    var password = casper.cli.get('password');
@@ -30,10 +30,17 @@ casper.test.begin('Testing filters manipulation', 9, function suite(test) {
 
    casper.then(function() {
       test.info('Testing filter add');
+      var count = this.evaluate(function() {
+	 return __utils__.findAll('#photo-filters > div img').length;
+      });
       this.fill('form#filter-add-form', {
          'files[]': 'test/image.png'
       }, false);
       this.wait(4000, function() {
+         var newCount = this.evaluate(function() {
+            return __utils__.findAll('#photo-filters > div img').length;
+         });
+	 test.assertEquals(newCount, count + 1, 'One filter has been removed');
          test.assertEvalEquals(function () {
 	    return document.querySelectorAll('#photo-filters > div:last-child img')[0].getAttribute('src');
 	 }, url + 'src/fileUpload/filters/image.png', 'image.png found in image list');
@@ -60,7 +67,7 @@ casper.test.begin('Testing filters manipulation', 9, function suite(test) {
          var newCount = this.evaluate(function() {
             return __utils__.findAll('#photo-filters > div img').length;
          });
-	 test.assert(newCount == count -1, 'One filter has been removed');
+	 test.assertEquals(newCount, count -1, 'One filter has been removed');
          test.assertEval(function (url) {
 	    return document.querySelectorAll('#photo-filters > div:last-child img')[0].getAttribute('src') != url + 'src/fileUpload/filters/image.png';
 	 }, 'image.png removed from image list');

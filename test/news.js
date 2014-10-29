@@ -1,4 +1,4 @@
-casper.test.begin('Testing news manipulation', 9, function suite(test) {
+casper.test.begin('Testing news manipulation', 10, function suite(test) {
    var url = casper.cli.get('url');
    var username = casper.cli.get('login');
    var password = casper.cli.get('password');
@@ -28,6 +28,9 @@ casper.test.begin('Testing news manipulation', 9, function suite(test) {
 
    casper.then(function() {
       test.info('Testing news add');
+      var count = this.evaluate(function() {
+	 return __utils__.findAll('table#news-table tbody tr').length;
+      });
       this.click('a#addNewsTriggerModal');
       this.waitUntilVisible('div#addNewModal', function() {
 	 this.fillSelectors('div#addNewModal form', {
@@ -36,6 +39,11 @@ casper.test.begin('Testing news manipulation', 9, function suite(test) {
 	 }, false);
 	 this.click('button#addNewButton');
 	 this.wait(3000, function() {
+            var newCount = this.evaluate(function() {
+               return __utils__.findAll('table#news-table tbody tr').length;
+            });
+   	 test.assertEquals(newCount, count + 1, 'One news has been added');
+
 	    test.assertSelectorHasText('table#news-table tbody tr:first-child td#title', 'test', 'New title is ok');
 	    test.assertSelectorHasText('table#news-table tbody tr:first-child td#content', 'testtesttest', 'New content is ok');
 	 }, function() {
@@ -83,7 +91,7 @@ casper.test.begin('Testing news manipulation', 9, function suite(test) {
          var newCount = this.evaluate(function() {
             return __utils__.findAll('table#news-table tbody tr').length;
          });
-	 test.assert(newCount == count -1, 'One news has been removed');
+	 test.assertEquals(newCount, count -1, 'One news has been removed');
 	 test.assertSelectorDoesntHaveText('table#news-table tbody tr:first-child td#title', 'test2');
 	 test.assertSelectorDoesntHaveText('table#news-table tbody tr:first-child td#content', 'testtesttest2');
       }, function() {
