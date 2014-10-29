@@ -38,7 +38,7 @@ casper.test.begin('Testing news manipulation', 10, function suite(test) {
 	    'div#addNewModal form textarea#newContent': 'testtesttest'
 	 }, false);
 	 this.click('button#addNewButton');
-	 this.wait(3000, function() {
+	 this.wait(4000, function() {
             var newCount = this.evaluate(function() {
                return __utils__.findAll('table#news-table tbody tr').length;
             });
@@ -87,7 +87,7 @@ casper.test.begin('Testing news manipulation', 10, function suite(test) {
       }, function() {
 	 test.fail('News delete alert did not show up');
       });
-      this.wait(3000, function() {
+      this.wait(4000, function() {
          var newCount = this.evaluate(function() {
             return __utils__.findAll('table#news-table tbody tr').length;
          });

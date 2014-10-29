@@ -54,7 +54,7 @@ casper.test.begin('Testing artists manipulation', 16, function suite(test) {
 	       'div#artistModal form input#art-youtube': 'testyoutube'
 	    }, false);
 	    this.click('button#artistModalActionButton');
-	    this.wait(3000, function() {
+	    this.wait(4000, function() {
 	       test.assertSelectorHasText('table#artists-table tbody tr:first-child td:nth-of-type(1)', 'test', 'New name is ok');
 	       test.assertSelectorHasText('table#artists-table tbody tr:first-child td:nth-of-type(2)', 'teststyle', 'New style is ok');
 	       test.assertSelectorHasText('table#artists-table tbody tr:first-child td:nth-of-type(3)', 'principale', 'New stage is ok');
@@ -89,7 +89,7 @@ casper.test.begin('Testing artists manipulation', 16, function suite(test) {
       }, function() {
 	 test.fail('Artist delete alert did not show up');
       });
-      this.wait(3000, function() {
+      this.wait(4000, function() {
          var newCount = this.evaluate(function() {
             return __utils__.findAll('table#artists-table tbody tr').length;
          });

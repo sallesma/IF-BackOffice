@@ -46,7 +46,7 @@ casper.test.begin('Testing partners manipulation', 16, function suite(test) {
 	       'div#addPartnerModal form input#newPriority': '999999999'
 	    }, false);
 	    this.click('button#addPartnerButton');
-	    this.wait(3000, function() {
+	    this.wait(4000, function() {
                var newCount = this.evaluate(function() {
                   return __utils__.findAll('table#partners-table tbody tr').length;
                });
@@ -82,7 +82,7 @@ casper.test.begin('Testing partners manipulation', 16, function suite(test) {
       }, function() {
 	 test.fail('Partners delete alert did not show up');
       });
-      this.wait(3000, function() {
+      this.wait(4000, function() {
          var newCount = this.evaluate(function() {
             return __utils__.findAll('table#partners-table tbody tr').length;
          });

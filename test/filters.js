@@ -63,7 +63,7 @@ casper.test.begin('Testing filters manipulation', 10, function suite(test) {
       }, function() {
 	 test.fail('Filter delete alert did not show up');
       });
-      this.wait(3000, function() {
+      this.wait(4000, function() {
          var newCount = this.evaluate(function() {
             return __utils__.findAll('#photo-filters > div img').length;
          });
