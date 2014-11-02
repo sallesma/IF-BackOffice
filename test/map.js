@@ -88,8 +88,8 @@ casper.test.begin('Testing map manipulation', 19, function suite(test) {
             var x = this.getElementBounds('#add-map').left + 1;
             var y = this.getElementBounds('#add-map').top + 1;
             this.mouse.click(x, y);
-	    var expectedX = (1000/this.getElementBounds('#add-map').width).toFixed(4);
-	    var expectedY = (1000/this.getElementBounds('#add-map').height).toFixed(5);
+	    var expectedX = (100/this.getElementBounds('#add-map').width).toFixed(5);
+	    var expectedY = (100/this.getElementBounds('#add-map').height).toFixed(6);
 	    this.wait(500, function() {
 	       this.fillSelectors('div#addMapItemModal form', {
 	          'div#addMapItemModal form input#newLabel': '000test',

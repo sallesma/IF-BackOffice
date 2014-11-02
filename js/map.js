@@ -5,11 +5,10 @@ $(document).on("click", "#add-map", function(e) {
         e.offsetX = e.pageX - targetOffset.left;
         e.offsetY = e.pageY - targetOffset.top;
     }
-	x_1000 = ( e.offsetX * 1000 ) / e.target.width;
-	y_1000 = ( e.offsetY * 1000 ) / e.target.height;
-	alert(x_1000 +", "+y_1000);
-	$('#addMapItemModal').find('input[id="newX"]').val(x_1000);
-	$('#addMapItemModal').find('input[id="newY"]').val(y_1000);
+	x_100 = ( e.offsetX * 100 ) / e.target.width;
+	y_100 = ( e.offsetY * 100 ) / e.target.height;
+	$('#addMapItemModal').find('input[id="newX"]').val(x_100);
+	$('#addMapItemModal').find('input[id="newY"]').val(y_100);
 });
 
 //Initializes the infoId selector in addModal
@@ -67,10 +66,10 @@ $(document).on("click", ".modifyMapItemButton", function() {
             e.offsetX = e.pageX - targetOffset.left;
             e.offsetY = e.pageY - targetOffset.top;
         }
-		x_1000 = ( e.offsetX * 1000 ) / e.target.width;
-		y_1000 = ( e.offsetY * 1000 ) / e.target.height;
-		$('#editMapItemModal').find('input[id="x"]').val(x_1000);
-		$('#editMapItemModal').find('input[id="y"]').val(y_1000);
+		x_100 = ( e.offsetX * 100 ) / e.target.width;
+		y_100 = ( e.offsetY * 100 ) / e.target.height;
+		$('#editMapItemModal').find('input[id="x"]').val(x_100);
+		$('#editMapItemModal').find('input[id="y"]').val(y_100);
 	});
 
 	var infoIdSelect = $('#editMapItemModal').find('#mapItem-linked-info');
