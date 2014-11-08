@@ -113,13 +113,13 @@ $('#infosDeleteButton').click(function() {
             url: "info/"+id,
         }).done(function(msg) {
             getInfos();
-			getMapItems();
-			remove($button, " Supprimer");
+            getMapItems();
+            remove($button, " Supprimer");
             $("#onDeleteInfoAlert").show();
             $('#infos-form').hide();
-			$('#infos-edit-text').show();
+            $('#infos-edit-text').show();
         }).fail(function(msg) {
-			remove($button, " Supprimer");
+            remove($button, " Supprimer");
             alert("Echec lors de la suppression de l'info");
         });
     }

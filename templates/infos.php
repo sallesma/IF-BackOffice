@@ -26,7 +26,7 @@
                                 </div>
                                 <!--isCategory-->
                                 <div class="form-group">
-                                    <label for="info-name" class="col-lg-4 control-label">Catégorie ou info ?</label>
+                                    <label for="category" class="col-lg-4 control-label">Catégorie ou info ?</label>
                                     <div class="col-lg-8">
                                         <label class="radio">
                                             <input type="radio" name="isCategoryRadio" id="category" value="1">Catégorie</label>
@@ -78,8 +78,8 @@
                                         <select id="info-parent" class="form-control"></select>
                                     </div>
                                 </div>
-                                <button class="btn btn-primary" id="infosEditButton" data-loading-text="Enregistrement...">Enregistrer les modifs</button>
-                                <button class="btn btn-danger" id="infosDeleteButton"><i class='fa fa-times'></i> Supprimer</button>
+                                <button type="button" class="btn btn-primary" id="infosEditButton" data-loading-text="Enregistrement...">Enregistrer les modifs</button>
+                                <button type="button" class="btn btn-danger" id="infosDeleteButton"><i class='fa fa-times'></i> Supprimer</button>
                             </form>
                         </div>
                     </div>
@@ -137,8 +137,8 @@
                                         <select id="add-info-parent" class="form-control"></select>
                                     </div>
                                     <div class="modal-footer">
-                                        <button class="btn btn-default" data-dismiss="modal">Annuler</button>
-                                        <button class="btn btn-primary" id="addInfoButton">Ajouter</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                                        <button type="button" class="btn btn-primary" id="addInfoButton">Ajouter</button>
                                     </div>
                                 </form>
                             </div>
