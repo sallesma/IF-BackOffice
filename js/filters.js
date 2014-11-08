@@ -21,8 +21,6 @@ $(function () {
                 }).fail(function(msg) {
                     alert("Echec à l'ajout d'un filtre");
                 });
-
-
             });
         },
         progressall: function (e, data) {
@@ -67,7 +65,7 @@ function getFilters() {
 			filtersHtmlString += "		<a href='#photo-filter' class='thumbnail'>";
 			filtersHtmlString += "			<img src=\"" + filter.picture + "\" alt=\"...\">";
 			filtersHtmlString += "		</a>";
-            filtersHtmlString += "		<button class='filterDeleteButton btn btn-default'><i class='fa fa-times'></i></button>";
+            filtersHtmlString += "		<button type='button' class='filterDeleteButton btn btn-default'><i class='fa fa-times'></i></button>";
             filtersHtmlString += "		<input type='hidden' name='filterId' value='" + filter.id + "'>";
 			filtersHtmlString += "	</form>";
 			filtersHtmlString += "</div>";
