@@ -55,7 +55,7 @@ function getInfos() {
                 //parent
                 var infoSelect = infoForm.find('#info-parent');
                 infoSelect.html('');
-                infoSelect.append('<option value="0"> Aucun parent </option>');
+                infoSelect.append('<option value="0">Aucun parent</option>');
                 var items = $('#infos-tree').jqxTree('getItems');
                 $.each(items, function (key, it) {
                     if (it.id != msg.id && it.value == "1") { //if category and not itself then display option

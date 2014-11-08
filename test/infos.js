@@ -1,7 +1,7 @@
 var fs = require('fs');
 var emptyfilesize = 514;
 
-casper.test.begin('Testing infos manipulation', 27, function suite(test) {
+casper.test.begin('Testing infos manipulation', 30, function suite(test) {
    var url = casper.cli.get('url');
    var username = casper.cli.get('login');
    var password = casper.cli.get('password');
@@ -44,7 +44,7 @@ casper.test.begin('Testing infos manipulation', 27, function suite(test) {
                document.querySelector('input#add-category').setAttribute('checked', true);
             });
             this.fillSelectors('div#addInfoModal form', {
-               'div#addInfoModal form input#add-info-name': '000test',
+               'div#addInfoModal form input#add-info-name': '000testcat',
                'div#addInfoModal form select#add-info-parent': '0'
             }, false);
             this.click('button#addInfoButton');
@@ -53,11 +53,11 @@ casper.test.begin('Testing infos manipulation', 27, function suite(test) {
                   return __utils__.findAll('div#infos-tree ul li').length;
                });
                test.assertEquals(newCount, count + 1, 'One category has been added');
-               test.assertSelectorHasText('div#infos-tree ul.jqx-tree-dropdown-root > li:last-child div', '000test', 'New name is ok');
+               test.assertSelectorHasText('div#infos-tree ul.jqx-tree-dropdown-root > li:last-child div', '000testcat', 'New name is ok');
                this.click('div#infos-tree ul.jqx-tree-dropdown-root > li:last-child div.jqx-tree-item');
                this.wait(4000, function() {
                   this.test.assertEval(function() {
-                     return __utils__.getFormValues('form#infos-form')['info-name'] == "000test";
+                     return __utils__.getFormValues('form#infos-form')['info-name'] == "000testcat";
                   }, 'New name in edit form is ok');
                   this.test.assertEval(function() {
                      return __utils__.getFormValues('form#infos-form')['isCategoryRadio'] == "1";
@@ -72,6 +72,9 @@ casper.test.begin('Testing infos manipulation', 27, function suite(test) {
                   this.download(url + '/src/fileUpload/infos/image.png', 'uploaded.png');
                   test.assertNotEquals(fs.size('uploaded.png'), emptyfilesize, 'Category picture was uploaded');
                   fs.remove('uploaded.png');
+                  categoryId = this.evaluate(function() {
+                     return __utils__.getFormValues('form#infos-form')['id'];
+                  });
                }, function() {
                   test.fail('Could not open new category');
                });
@@ -83,34 +86,6 @@ casper.test.begin('Testing infos manipulation', 27, function suite(test) {
          });
       }, function() {
          test.fail('Add Infos modal was not visible');
-      });
-   });
-
-   casper.then(function() {
-      test.info('Testing category delete');
-      var count = this.evaluate(function() {
-         return __utils__.findAll('div#infos-tree li').length;
-      });
-      this.click('div#infos-tree ul.jqx-tree-dropdown-root > li:last-child div.jqx-tree-item');
-      this.wait(4000, function() {
-         this.click('#infosDeleteButton');
-         this.waitUntilVisible('div#onDeleteInfoAlert', function() {
-            test.pass('Info delete modal is displayed');
-         }, function() {
-            test.fail('Info delete alert did not show up');
-         });
-         this.wait(4000, function() {
-            var newCount = this.evaluate(function() {
-               return __utils__.findAll('div#infos-tree li').length;
-            });
-            test.assertEquals(newCount, count -1, 'One info has been removed');
-            test.assertSelectorDoesntHaveText('div#infos-tree ul.jqx-tree-dropdown-root > li:last-child div', '000test', 'New name is ok');
-            this.download(url + '/src/fileUpload/infos/image.png', 'uploaded.png');
-            test.assertEquals(fs.size('uploaded.png'), emptyfilesize, 'Category picture was deleted');
-            fs.remove('uploaded.png');
-         }, function() {
-            test.fail('Category was not deleted');
-         });
       });
    });
 
@@ -129,8 +104,9 @@ casper.test.begin('Testing infos manipulation', 27, function suite(test) {
                document.querySelector('input#add-info').setAttribute('checked', true);
             });
             this.fillSelectors('div#addInfoModal form', {
-               'div#addInfoModal form input#add-info-name': '000test',
-               'div#addInfoModal form select#add-info-parent': '0'
+               'div#addInfoModal form input#add-info-name': '000testinfo',
+               'div#addInfoModal form textarea#add-info-content': 'testtesttest',
+               'div#addInfoModal form select#add-info-parent': categoryId
             }, false);
             this.click('button#addInfoButton');
             this.wait(4000, function() {
@@ -138,23 +114,27 @@ casper.test.begin('Testing infos manipulation', 27, function suite(test) {
                   return __utils__.findAll('div#infos-tree ul li').length;
                });
                test.assertEquals(newCount, count + 1, 'One info has been added');
-               test.assertSelectorHasText('div#infos-tree ul.jqx-tree-dropdown-root > li:last-child div', '000test', 'New name is ok');
-               this.click('div#infos-tree ul.jqx-tree-dropdown-root > li:last-child div.jqx-tree-item');
+               test.assertSelectorHasText('div#infos-tree ul.jqx-tree-dropdown-root > li:last-child  > ul > li', '000testinfo', 'New name is ok');
+               this.click('div#infos-tree ul.jqx-tree-dropdown-root > li:last-child > ul > li > div');
                this.wait(4000, function() {
                   this.test.assertEval(function() {
-                     return __utils__.getFormValues('form#infos-form')['info-name'] == "000test";
+                     return __utils__.getFormValues('form#infos-form')['info-name'] == "000testinfo";
                   }, 'New name in edit form is ok');
+                  this.test.assertEval(function() {
+                     return __utils__.getFormValues('form#infos-form')['info-content'] == "testtesttest";
+                  }, 'New content in edit form is ok');
                   this.test.assertEval(function() {
                      return __utils__.getFormValues('form#infos-form')['isCategoryRadio'] == "0";
                   }, 'New info is an info');
                   test.assertSelectorHasText('div#infos-edit-form p#info-map', 'Non', 'New info is not displayed on map');
                   this.test.assertEval(function() {
-                     return __utils__.getFormValues('form#infos-form')['info-parent'] == "0";
-                  }, 'New info has no parent');
+                     var select = document.querySelectorAll('form#infos-form select#info-parent')[0];
+                     return select.options[select.selectedIndex].innerHTML == '000testcat'
+                  }, 'New info has the added category as a parent');
                   test.assertEvalEquals(function() {
                      return document.querySelectorAll('div#infos-edit-form #edit-photoInfo img')[0].getAttribute("src");
-                  }, url + 'src/fileUpload/infos/image.png', 'New info picture is ok');
-                  this.download(url + '/src/fileUpload/infos/image.png', 'uploaded.png');
+                  }, url + 'src/fileUpload/infos/image_1.png', 'New info picture is ok');
+                  this.download(url + '/src/fileUpload/infos/image_1.png', 'uploaded.png');
                   test.assertNotEquals(fs.size('uploaded.png'), emptyfilesize, 'Info picture was uploaded');
                   fs.remove('uploaded.png');
                }, function() {
@@ -168,6 +148,46 @@ casper.test.begin('Testing infos manipulation', 27, function suite(test) {
          });
       }, function() {
          test.fail('Add Infos modal was not visible');
+      });
+   });
+
+   casper.then(function() {
+      test.info('Testing category delete and contained info is moved up');
+      var count = this.evaluate(function() {
+         return __utils__.findAll('div#infos-tree li').length;
+      });
+      this.click('div#infos-tree ul.jqx-tree-dropdown-root > li:last-child div.jqx-tree-item');
+      this.wait(4000, function() {
+         this.click('#infosDeleteButton');
+         this.waitUntilVisible('div#onDeleteInfoAlert', function() {
+            test.pass('Info delete modal is displayed');
+         }, function() {
+            test.fail('Info delete alert did not show up');
+         });
+         this.wait(4000, function() {
+            var newCount = this.evaluate(function() {
+               return __utils__.findAll('div#infos-tree li').length;
+            });
+            test.assertEquals(newCount, count -1, 'One info has been removed');
+            test.assertSelectorDoesntHaveText('div#infos-tree ul.jqx-tree-dropdown-root > li:last-child div', '000testcat', 'New name is ok');
+            this.download(url + '/src/fileUpload/infos/image.png', 'uploaded.png');
+            test.assertEquals(fs.size('uploaded.png'), emptyfilesize, 'Category picture was deleted');
+            fs.remove('uploaded.png');
+            this.click('div#infos-tree ul.jqx-tree-dropdown-root > li:last-child > div');
+            this.wait(4000, function() {
+               this.test.assertEval(function() {
+                  return __utils__.getFormValues('form#infos-form')['info-name'] == "000testinfo";
+               }, 'New name in edit form is ok');
+               this.test.assertEval(function() {
+                  var select = document.querySelectorAll('form#infos-form select#info-parent')[0];
+                  return select.options[select.selectedIndex].innerHTML == 'Aucun parent'
+               }, 'New info has no parent');
+            }, function() {
+               test.fail('Could not check that new info was moved up in the tree info');
+            });
+         }, function() {
+            test.fail('Category was not deleted');
+         });
       });
    });
 
@@ -189,7 +209,7 @@ casper.test.begin('Testing infos manipulation', 27, function suite(test) {
                return __utils__.findAll('div#infos-tree li').length;
             });
             test.assertEquals(newCount, count -1, 'One info has been removed');
-            test.assertSelectorDoesntHaveText('div#infos-tree ul.jqx-tree-dropdown-root > li:last-child div', '000test', 'New name is ok');
+            test.assertSelectorDoesntHaveText('div#infos-tree ul.jqx-tree-dropdown-root > li:last-child div', '000testinfo', 'New name is ok');
             this.download(url + '/src/fileUpload/infos/image.png', 'uploaded.png');
             test.assertEquals(fs.size('uploaded.png'), emptyfilesize, 'Info picture was deleted');
             fs.remove('uploaded.png');
