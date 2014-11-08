@@ -21,7 +21,7 @@
                                 <div class="form-group">
                                     <label for="info-name" class="col-lg-4 control-label">Nom</label>
                                     <div class="col-lg-8">
-                                        <input id="info-name" type="text" class="form-control" id="art-name" placeholder="Nom">
+                                        <input id="info-name" name="info-name" type="text" class="form-control" id="art-name" placeholder="Nom">
                                     </div>
                                 </div>
                                 <!--isCategory-->
@@ -38,7 +38,7 @@
                                 <div id="InfoContent" class="form-group">
                                     <label for="info-content" class="col-lg-4 control-label">Description</label>
                                     <div class="col-lg-8">
-                                        <textarea id="info-content" type="text" class="form-control" placeholder="Description"></textarea>
+                                        <textarea id="info-content" name="info-content" type="text" class="form-control" placeholder="Description"></textarea>
                                     </div>
                                 </div>
 
@@ -75,7 +75,7 @@
                                 <div class="form-group">
                                     <label for="info-parent" class="col-lg-4 control-label">Catégorie parente</label>
                                     <div class="col-lg-8">
-                                        <select id="info-parent" class="form-control"></select>
+                                        <select id="info-parent" name="info-parent" class="form-control"></select>
                                     </div>
                                 </div>
                                 <button type="button" class="btn btn-primary" id="infosEditButton" data-loading-text="Enregistrement...">Enregistrer les modifs</button>

@@ -119,7 +119,7 @@ FROM ' . INFOS_TABLE . ' infos WHERE infos.id = :id');
             }
 
             // Delete info's picture
-            $sth = $connection->prepare('SELECT picture FROM ' . INFOS_TABLE . 'WHERE id = :id');
+            $sth = $connection->prepare('SELECT picture FROM ' . INFOS_TABLE . ' WHERE id = :id');
             $sth->execute(array(
                 'id' => $id
             ));
