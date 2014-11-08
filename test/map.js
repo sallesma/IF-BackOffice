@@ -186,7 +186,6 @@ casper.test.begin('Testing map manipulation', 32, function suite(test) {
             'div#addMapItemModal form input#newLabel': '000test',
             'div#addMapItemModal form select#addMapItem-linked-info': infoId,
          }, false);
-         this.capture('a.png');
          this.click('button#addMapItemButton');
          this.wait(4000, function() {
             var newCount = this.evaluate(function() {

@@ -1,5 +1,8 @@
 function getInfos() {
     $.getJSON("info", function(data) {
+        $('#infos-form').hide();
+        $('#infos-edit-text').show();
+            
         $('#infos-tree').jqxTree({ source:computeTree(data)});
         $('#infos-tree').jqxTree('refresh');
 
