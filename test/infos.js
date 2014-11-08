@@ -169,7 +169,7 @@ casper.test.begin('Testing infos manipulation', 30, function suite(test) {
                return __utils__.findAll('div#infos-tree li').length;
             });
             test.assertEquals(newCount, count -1, 'One info has been removed');
-            test.assertSelectorDoesntHaveText('div#infos-tree ul.jqx-tree-dropdown-root > li:last-child div', '000testcat', 'New name is ok');
+            test.assertSelectorDoesntHaveText('div#infos-tree ul.jqx-tree-dropdown-root > li:last-child div', '000testcat', 'Category has been deleted');
             this.download(url + '/src/fileUpload/infos/image.png', 'uploaded.png');
             test.assertEquals(fs.size('uploaded.png'), emptyfilesize, 'Category picture was deleted');
             fs.remove('uploaded.png');
@@ -209,7 +209,7 @@ casper.test.begin('Testing infos manipulation', 30, function suite(test) {
                return __utils__.findAll('div#infos-tree li').length;
             });
             test.assertEquals(newCount, count -1, 'One info has been removed');
-            test.assertSelectorDoesntHaveText('div#infos-tree ul.jqx-tree-dropdown-root > li:last-child div', '000testinfo', 'New name is ok');
+            test.assertSelectorDoesntHaveText('div#infos-tree ul.jqx-tree-dropdown-root > li:last-child div', '000testinfo', 'Info has been deleted');
             this.download(url + '/src/fileUpload/infos/image.png', 'uploaded.png');
             test.assertEquals(fs.size('uploaded.png'), emptyfilesize, 'Info picture was deleted');
             fs.remove('uploaded.png');

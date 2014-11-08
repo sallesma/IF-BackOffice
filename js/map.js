@@ -11,17 +11,6 @@ $(document).on("click", "#add-map", function(e) {
 	$('#addMapItemModal').find('input[id="newY"]').val(y_100);
 });
 
-//Initializes the infoId selector in addModal
-var infoIdSelect = $('#addMapItemModal').find('#addMapItem-linked-info');
-infoIdSelect.html('');
-infoIdSelect.append('<option value="-1"> Aucune info </option>');
-$.get("info", function(jsonInfosTable) {
-	jsonInfosTable=JSON.parse(jsonInfosTable);
-	$.each(jsonInfosTable, function (key, it) {
-			infoIdSelect.append('<option value="' + it.id + '">' + it.name + '</option>');
-	});
-});
-
 // Add a new map item
 $('#addMapItemButton').click(function() {
     $.ajax({
@@ -36,6 +25,7 @@ $('#addMapItemButton').click(function() {
     }).done(function(msg) {
         $('#addMapItemModal').modal('hide');
         getMapItems();
+        getInfos();
     }).fail(function(msg) {
         alert("Echec à l'ajout d'un point");
     });
@@ -74,7 +64,6 @@ $(document).on("click", ".modifyMapItemButton", function() {
 
 	var infoIdSelect = $('#editMapItemModal').find('#mapItem-linked-info');
 
-
 	infoIdSelect.html('');
 	infoIdSelect.append('<option value="-1"> Aucune info </option>');
 	$.get("info", function(jsonInfosTable) {
@@ -108,6 +97,7 @@ $('#editMapItemButton').click(function() {
     }).done(function(msg) {
         $('#editMapItemModal').modal('hide');
         getMapItems();
+        getInfos();
     }).fail(function(msg) {
         alert("Echec à la mise à jour du point");
     });
@@ -126,6 +116,7 @@ $(document).on('click', '.mapItemDeleteButton', function (event) {
             url: "mapItem/"+id
         }).done(function (msg) {
             getMapItems();
+            getInfos();
 			remove($button);
             $("#onDeleteMapItemsAlert").show();
         }).fail(function (msg) {
@@ -179,6 +170,17 @@ function getMapItems() {
 			mapItemsHtmlString += "</tr>";
 		});
     	$("#mapItem-table tbody").html(mapItemsHtmlString);
+    	
+    	//Initializes the infoId selector in addModal
+        var infoIdSelect = $('#addMapItemModal').find('#addMapItem-linked-info');
+        infoIdSelect.html('');
+        infoIdSelect.append('<option value="-1"> Aucune info </option>');
+        $.get("info", function(jsonInfosTable) {
+	        jsonInfosTable=JSON.parse(jsonInfosTable);
+	        $.each(jsonInfosTable, function (key, it) {
+			        infoIdSelect.append('<option value="' + it.id + '">' + it.name + '</option>');
+	        });
+        });
 	}).fail(function(msg) {
 		alert("Echec au chargement des points de la carte");
 	});

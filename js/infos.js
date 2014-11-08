@@ -93,6 +93,7 @@ $('#infosEditButton').click(function() {
         }
     }).done(function(msg) {
         getInfos();
+        getMapItems();
     }).fail(function(msg) {
         alert("Echec lors de la mise à jour de l'info");
     }).always(function () {
@@ -140,6 +141,7 @@ $('#addInfoButton').click(function() {
     }).done(function(msg) {
         $('#addInfoModal').modal('hide');
         getInfos();
+        getMapItems();
     }).fail(function(msg) {
         alert("Echec lors de l'ajout de l'info");
     });
