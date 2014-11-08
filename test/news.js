@@ -14,9 +14,9 @@ casper.test.begin('Testing news manipulation', 10, function suite(test) {
          this.click('button.SubmitBtn[name="Submit1"]');
       }
       this.waitForUrl(url, function(){
-	 test.pass('Logged in');
+         test.pass('Logged in');
       }, function () {
-	 test.fail('Did not log in the backoffice');
+         test.fail('Did not log in the backoffice');
       });
    });
   
@@ -29,73 +29,73 @@ casper.test.begin('Testing news manipulation', 10, function suite(test) {
    casper.then(function() {
       test.info('Testing news add');
       var count = this.evaluate(function() {
-	 return __utils__.findAll('table#news-table tbody tr').length;
+         return __utils__.findAll('table#news-table tbody tr').length;
       });
       this.click('a#addNewsTriggerModal');
       this.waitUntilVisible('div#addNewModal', function() {
-	 this.fillSelectors('div#addNewModal form', {
-	    'div#addNewModal form input#newTitle': 'test',
-	    'div#addNewModal form textarea#newContent': 'testtesttest'
-	 }, false);
-	 this.click('button#addNewButton');
-	 this.wait(4000, function() {
+         this.fillSelectors('div#addNewModal form', {
+         'div#addNewModal form input#newTitle': 'test',
+         'div#addNewModal form textarea#newContent': 'testtesttest'
+         }, false);
+         this.click('button#addNewButton');
+         this.wait(4000, function() {
             var newCount = this.evaluate(function() {
                return __utils__.findAll('table#news-table tbody tr').length;
             });
-   	 test.assertEquals(newCount, count + 1, 'One news has been added');
-
-	    test.assertSelectorHasText('table#news-table tbody tr:first-child td#title', 'test', 'New title is ok');
-	    test.assertSelectorHasText('table#news-table tbody tr:first-child td#content', 'testtesttest', 'New content is ok');
-	 }, function() {
-	    test.fail('New news was not added');
-	 });
+            test.assertEquals(newCount, count + 1, 'One news has been added');
+            test.assertSelectorHasText('table#news-table tbody tr:first-child td#title', 'test', 'New title is ok');
+            test.assertSelectorHasText('table#news-table tbody tr:first-child td#content', 'testtesttest', 'New content is ok');
+         }, function() {
+            test.fail('New news was not added');
+         });
       }, function() {
-	 test.fail('Add news modal was not visible');
+         test.fail('Add news modal was not visible');
       });
    });
 
    /*casper.then(function() {
       test.info('Testing news update');
       this.click('table#news-table tbody tr:first-child button.modifyNewButton');
-      this.waitUntilVisible('div#editNewsModal.in', function() {
-	 test.pass('Edit news modal is visible');
-         this.fillSelectors('div#editNewsModal form', {
-	    'div#editNewsModal form input#newTitle': 'test2',
-	    'div#editNewsModal form textarea#newContent': 'testtesttest2'
-	 }, false);
-	 this.click('button#editNewButton');
-	 this.wait(1000, function() {
-	    test.assertSelectorHasText('table#news-table tbody tr:first-child td#title', 'test2');
-	    test.assertSelectorHasText('table#news-table tbody tr:first-child td#content', 'testtesttest2');
-	 }, function() {
-	    test.fail('Last news was not updated');
-	 });
+      this.waitUntilVisible('div#editNewsModal', function() {
+         test.pass('Edit news modal is visible');
+         this.wait(500, function(){
+            this.fillSelectors('div#editNewsModal form', {
+               'div#editNewsModal form input#newTitle': 'test2',
+               'div#editNewsModal form textarea#newContent': 'testtesttest2'
+            }, false);
+            this.click('button#editNewButton');
+            this.wait(4000, function() {
+               test.assertSelectorHasText('table#news-table tbody tr:first-child td#title', 'test2');
+               test.assertSelectorHasText('table#news-table tbody tr:first-child td#content', 'testtesttest2');
+            }, function() {
+               test.fail('Last news was not updated');
+            });
+         });
       }, function() {
-	 this.capture('test.png');
-	 test.fail('Edit news modal was not visible');
+         test.fail('Edit news modal was not visible');
       });
-   });*/
-
+   });
+*/
    casper.then(function() {
       test.info('Testing news delete');
       var count = this.evaluate(function() {
-	 return __utils__.findAll('table#news-table tbody tr').length;
+         return __utils__.findAll('table#news-table tbody tr').length;
       });
       this.click('table#news-table tbody tr:first-child button.newsDeleteButton');
       this.waitUntilVisible('div#onDeleteNewsAlert', function() {
-	 test.pass('News delete modal is displayed');
+         test.pass('News delete modal is displayed');
       }, function() {
-	 test.fail('News delete alert did not show up');
+         test.fail('News delete alert did not show up');
       });
       this.wait(4000, function() {
          var newCount = this.evaluate(function() {
             return __utils__.findAll('table#news-table tbody tr').length;
          });
-	 test.assertEquals(newCount, count -1, 'One news has been removed');
-	 test.assertSelectorDoesntHaveText('table#news-table tbody tr:first-child td#title', 'test2');
-	 test.assertSelectorDoesntHaveText('table#news-table tbody tr:first-child td#content', 'testtesttest2');
+         test.assertEquals(newCount, count -1, 'One news has been removed');
+         test.assertSelectorDoesntHaveText('table#news-table tbody tr:first-child td#title', 'test2');
+         test.assertSelectorDoesntHaveText('table#news-table tbody tr:first-child td#content', 'testtesttest2');
       }, function() {
-	 test.fail('News was not deleted');
+         test.fail('News was not deleted');
       });
    });
  
