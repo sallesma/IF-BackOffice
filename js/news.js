@@ -18,9 +18,6 @@ $('#addNewButton').click(function() {
 
 // Open News modal with an existing news
 $(document).on("click", ".modifyNewButton", function() {
-
-    $('#editNewsModal').modal('show');
-
     var formClass = $(this).parent().parent().parent();
 
     var id = formClass.find('input[name="rowID"]').val();
@@ -91,7 +88,7 @@ function getNews() {
 			newsHtmlString += "<td>"+news.date+"</td>";
 			newsHtmlString += "<td>";
             newsHtmlString += " <div class='btn-group'>";
-            newsHtmlString += " <button class='btn btn-default modifyNewButton'><i class='fa fa-pencil'></i></button>";
+            newsHtmlString += " <button data-toggle='modal' href='#editNewsModal' class='btn btn-default modifyNewButton'><i class='fa fa-pencil'></i></button>";
             newsHtmlString += " <button class='btn btn-default newsDeleteButton'><i class='fa fa-times'></i></button>";
 			newsHtmlString += " </div>";
 			newsHtmlString += "</td>";

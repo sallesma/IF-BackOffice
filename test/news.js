@@ -1,4 +1,4 @@
-casper.test.begin('Testing news manipulation', 10, function suite(test) {
+casper.test.begin('Testing news manipulation', 13, function suite(test) {
    var url = casper.cli.get('url');
    var username = casper.cli.get('login');
    var password = casper.cli.get('password');
@@ -53,29 +53,27 @@ casper.test.begin('Testing news manipulation', 10, function suite(test) {
       });
    });
 
-   /*casper.then(function() {
+   casper.then(function() {
       test.info('Update news');
       this.click('table#news-table tbody tr:first-child button.modifyNewButton');
       this.waitUntilVisible('div#editNewsModal', function() {
          test.pass('Edit news modal is visible');
-         this.wait(500, function(){
-            this.fillSelectors('div#editNewsModal form', {
-               'div#editNewsModal form input#newTitle': 'test2',
-               'div#editNewsModal form textarea#newContent': 'testtesttest2'
-            }, false);
-            this.click('button#editNewButton');
-            this.wait(4000, function() {
-               test.assertSelectorHasText('table#news-table tbody tr:first-child td#title', 'test2');
-               test.assertSelectorHasText('table#news-table tbody tr:first-child td#content', 'testtesttest2');
-            }, function() {
-               test.fail('Last news was not updated');
-            });
+         this.fillSelectors('div#editNewsModal form', {
+            'div#editNewsModal form input#newTitle': 'test2',
+            'div#editNewsModal form textarea#newContent': 'testtesttest2'
+         }, false);
+         this.click('button#editNewButton');
+         this.wait(4000, function() {
+            test.assertSelectorHasText('table#news-table tbody tr:first-child td#title', 'test2');
+            test.assertSelectorHasText('table#news-table tbody tr:first-child td#content', 'testtesttest2');
+         }, function() {
+            test.fail('Last news was not updated');
          });
       }, function() {
          test.fail('Edit news modal was not visible');
       });
    });
-*/
+
    casper.then(function() {
       test.info('Delete news');
       var count = this.evaluate(function() {
@@ -98,7 +96,7 @@ casper.test.begin('Testing news manipulation', 10, function suite(test) {
          test.fail('News was not deleted');
       });
    });
- 
+
    casper.run(function() {
       test.done();
    });
