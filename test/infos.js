@@ -1,7 +1,7 @@
 var fs = require('fs');
 var emptyfilesize = 514;
 
-casper.test.begin('Testing infos manipulation', 30, function suite(test) {
+casper.test.begin('Testing infos manipulation', 44, function suite(test) {
    var url = casper.cli.get('url');
    var username = casper.cli.get('login');
    var password = casper.cli.get('password');
@@ -30,7 +30,7 @@ casper.test.begin('Testing infos manipulation', 30, function suite(test) {
    });
 
    casper.then(function() {
-      test.info('Testing category add');
+      test.info('Add category');
       var count = this.evaluate(function() {
          return __utils__.findAll('div#infos-tree ul li').length;
       });
@@ -90,7 +90,7 @@ casper.test.begin('Testing infos manipulation', 30, function suite(test) {
    });
 
    casper.then(function() {
-      test.info('Testing info add');
+      test.info('Add info');
       var count = this.evaluate(function() {
          return __utils__.findAll('div#infos-tree ul li').length;
       });
@@ -152,7 +152,7 @@ casper.test.begin('Testing infos manipulation', 30, function suite(test) {
    });
 
    casper.then(function() {
-      test.info('Testing category delete and contained info is moved up');
+      test.info('Delete category and contained info is moved up');
       var count = this.evaluate(function() {
          return __utils__.findAll('div#infos-tree li').length;
       });
@@ -192,7 +192,116 @@ casper.test.begin('Testing infos manipulation', 30, function suite(test) {
    });
 
    casper.then(function() {
-      test.info('Testing info delete');
+      test.info('Add category');
+      var count = this.evaluate(function() {
+         return __utils__.findAll('div#infos-tree ul li').length;
+      });
+      this.click('a#showInfoModalToAdd');
+      this.waitUntilVisible('div#addInfoModal', function() {
+         this.click('input#add-category');
+         this.fillSelectors('div#addInfoModal form', {
+            'div#addInfoModal form input#add-info-name': '000testcatupdate',
+            'div#addInfoModal form select#add-info-parent': '0'
+         }, false);
+         this.click('button#addInfoButton');
+         this.wait(4000, function() {
+            var newCount = this.evaluate(function() {
+               return __utils__.findAll('div#infos-tree ul li').length;
+            });
+            test.assertEquals(newCount, count + 1, 'One category has been added');
+            test.assertSelectorHasText('div#infos-tree ul.jqx-tree-dropdown-root > li:last-child div', '000testcatupdate', 'New name is ok');
+            this.click('div#infos-tree ul.jqx-tree-dropdown-root > li:last-child div.jqx-tree-item');
+            this.wait(4000, function() {
+               categoryId = this.evaluate(function() {
+                  return __utils__.getFormValues('form#infos-form')['id'];
+               });
+            });
+        }, function() {
+           test.fail('New category was not added');
+        });
+      }, function() {
+         test.fail('Add Infos modal was not visible');
+      });
+   });
+
+   casper.then(function() {
+      test.info('Update info');
+      this.click('div#infos-tree ul.jqx-tree-dropdown-root > li:nth-last-child(2) > div');
+      this.wait(4000, function() {
+         this.fillSelectors('form#infos-form', {
+            'input#info-name': '000testinfo2',
+            'textarea#info-content': 'testtesttest2',
+            'select#info-parent': categoryId
+         }, false);
+         this.fill('form#infos-form', {
+            'files[]': 'test/ananas.jpg'
+         }, false);
+         this.wait(4000, function() {
+            this.click('button#infosEditButton');
+            this.wait(4000, function(){
+                  test.assertSelectorHasText('div#infos-tree ul.jqx-tree-dropdown-root > li:last-child  > ul > li', '000testinfo2', 'Updated name is ok');
+               this.test.assertEval(function() {
+                  return __utils__.getFormValues('form#infos-form')['info-name'] == "000testinfo2";
+               }, 'Update name in edit form is ok');
+               this.test.assertEval(function() {
+                  return __utils__.getFormValues('form#infos-form')['info-content'] == "testtesttest2";
+               }, 'Update content in edit form is ok');
+               this.test.assertEval(function() {
+                  return __utils__.getFormValues('form#infos-form')['isCategoryRadio'] == "0";
+               }, 'Updated info is an info');
+               test.assertSelectorHasText('div#infos-edit-form p#info-map', 'Non', 'Updated info is not displayed on map');
+               this.test.assertEval(function() {
+                  var select = document.querySelectorAll('form#infos-form select#info-parent')[0];
+                  return select.options[select.selectedIndex].innerHTML == '000testcatupdate'
+               }, 'Updated info has the added category as a parent');
+               test.assertEvalEquals(function() {
+                  return document.querySelectorAll('div#infos-edit-form #edit-photoInfo img')[0].getAttribute("src");
+               }, url + 'src/fileUpload/infos/ananas.jpg', 'Updated info picture is ok');
+               this.download(url + '/src/fileUpload/infos/ananas.jpg', 'uploaded.jpg');
+               test.assertNotEquals(fs.size('uploaded.jpg'), emptyfilesize, 'Info picture was uploaded');
+               fs.remove('uploaded.jpg');
+               this.download(url + '/src/fileUpload/infos/image_1.png', 'uploaded.png');
+               test.assertEquals(fs.size('uploaded.png'), emptyfilesize, 'Info old picture was deleted');
+               fs.remove('uploaded.png');
+            });
+         }, function() {
+            test.fail('Could not update image');
+         });
+      }, function() {
+         test.fail('Could not open new info');
+      });
+   });
+
+   casper.then(function() {
+      test.info('Delete info');
+      var count = this.evaluate(function() {
+         return __utils__.findAll('div#infos-tree li').length;
+      });
+      this.click('div#infos-tree ul.jqx-tree-dropdown-root > li:last-child > ul > li > div.jqx-tree-item');
+      this.wait(4000, function() {
+         this.click('#infosDeleteButton');
+         this.waitUntilVisible('div#onDeleteInfoAlert', function() {
+            test.pass('Info delete modal is displayed');
+         }, function() {
+            test.fail('Info delete alert did not show up');
+         });
+         this.wait(4000, function() {
+            var newCount = this.evaluate(function() {
+               return __utils__.findAll('div#infos-tree li').length;
+            });
+            test.assertEquals(newCount, count -1, 'One info has been removed');
+            test.assertDoesntExist('div#infos-tree ul.jqx-tree-dropdown-root > li:last-child > ul > li > div', 'Info has been deleted');
+            this.download(url + '/src/fileUpload/infos/image.png', 'uploaded.png');
+            test.assertEquals(fs.size('uploaded.png'), emptyfilesize, 'Info picture was deleted');
+            fs.remove('uploaded.png');
+         }, function() {
+            test.fail('Info was not deleted');
+         });
+      });
+   });
+
+   casper.then(function() {
+      test.info('Delete category');
       var count = this.evaluate(function() {
          return __utils__.findAll('div#infos-tree li').length;
       });
@@ -209,12 +318,9 @@ casper.test.begin('Testing infos manipulation', 30, function suite(test) {
                return __utils__.findAll('div#infos-tree li').length;
             });
             test.assertEquals(newCount, count -1, 'One info has been removed');
-            test.assertSelectorDoesntHaveText('div#infos-tree ul.jqx-tree-dropdown-root > li:last-child div', '000testinfo', 'Info has been deleted');
-            this.download(url + '/src/fileUpload/infos/image.png', 'uploaded.png');
-            test.assertEquals(fs.size('uploaded.png'), emptyfilesize, 'Info picture was deleted');
-            fs.remove('uploaded.png');
+            test.assertSelectorDoesntHaveText('div#infos-tree ul.jqx-tree-dropdown-root > li:last-child div', '000testcat', 'Category has been deleted');
          }, function() {
-            test.fail('Info was not deleted');
+            test.fail('Category was not deleted');
          });
       });
    });
