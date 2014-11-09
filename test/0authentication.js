@@ -5,33 +5,32 @@ casper.test.begin('Testing backoffice authentication', 5, function suite(test) {
    casper.then(function() {
       test.assertEquals(this.getCurrentUrl(), 'https://cas.utc.fr/cas/login?service=' + url, "Redirection to CAS because not logged in");
       this.fillSelectors("form#credentials", {
-	 'input[name="username"]': 'wronglogin',
-	 'input[name="password"]': 'wrongpassword'
+         'input[name="username"]': 'wronglogin',
+         'input[name="password"]': 'wrongpassword'
       }, false);
       this.click('button.SubmitBtn[name="Submit1"]');
       var regexp_url = new RegExp("https://cas.utc.fr/cas/login.*?service=" + url);
       this.waitForUrl(regexp_url, function() {
          test.pass("Stays on CAS because bad credentials");
-
-	 this.fillSelectors("form#credentials", {
-	    'input[name="username"]': casper.cli.get("login"),
-	    'input[name="password"]': casper.cli.get("password")
+         this.fillSelectors("form#credentials", {
+            'input[name="username"]': casper.cli.get("login"),
+            'input[name="password"]': casper.cli.get("password")
          }, false);
-	 this.click('button.SubmitBtn[name="Submit1"]');
+         this.click('button.SubmitBtn[name="Submit1"]');
          this.waitForUrl(url, function() {
-	    test.pass("Redirection to backoffice after login");
-	    this.click('a[href="logout"]');
-	    this.waitForUrl('https://cas.utc.fr/cas/logout?url=' + url, function(){
-	       test.pass("Redirection du CAS after logout");
-	       test.assertVisible('a[href="'+url+'"]', "Link back to backoffice is visible");
-	    }, function() {
-	       test.fail();
-	    });
-	 }, function() {
-	    test.fail();
-	 });
+            test.pass("Redirection to backoffice after login");
+            this.click('a[href="logout"]');
+            this.waitForUrl('https://cas.utc.fr/cas/logout?url=' + url, function(){
+               test.pass("Redirection du CAS after logout");
+               test.assertVisible('a[href="'+url+'"]', "Link back to backoffice is visible");
+            }, function() {
+               test.fail();
+            });
+         }, function() {
+            test.fail();
+         });
       }, function() {
-	 test.fail(this.getCurrentUrl());
+         test.fail(this.getCurrentUrl());
       });
    });
  

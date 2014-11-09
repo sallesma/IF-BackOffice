@@ -27,7 +27,7 @@ casper.test.begin('Testing news manipulation', 10, function suite(test) {
    });
 
    casper.then(function() {
-      test.info('Testing news add');
+      test.info('Add news');
       var count = this.evaluate(function() {
          return __utils__.findAll('table#news-table tbody tr').length;
       });
@@ -54,7 +54,7 @@ casper.test.begin('Testing news manipulation', 10, function suite(test) {
    });
 
    /*casper.then(function() {
-      test.info('Testing news update');
+      test.info('Update news');
       this.click('table#news-table tbody tr:first-child button.modifyNewButton');
       this.waitUntilVisible('div#editNewsModal', function() {
          test.pass('Edit news modal is visible');
@@ -77,7 +77,7 @@ casper.test.begin('Testing news manipulation', 10, function suite(test) {
    });
 */
    casper.then(function() {
-      test.info('Testing news delete');
+      test.info('Delete news');
       var count = this.evaluate(function() {
          return __utils__.findAll('table#news-table tbody tr').length;
       });

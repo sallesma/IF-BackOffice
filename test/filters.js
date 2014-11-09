@@ -29,7 +29,7 @@ casper.test.begin('Testing filters manipulation', 10, function suite(test) {
    });
 
    casper.then(function() {
-      test.info('Testing filter add');
+      test.info('Add filter');
       var count = this.evaluate(function() {
          return __utils__.findAll('#photo-filters > div img').length;
       });
@@ -53,7 +53,7 @@ casper.test.begin('Testing filters manipulation', 10, function suite(test) {
    });
 
    casper.then(function() {
-      test.info('Testing filter delete');
+      test.info('Delete filter');
       var count = this.evaluate(function() {
          return __utils__.findAll('#photo-filters > div img').length;
       });
