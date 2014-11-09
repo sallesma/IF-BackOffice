@@ -36,11 +36,11 @@ casper.test.begin('Testing filters manipulation', 10, function suite(test) {
       this.fill('form#filter-add-form', {
          'files[]': 'test/image.png'
       }, false);
-      this.wait(6000, function() {
+      this.wait(7000, function() {
          var newCount = this.evaluate(function() {
             return __utils__.findAll('#photo-filters > div img').length;
          });
-         test.assertEquals(newCount, count + 1, 'One filter has been removed');
+         test.assertEquals(newCount, count + 1, 'One filter has been added');
          test.assertEvalEquals(function () {
             return document.querySelectorAll('#photo-filters > div:last-child img')[0].getAttribute('src');
          }, url + 'src/fileUpload/filters/image.png', 'image.png found in image list');

@@ -26,7 +26,24 @@ class ArtistsManager extends EntityManager
 
     public function update($id, $params)
     {
-        parent::update(ARTISTS_TABLE, $id, $params);
+        $connection = Connection::getInstance();
+        
+        return parent::update(ARTISTS_TABLE, $id, $params, function () use ($connection, $id, $params) {
+            $sth = $connection->prepare('SELECT picture FROM ' . ARTISTS_TABLE . ' WHERE id = :id');
+            $sth->execute(array(
+                ':id' => $id
+            ));
+
+            if ($artist = $sth->fetch(PDO::FETCH_ASSOC)) {
+                // Delete artist picture
+                if (!empty($artist['picture']) && $artist['picture'] != $params['picture']) {
+                    $picturePath = substr($artist['picture'], strpos($artist['picture'], '/src'));
+                    if (!@unlink(getcwd() . $picturePath)) {
+                        echo ('Error deleting : ' . $picturePath);
+                    }
+                }
+            }
+        });
     }
 
     public function delete($id)
