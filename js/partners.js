@@ -106,12 +106,12 @@ function getPartners() {
             partnerHtmlString += "<input type=\"hidden\" name=\"picture\" value=\""+partner.picture+"\">";
             partnerHtmlString +=  "<input type=\"hidden\" name=\"id\" value=\""+partner.id+"\">";
 			partnerHtmlString += "<td>"+partner.name+"</td>";
-			partnerHtmlString += "<td><img class=\"col-md-9\" src=\" "+partner.picture+" \"/></td>";
+			partnerHtmlString += "<td><img class=\"col-md-9\" src=\""+partner.picture+"\"/></td>";
 			partnerHtmlString += "<td><a href='"+partner.website+"' target=blank>"+partner.website+"</a></td>";
 			partnerHtmlString += "<td>"+partner.priority+"</td>";
 			partnerHtmlString += "<td>";
 			partnerHtmlString += " <div class='btn-group'>";
-            partnerHtmlString += "	<button class='btn btn-default modifyPartnerButton'><i class='fa fa-pencil'></i></button>";
+            partnerHtmlString += "	<button data-toggle='modal' href='#editPartnerModal' class='btn btn-default modifyPartnerButton'><i class='fa fa-pencil'></i></button>";
             partnerHtmlString += "	<button class='btn btn-default partnerDeleteButton'><i class='fa fa-times'></i></button>";
 			partnerHtmlString += "</td>";
 			partnerHtmlString += " <div>";

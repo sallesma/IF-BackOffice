@@ -1,7 +1,7 @@
 var fs = require('fs');
 var emptyfilesize = 514;
 
-casper.test.begin('Testing partners manipulation', 16, function suite(test) {
+casper.test.begin('Testing partners manipulation', 23, function suite(test) {
    var url = casper.cli.get('url');
    var username = casper.cli.get('login');
    var password = casper.cli.get('password');
@@ -72,6 +72,47 @@ casper.test.begin('Testing partners manipulation', 16, function suite(test) {
    });
 
    casper.then(function() {
+      test.info('Update partner');
+      var count = this.evaluate(function() {
+         return __utils__.findAll('table#partners-table tbody tr').length;
+      });
+      this.click('table#partners-table tbody tr:first-child button.modifyPartnerButton');
+      this.waitUntilVisible('div#editPartnerModal', function() {
+         this.fill('div#editPartnerModal form', {
+            'files[]': 'test/ananas.jpg'
+         }, false);
+         this.wait(4000, function() {
+            this.fillSelectors('div#editPartnerModal form', {
+               'div#editPartnerModal form input#name': 'test2',
+               'div#editPartnerModal form input#website': 'testtesttest2',
+               'div#editPartnerModal form input#priority': '999999998'
+            }, false);
+            this.click('button#editPartnerButton');
+            this.wait(4000, function() {
+               var newCount = this.evaluate(function() {
+                  return __utils__.findAll('table#partners-table tbody tr').length;
+               });
+               test.assertEquals(newCount, count, 'No partner has been added');
+               test.assertSelectorHasText('table#partners-table tbody tr:first-child td:nth-of-type(1)', 'test2', 'Updated name is ok');
+               test.assertEvalEquals(function() {
+                  return document.querySelectorAll('table#partners-table tbody tr:first-child td:nth-of-type(2) img')[0].getAttribute("src");
+               }, url + 'src/fileUpload/partners/ananas.jpg', 'Updated picture is ok');
+               test.assertSelectorHasText('table#partners-table tbody tr:first-child td:nth-of-type(3)', 'testtesttest2', 'Updated website is ok');
+               test.assertSelectorHasText('table#partners-table tbody tr:first-child td:nth-of-type(4)', '999999998', 'Updated priority is ok');
+               this.download(url + '/src/fileUpload/partners/image.png', 'uploaded.png');
+               test.assertEquals(fs.size('uploaded.png'), emptyfilesize, 'Partner old picture was deleted');
+               fs.remove('uploaded.png');
+               this.download(url + '/src/fileUpload/partners/ananas.jpg', 'uploaded.jpg');
+               test.assertNotEquals(fs.size('uploaded.jpg'), emptyfilesize, 'Partner picture was uploaded');
+               fs.remove('uploaded.jpg');
+
+            });
+         });
+      }, function() {
+         test.fail('Add partners modal was not visible');
+      });
+   });
+   casper.then(function() {
       test.info('Delete partners');
       var count = this.evaluate(function() {
          return __utils__.findAll('table#partners-table tbody tr').length;
@@ -87,15 +128,15 @@ casper.test.begin('Testing partners manipulation', 16, function suite(test) {
             return __utils__.findAll('table#partners-table tbody tr').length;
          });
          test.assertEquals(newCount, count -1, 'One partner has been removed');
-         test.assertSelectorDoesntHaveText('table#partners-table tbody tr:first-child td:nth-of-type(1)', 'test');
+         test.assertSelectorDoesntHaveText('table#partners-table tbody tr:first-child td:nth-of-type(1)', 'test2');
          test.assertEval(function (url) {
-            return document.querySelectorAll('table#partners-table tbody tr:first-child td:nth-of-type(2) img')[0].getAttribute('src') != url + 'src/fileUpload/partners/image.png';
+            return document.querySelectorAll('table#partners-table tbody tr:first-child td:nth-of-type(2) img')[0].getAttribute('src') != url + 'src/fileUpload/partners/ananas.jpg';
          });
-         test.assertSelectorDoesntHaveText('table#partners-table tbody tr:first-child td:nth-of-type(3)', 'testtesttest');
-         test.assertSelectorDoesntHaveText('table#partners-table tbody tr:first-child td:nth-of-type(4)', '999999999');
-         this.download(url + '/src/fileUpload/partners/image.png', 'uploaded.png');
-         test.assertEquals(fs.size('uploaded.png'), emptyfilesize, 'Partner picture was deleted');
-         fs.remove('uploaded.png');
+         test.assertSelectorDoesntHaveText('table#partners-table tbody tr:first-child td:nth-of-type(3)', 'testtesttest2');
+         test.assertSelectorDoesntHaveText('table#partners-table tbody tr:first-child td:nth-of-type(4)', '999999998');
+         this.download(url + '/src/fileUpload/partners/ananas.jpg', 'uploaded.jpg');
+         test.assertEquals(fs.size('uploaded.jpg'), emptyfilesize, 'Partner picture was deleted');
+         fs.remove('uploaded.jpg');
       }, function() {
          test.fail('Partner was not deleted');
       });

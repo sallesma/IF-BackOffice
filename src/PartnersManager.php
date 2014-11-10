@@ -16,14 +16,14 @@ class PartnersManager extends EntityManager
 
     public function add($params)
     {
-        var_dump($params);
         return parent::add(PARTNERS_TABLE, $params);
     }
 
     public function update($id, $params)
     {
-        return parent::update(PARTNERS_TABLE, $id, $params, function ($connection, $id, $params) {
-            $connection = Connection::getInstance();
+        $connection = Connection::getInstance();
+        
+        return parent::update(PARTNERS_TABLE, $id, $params, function () use ($connection, $id, $params) {
             $sth = $connection->prepare('SELECT picture FROM ' . PARTNERS_TABLE . ' WHERE id = :id');
             $sth->execute(array(
                 ':id' => $id
