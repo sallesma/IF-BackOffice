@@ -1,4 +1,4 @@
-casper.test.begin('Testing map manipulation', 32, function suite(test) {
+casper.test.begin('Testing map manipulation', 37, function suite(test) {
    var url = casper.cli.get('url');
    var username = casper.cli.get('login');
    var password = casper.cli.get('password');
@@ -38,7 +38,7 @@ casper.test.begin('Testing map manipulation', 32, function suite(test) {
             'div#addMapItemModal form select#addMapItem-linked-info': '-1',
          }, false);
          this.click('button#addMapItemButton');
-         this.wait(4000, function() {
+         this.wait(6000, function() {
             var newCount = this.evaluate(function() {
                return __utils__.findAll('table#mapItem-table tbody tr').length;
             });
@@ -88,15 +88,15 @@ casper.test.begin('Testing map manipulation', 32, function suite(test) {
             var x = this.getElementBounds('#add-map').left + 1;
             var y = this.getElementBounds('#add-map').top + 1;
             this.mouse.click(x, y);
-            var expectedX = (100/this.getElementBounds('#add-map').width).toFixed(5);
-            var expectedY = (100/this.getElementBounds('#add-map').height).toFixed(6);
+            var expectedX = (1*100/this.getElementBounds('#add-map').width).toFixed(5);
+            var expectedY = (1*100/this.getElementBounds('#add-map').height).toFixed(6);
             this.wait(500, function() {
                this.fillSelectors('div#addMapItemModal form', {
                   'div#addMapItemModal form input#newLabel': '000test',
                   'div#addMapItemModal form select#addMapItem-linked-info': '-1',
                }, false);
                this.click('button#addMapItemButton');
-               this.wait(4000, function() {
+               this.wait(6000, function() {
                   var newCount = this.evaluate(function() {
                      return __utils__.findAll('table#mapItem-table tbody tr').length;
                   });
@@ -112,6 +112,41 @@ casper.test.begin('Testing map manipulation', 32, function suite(test) {
          });
       }, function() {
          test.fail('Add map item modal was not visible');
+      });
+   });
+
+   casper.then(function() {
+      test.info('Update map item');
+      var count = this.evaluate(function() {
+         return __utils__.findAll('table#mapItem-table tbody tr').length;
+      });
+      this.click('table#mapItem-table tbody tr:first-child .modifyMapItemButton');
+      this.waitUntilVisible('div#editMapItemModal', function() {
+         this.wait(500, function () {
+            var x = this.getElementBounds('#edit-map').left + 20;
+            var y = this.getElementBounds('#edit-map').top + 20;
+            this.mouse.click(x, y);
+            var expectedX = (20*100/this.getElementBounds('#edit-map').width).toFixed(5);
+            var expectedY = (20*100/this.getElementBounds('#edit-map').height).toFixed(5);
+            this.wait(4000, function() {
+               this.fillSelectors('div#editMapItemModal form', {
+                  'div#editMapItemModal form input#label': '000test2',
+               }, false);
+               this.click('button#editMapItemButton');
+               this.wait(4000, function() {
+                  var newCount = this.evaluate(function() {
+                     return __utils__.findAll('table#mapItem-table tbody tr').length;
+                  });
+                  test.assertEquals(newCount, count, 'No map item has been added');
+                  test.assertSelectorHasText('table#mapItem-table tbody tr:first-child td:nth-of-type(1)', '000test2', 'Updated label is ok');
+                  test.assertSelectorHasText('table#mapItem-table tbody tr:first-child td:nth-of-type(2)', expectedX, 'Updated X coordinate is ok');
+                  test.assertSelectorHasText('table#mapItem-table tbody tr:first-child td:nth-of-type(3)', expectedY, 'Updated Y coordinate is ok');
+                  test.assertSelectorHasText('table#mapItem-table tbody tr:first-child td:nth-of-type(4)', 'Aucune info liée', 'Linked info is ok');
+               });
+            });
+         });
+      }, function() {
+         test.fail('Edit map item modal was not visible');
       });
    });
 

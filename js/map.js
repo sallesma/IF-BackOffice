@@ -162,7 +162,7 @@ function getMapItems() {
             mapItemsHtmlString += "</td>";
 			mapItemsHtmlString += "<td>";
 			mapItemsHtmlString += " <div class='btn-group'>";
-			mapItemsHtmlString += "	<button class='btn btn-default modifyMapItemButton'><i class='fa fa-pencil'></i></button>";
+			mapItemsHtmlString += "	<button data-toggle='modal' href='#editMapItemModal' class='btn btn-default modifyMapItemButton'><i class='fa fa-pencil'></i></button>";
 			mapItemsHtmlString += "	<button class='btn btn-default mapItemDeleteButton'><i class='fa fa-times'></i></button>";
 			mapItemsHtmlString += " </div>";
 			mapItemsHtmlString += "</td>";
