@@ -58,6 +58,8 @@ Run all the tests in the test/ folder:
 
     casperjs test test/ --url="yoururl" --login="yourlogin" --password="yourpassword"
 
+Please do not run the tests on the production server, test data might appear in the applications that pull data from it.
+
 ## Contribution
 
 If you have any good ideas about a better interface, contact us :)
