@@ -1,5 +1,3 @@
-var emptyfilesize = 514;
-
 casper.test.begin('Testing filters manipulation', 10, function suite(test) {
    var url = casper.cli.get('url');
    var username = casper.cli.get('login');
@@ -45,8 +43,10 @@ casper.test.begin('Testing filters manipulation', 10, function suite(test) {
             return document.querySelectorAll('#photo-filters > div:last-child img')[0].getAttribute('src');
          }, url + 'src/fileUpload/filters/image.png', 'image.png found in image list');
          this.download(url + '/src/fileUpload/filters/image.png', 'uploaded.png');
-         test.assertNotEquals(fs.size('uploaded.png'), emptyfilesize, 'Filter was uploaded');
+         this.download(url + '/src/fileUpload/filters/doesnotexist.png', 'doesnotexist.png');
+         test.assertNotEquals(fs.size('uploaded.png'), fs.size('doesnotexist.png'), 'Filter was uploaded');
          fs.remove('uploaded.png');
+         fs.remove('doesnotexist.png');
       }, function() {
          test.fail('New filter was not added');
       });
@@ -69,11 +69,16 @@ casper.test.begin('Testing filters manipulation', 10, function suite(test) {
          });
          test.assertEquals(newCount, count -1, 'One filter has been removed');
          test.assertEval(function (url) {
-         return document.querySelectorAll('#photo-filters > div:last-child img')[0].getAttribute('src') != url + 'src/fileUpload/filters/image.png';
+            if (document.querySelectorAll('#photo-filters > div:last-child img').length == 0)
+               return true;
+            else
+               return document.querySelectorAll('#photo-filters > div:last-child img')[0].getAttribute('src') != url + 'src/fileUpload/filters/image.png'
          }, 'image.png removed from image list');
          this.download(url + '/src/fileUpload/filters/image.png', 'uploaded.png');
-         test.assertEquals(fs.size('uploaded.png'), emptyfilesize, 'Filter file was deleted');
+         this.download(url + '/src/fileUpload/filters/doesnotexist.png', 'doesnotexist.png');
+         test.assertEquals(fs.size('uploaded.png'), fs.size('doesnotexist.png'), 'Filter file was deleted');
          fs.remove('uploaded.png');
+         fs.remove('doesnotexist.png');
       }, function() {
          test.fail('Filter was not deleted');
       });

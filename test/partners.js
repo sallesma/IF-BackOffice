@@ -1,6 +1,3 @@
-var fs = require('fs');
-var emptyfilesize = 514;
-
 casper.test.begin('Testing partners manipulation', 23, function suite(test) {
    var url = casper.cli.get('url');
    var username = casper.cli.get('login');
@@ -57,9 +54,11 @@ casper.test.begin('Testing partners manipulation', 23, function suite(test) {
                }, url + 'src/fileUpload/partners/image.png', 'New picture is ok');
                test.assertSelectorHasText('table#partners-table tbody tr:first-child td:nth-of-type(3)', 'testtesttest', 'New website is ok');
                test.assertSelectorHasText('table#partners-table tbody tr:first-child td:nth-of-type(4)', '999999999', 'New priority is ok');
+               this.download(url + '/src/fileUpload/partners/doesnotexist.png', 'doesnotexist.png');
                this.download(url + '/src/fileUpload/partners/image.png', 'uploaded.png');
-               test.assertNotEquals(fs.size('uploaded.png'), emptyfilesize, 'Partner picture was uploaded');
+               test.assertNotEquals(fs.size('uploaded.png'), fs.size('doesnotexist.png'), 'Partner picture was uploaded');
                fs.remove('uploaded.png');
+               fs.remove('doesnotexist.png');
             }, function() {
                test.fail('New partner was not added');
             });
@@ -99,12 +98,14 @@ casper.test.begin('Testing partners manipulation', 23, function suite(test) {
                }, url + 'src/fileUpload/partners/ananas.jpg', 'Updated picture is ok');
                test.assertSelectorHasText('table#partners-table tbody tr:first-child td:nth-of-type(3)', 'testtesttest2', 'Updated website is ok');
                test.assertSelectorHasText('table#partners-table tbody tr:first-child td:nth-of-type(4)', '999999998', 'Updated priority is ok');
+               this.download(url + '/src/fileUpload/partners/doesnotexist.png', 'doesnotexist.png');
                this.download(url + '/src/fileUpload/partners/image.png', 'uploaded.png');
-               test.assertEquals(fs.size('uploaded.png'), emptyfilesize, 'Partner old picture was deleted');
+               test.assertEquals(fs.size('uploaded.png'), fs.size('doesnotexist.png'), 'Partner old picture was deleted');
                fs.remove('uploaded.png');
                this.download(url + '/src/fileUpload/partners/ananas.jpg', 'uploaded.jpg');
-               test.assertNotEquals(fs.size('uploaded.jpg'), emptyfilesize, 'Partner picture was uploaded');
+               test.assertNotEquals(fs.size('uploaded.jpg'), fs.size('doesnotexist.png'), 'Partner picture was uploaded');
                fs.remove('uploaded.jpg');
+               fs.remove('doesnotexist.png');
 
             });
          });
@@ -130,13 +131,18 @@ casper.test.begin('Testing partners manipulation', 23, function suite(test) {
          test.assertEquals(newCount, count -1, 'One partner has been removed');
          test.assertSelectorDoesntHaveText('table#partners-table tbody tr:first-child td:nth-of-type(1)', 'test2');
          test.assertEval(function (url) {
-            return document.querySelectorAll('table#partners-table tbody tr:first-child td:nth-of-type(2) img')[0].getAttribute('src') != url + 'src/fileUpload/partners/ananas.jpg';
+            if (document.querySelectorAll('table#partners-table tbody tr:first-child td:nth-of-type(2) img').length == 0)
+               return true;
+            else
+               return document.querySelectorAll('table#partners-table tbody tr:first-child td:nth-of-type(2) img')[0].getAttribute('src') != url + 'src/fileUpload/partners/ananas.jpg';
          });
          test.assertSelectorDoesntHaveText('table#partners-table tbody tr:first-child td:nth-of-type(3)', 'testtesttest2');
          test.assertSelectorDoesntHaveText('table#partners-table tbody tr:first-child td:nth-of-type(4)', '999999998');
+         this.download(url + '/src/fileUpload/partners/doesnotexist.png', 'doesnotexist.png');
          this.download(url + '/src/fileUpload/partners/ananas.jpg', 'uploaded.jpg');
-         test.assertEquals(fs.size('uploaded.jpg'), emptyfilesize, 'Partner picture was deleted');
+         test.assertEquals(fs.size('uploaded.jpg'), fs.size('doesnotexist.png'), 'Partner picture was deleted');
          fs.remove('uploaded.jpg');
+         fs.remove('doesnotexist.png');
       }, function() {
          test.fail('Partner was not deleted');
       });

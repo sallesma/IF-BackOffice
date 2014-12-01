@@ -1,6 +1,3 @@
-var fs = require('fs');
-var emptyfilesize = 514;
-
 casper.test.begin('Testing infos manipulation', 44, function suite(test) {
    var url = casper.cli.get('url');
    var username = casper.cli.get('login');
@@ -69,9 +66,11 @@ casper.test.begin('Testing infos manipulation', 44, function suite(test) {
                   test.assertEvalEquals(function() {
                      return document.querySelectorAll('div#infos-edit-form #edit-photoInfo img')[0].getAttribute("src");
                   }, url + 'src/fileUpload/infos/image.png', 'New category picture is ok');
+                  this.download(url + '/src/fileUpload/infos/doesnotexist.png', 'doesnotexist.png');
                   this.download(url + '/src/fileUpload/infos/image.png', 'uploaded.png');
-                  test.assertNotEquals(fs.size('uploaded.png'), emptyfilesize, 'Category picture was uploaded');
+                  test.assertNotEquals(fs.size('uploaded.png'), fs.size('doesnotexist.png'), 'Category picture was uploaded');
                   fs.remove('uploaded.png');
+                  fs.remove('doesnotexist.png');
                   categoryId = this.evaluate(function() {
                      return __utils__.getFormValues('form#infos-form')['id'];
                   });
@@ -134,9 +133,11 @@ casper.test.begin('Testing infos manipulation', 44, function suite(test) {
                   test.assertEvalEquals(function() {
                      return document.querySelectorAll('div#infos-edit-form #edit-photoInfo img')[0].getAttribute("src");
                   }, url + 'src/fileUpload/infos/image_1.png', 'New info picture is ok');
+                  this.download(url + '/src/fileUpload/infos/doesnotexist.png', 'doesnotexist.png');
                   this.download(url + '/src/fileUpload/infos/image_1.png', 'uploaded.png');
-                  test.assertNotEquals(fs.size('uploaded.png'), emptyfilesize, 'Info picture was uploaded');
+                  test.assertNotEquals(fs.size('uploaded.png'), fs.size('doesnotexist.png'), 'Info picture was uploaded');
                   fs.remove('uploaded.png');
+                  fs.remove('doesnotexist.png');
                }, function() {
                   test.fail('Could not open new info');
                });
@@ -170,9 +171,11 @@ casper.test.begin('Testing infos manipulation', 44, function suite(test) {
             });
             test.assertEquals(newCount, count -1, 'One info has been removed');
             test.assertSelectorDoesntHaveText('div#infos-tree ul.jqx-tree-dropdown-root > li:last-child div', '000testcat', 'Category has been deleted');
+            this.download(url + '/src/fileUpload/infos/doesnotexist.png', 'doesnotexist.png');
             this.download(url + '/src/fileUpload/infos/image.png', 'uploaded.png');
-            test.assertEquals(fs.size('uploaded.png'), emptyfilesize, 'Category picture was deleted');
+            test.assertEquals(fs.size('uploaded.png'), fs.size('doesnotexist.png'), 'Category picture was deleted');
             fs.remove('uploaded.png');
+            fs.remove('doesnotexist.png');
             this.click('div#infos-tree ul.jqx-tree-dropdown-root > li:last-child > div');
             this.wait(4000, function() {
                this.test.assertEval(function() {
@@ -257,12 +260,14 @@ casper.test.begin('Testing infos manipulation', 44, function suite(test) {
                test.assertEvalEquals(function() {
                   return document.querySelectorAll('div#infos-edit-form #edit-photoInfo img')[0].getAttribute("src");
                }, url + 'src/fileUpload/infos/ananas.jpg', 'Updated info picture is ok');
+               this.download(url + '/src/fileUpload/infos/doesnotexist.png', 'doesnotexist.png');
                this.download(url + '/src/fileUpload/infos/ananas.jpg', 'uploaded.jpg');
-               test.assertNotEquals(fs.size('uploaded.jpg'), emptyfilesize, 'Info picture was uploaded');
+               test.assertNotEquals(fs.size('uploaded.jpg'), fs.size('doesnotexist.png'), 'Info picture was uploaded');
                fs.remove('uploaded.jpg');
                this.download(url + '/src/fileUpload/infos/image_1.png', 'uploaded.png');
-               test.assertEquals(fs.size('uploaded.png'), emptyfilesize, 'Info old picture was deleted');
+               test.assertEquals(fs.size('uploaded.png'), fs.size('doesnotexist.png'), 'Info old picture was deleted');
                fs.remove('uploaded.png');
+               fs.remove('doesnotexist.png');
             });
          }, function() {
             test.fail('Could not update image');
@@ -292,8 +297,10 @@ casper.test.begin('Testing infos manipulation', 44, function suite(test) {
             test.assertEquals(newCount, count -1, 'One info has been removed');
             test.assertDoesntExist('div#infos-tree ul.jqx-tree-dropdown-root > li:last-child > ul > li > div', 'Info has been deleted');
             this.download(url + '/src/fileUpload/infos/image.png', 'uploaded.png');
-            test.assertEquals(fs.size('uploaded.png'), emptyfilesize, 'Info picture was deleted');
+            this.download(url + '/src/fileUpload/infos/doesnotexist.png', 'doesnotexist.png');
+            test.assertEquals(fs.size('uploaded.png'), fs.size('doesnotexist.png'), 'Info picture was deleted');
             fs.remove('uploaded.png');
+            fs.remove('doesnotexist.png');
          }, function() {
             test.fail('Info was not deleted');
          });

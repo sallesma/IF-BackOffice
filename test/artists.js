@@ -1,6 +1,3 @@
-var fs = require('fs');
-var emptyfilesize = 514;
-
 casper.test.begin('Testing artists manipulation', 26, function suite(test) {
    var url = casper.cli.get('url');
    var username = casper.cli.get('login');
@@ -65,8 +62,10 @@ casper.test.begin('Testing artists manipulation', 26, function suite(test) {
                });
                test.assertEquals(newCount, count + 1, 'One artist has been added');
                this.download(url + '/src/fileUpload/artists/image.png', 'uploaded.png');
-               test.assertNotEquals(fs.size('uploaded.png'), emptyfilesize, 'Artist picture was uploaded');
+               this.download(url + '/src/fileUpload/artists/doesnotexist.png', 'doesnotexist.png');
+               test.assertNotEquals(fs.size('uploaded.png'), fs.size('doesnotexist.png'), 'Artist picture was uploaded');
                fs.remove('uploaded.png');
+               fs.remove('doesnotexist.png');
             }, function() {
                test.fail('New artist was not added');
             });
@@ -117,12 +116,14 @@ casper.test.begin('Testing artists manipulation', 26, function suite(test) {
                   return __utils__.findAll('table#artists-table tbody tr').length;
                });
                test.assertEquals(newCount, count, 'No artist has been added');
+               this.download(url + '/src/fileUpload/artists/doesnotexist.png', 'doesnotexist.png');
                this.download(url + '/src/fileUpload/artists/image.png', 'uploaded.png');
-               test.assertEquals(fs.size('uploaded.png'), emptyfilesize, 'Artist old picture was deleted');
+               test.assertEquals(fs.size('uploaded.png'), fs.size('doesnotexist.png'), 'Artist old picture was deleted');
                fs.remove('uploaded.png');
                this.download(url + '/src/fileUpload/artists/ananas.jpg', 'uploaded.jpg');
-               test.assertNotEquals(fs.size('uploaded.jpg'), emptyfilesize, 'Artist updated picture was uploaded');
+               test.assertNotEquals(fs.size('uploaded.jpg'), fs.size('doesnotexist.png'), 'Artist updated picture was uploaded');
                fs.remove('uploaded.jpg');
+               fs.remove('doesnotexist.png');
             }, function() {
                test.fail('Last artist was not updated');
             });
@@ -151,9 +152,11 @@ casper.test.begin('Testing artists manipulation', 26, function suite(test) {
          test.assertSelectorDoesntHaveText('table#artists-table tbody tr:first-child td:nth-of-type(1)', '000test');
          test.assertSelectorDoesntHaveText('table#artists-table tbody tr:first-child td:nth-of-type(2)', 'teststyle');
          test.assertSelectorDoesntHaveText('table#artists-table tbody tr:first-child td:nth-of-type(5)', '01:00');
+         this.download(url + '/src/fileUpload/artists/doesnotexist.png', 'doesnotexist.png');
          this.download(url + '/src/fileUpload/artists/ananas.jpg', 'uploaded.jpg');
-         test.assertEquals(fs.size('uploaded.jpg'), emptyfilesize, 'Artist picture was deleted');
+         test.assertEquals(fs.size('uploaded.jpg'), fs.size('doesnotexist.png'), 'Artist picture was deleted');
          fs.remove('uploaded.jpg');
+         fs.remove('doesnotexist.png');
       }, function() {
          test.fail('Artist was not deleted');
       });
