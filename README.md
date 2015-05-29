@@ -3,7 +3,9 @@ IF-BackOffice
 
 Back Office for the Festival mobile applications.
 
-It aims to provide data for both android and iOS apps, so that the crew can update both applications without updating any code
+It aims to provide data for both android and iOS apps through a simple API, so that the crew can update both applications without updating any code
+
+As an example, send a request to /api/artists to retrieve all the artists and their associated data.
 
 ## Information
 
